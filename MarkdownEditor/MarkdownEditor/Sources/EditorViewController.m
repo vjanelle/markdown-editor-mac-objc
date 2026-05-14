@@ -3,14 +3,16 @@
 //  MarkdownEditor
 //
 //  Created by Iwaki Satoshi on 2018/02/27.
-//  Copyright © 2018年 Satoshi Iwaki. All rights reserved.
+//  Copyright © 2018 Satoshi Iwaki and 2026 Vincent Janelle. All rights reserved.
 //
 
 #import "EditorViewController.h"
 #import "ConverterManager.h"
 #import "TextConverter.h"
-#import "GitHubGistsClient.h"
-#import "GitHubGistsContent.h"
+#import "Editor/EditorDialogPresenter.h"
+#import "Editor/EditorFileWatcher.h"
+#import "Editor/EditorDocumentStore.h"
+#import "Editor/EditorTextFormatter.h"
 
 @interface EditorViewController () <NSTextViewDelegate> {
     NSString *_filePath;
@@ -18,11 +20,28 @@
 }
 
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
-@property (weak) IBOutlet NSTextField *titleTextField;
+@property (nonatomic, strong) EditorDialogPresenter *dialogPresenter;
+@property (nonatomic, strong) EditorFileWatcher *fileWatcher;
 
 @end
 
 @implementation EditorViewController
+
+static const NSTimeInterval EditorAutosaveDelay = 0.5;
+
+- (EditorDialogPresenter *)dialogPresenter {
+    if (!_dialogPresenter) {
+        _dialogPresenter = [[EditorDialogPresenter alloc] init];
+    }
+    return _dialogPresenter;
+}
+
+- (EditorFileWatcher *)fileWatcher {
+    if (!_fileWatcher) {
+        _fileWatcher = [[EditorFileWatcher alloc] init];
+    }
+    return _fileWatcher;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -38,16 +57,23 @@
     // Update the view, if already loaded.
 }
 
+- (void)dealloc {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveIfNeeded) object:nil];
+    [self.fileWatcher stopWatching];
+}
+
 #pragma mark - NSTextDelegate
 
 - (void)textDidEndEditing:(NSNotification *)notification {
     [ConverterManager.sharedInstance setContentWithString:self.textView.string];
     _dirty = YES;
+    [self scheduleAutosave];
 }
 
 - (void)textDidChange:(NSNotification *)notification {
     [ConverterManager.sharedInstance setContentWithString:self.textView.string];
     _dirty = YES;
+    [self scheduleAutosave];
 }
 
 #pragma mark - NSTextViewDelegate
@@ -59,91 +85,35 @@
 #pragma mark - Formatter Handler
 
 - (IBAction)boldButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatBold];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatBold];
 }
 
 - (IBAction)strikeThroughButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatStrikeThrough];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatStrikeThrough];
 }
 
 - (IBAction)italicButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatItalic];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatItalic];
 }
 
 - (IBAction)quoteButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatQuote];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatQuote];
 }
 
 - (IBAction)codeButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatCode];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatCode];
 }
 
 - (IBAction)insertLinkButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatLink];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatLink];
 }
 
 - (IBAction)listBulletedButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatListBulleted];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatListBulleted];
 }
 
 - (IBAction)listNumberedButtonClicked:(NSButton *)sender {
-    NSRange range = self.textView.selectedRange;
-    if (range.length == 0) {
-        return;
-    }
-    NSString *selectedString = [self.textView.string substringWithRange:range];
-    NSString *string = [ConverterManager.sharedInstance.selectedConverter formattedStringWithString:selectedString
-                                                                                            format:TextConverterFormatListNumbered];
-    [self replaceCharactersInRange:range withString:string];
+    [self applyFormat:TextConverterFormatListNumbered];
 }
 
 #pragma mark - Menu Handler
@@ -153,20 +123,13 @@
         [self newFile];
         return;
     }
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = @"Your changes will be lost if you don't save them.";
-    alert.messageText = @"Do you want to save the changes you made to New file?";
-    alert.alertStyle = NSAlertStyleWarning;
-    [alert addButtonWithTitle:@"Save"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert addButtonWithTitle:@"Don't Save"];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+    [self.dialogPresenter confirmDiscardingChangesForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
         switch (returnCode) {
             case NSAlertFirstButtonReturn: {  // Save
                 if ([self saveFile]) {
                     return;
                 }
-                [self showSaveFilePanelWithCompletionHandler:^(BOOL result) {
+                [self promptForSaveURLWithCompletionHandler:^(BOOL result) {
                     if (result) {
                         [self newFile];
                     }
@@ -185,31 +148,24 @@
 
 - (IBAction)openDocument:(id)sender {
     if (!_dirty) {
-        [self showOpenFilePanel];
+        [self promptForOpenURLWithCompletionHandler:nil];
         return;
     }
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = @"Your changes will be lost if you don't save them.";
-    alert.messageText = @"Do you want to save the changes you made to New file?";
-    alert.alertStyle = NSAlertStyleWarning;
-    [alert addButtonWithTitle:@"Save"];
-    [alert addButtonWithTitle:@"Cancel"];
-    [alert addButtonWithTitle:@"Don't Save"];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
+    [self.dialogPresenter confirmDiscardingChangesForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
         switch (returnCode) {
             case NSAlertFirstButtonReturn: {  // Save
                 if ([self saveFile]) {
                     return;
                 }
-                [self showSaveFilePanelWithCompletionHandler:^(BOOL result) {
+                [self promptForSaveURLWithCompletionHandler:^(BOOL result) {
                     if (result) {
-                        [self showOpenFilePanel];
+                        [self promptForOpenURLWithCompletionHandler:nil];
                     }
                 }];
                 break;
             }
             case NSAlertThirdButtonReturn:  // Don't Save
-                [self showOpenFilePanel];
+                [self promptForOpenURLWithCompletionHandler:nil];
                 break;
             case NSAlertSecondButtonReturn: // Cancel
             default:
@@ -222,42 +178,17 @@
     if ([self saveFile]) {
         return;
     }
-    [self showSaveFilePanel];
+    [self promptForSaveURLWithCompletionHandler:nil];
 }
 
 - (IBAction)saveDocumentAs:(id)sender {
-    [self showSaveFilePanel];
-}
-
-- (IBAction)uploadDocument:(id)sender {
-    GitHubGistsContent *content = [[GitHubGistsContent alloc] initWithContent:[self documentBody]
-                                                                        title:[self documentTitle]
-                                                                     fileName:[self fileName]];
-    GitHubGistsClientTask *task = [GitHubGistsClient.sharedClient uploadTaskWithConent:content
-                                                                     completionHandler:^(NSDictionary * _Nonnull response, NSError * _Nullable error)
-    {
-        if (error) {
-            [self showAlertWithTitle:@"Failed to upload." message:error.localizedDescription];
-            return;
-        }
-        [self showAlertWithTitle:@"Succeded to upload." message:@""];
-    }];
-
-    [task execute];
+    [self promptForSaveURLWithCompletionHandler:nil];
 }
 
 #pragma mark - Private Methods
 
 - (NSString *)loadSample {
     return ConverterManager.sharedInstance.selectedConverter.sample;
-}
-
-- (NSString *)documentTitle {
-    NSString *title = self.titleTextField.stringValue;
-    if (!title) {
-        title = @"Unknown";
-    }
-    return title;
 }
 
 - (NSString *)documentBody {
@@ -268,13 +199,6 @@
     return body;
 }
 
-- (NSString *)fileName {
-    if (!_filePath) {
-        return @"Unknown.md";
-    }
-    return [_filePath lastPathComponent];
-}
-
 - (void)replaceCharactersInRange:(NSRange)range withString:(NSString *)string {
     if ([self.textView shouldChangeTextInRange:range replacementString:string]) {
         [self.textView replaceCharactersInRange:range withString:string];
@@ -283,87 +207,106 @@
     }
 }
 
-- (void)showAlertWithTitle:(NSString *)title message:(NSString *)message {
-    if (!NSThread.isMainThread) {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            [self showAlertWithTitle:title message:message];
-        });
+- (void)applyFormat:(TextConverterFormat)format {
+    NSRange range = self.textView.selectedRange;
+    if (range.length == 0) {
         return;
     }
-    NSAlert *alert = [[NSAlert alloc] init];
-    alert.informativeText = title;
-    alert.messageText = message;
-    alert.alertStyle = NSAlertStyleWarning;
-    [alert addButtonWithTitle:@"OK"];
-    [alert beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse returnCode) {
-        switch (returnCode) {
-            case NSAlertFirstButtonReturn:  // OK
-            default:
-                break;
-        }
-    }];
+
+    EditorTextFormatter *formatter = [[EditorTextFormatter alloc] initWithConverter:ConverterManager.sharedInstance.selectedConverter];
+    NSRange selectedRange = range;
+    NSString *updatedString = [formatter stringByApplyingFormat:format
+                                                         toText:self.textView.string
+                                                          range:range
+                                                  selectedRange:&selectedRange];
+    self.textView.string = updatedString;
+    self.textView.selectedRange = selectedRange;
+    [ConverterManager.sharedInstance setContentWithString:self.textView.string];
+    _dirty = YES;
+    [self scheduleAutosave];
 }
 
-- (void)showOpenFilePanelWithCompletionHandler:(void (^)(BOOL result))handler {
+- (NSString *)defaultDirectoryPath {
     NSString *path = _filePath;
     if (!path) {
         path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, NO).firstObject;
     }
-    
-    NSOpenPanel *panel = [NSOpenPanel openPanel];
-    panel.directoryURL = [NSURL fileURLWithPath:path];
-    panel.canChooseDirectories = NO;
-    panel.canChooseFiles = YES;
-    panel.canSelectHiddenExtension = YES;
-    [panel beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse result) {
+    return path;
+}
+
+- (void)startWatchingCurrentFile {
+    __weak typeof(self) weakSelf = self;
+    [self.fileWatcher watchFileAtPath:_filePath changeHandler:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) {
+            return;
+        }
+        [strongSelf reloadFileFromDiskIfNeeded];
+    }];
+}
+
+- (void)scheduleAutosave {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveIfNeeded) object:nil];
+    [self performSelector:@selector(autosaveIfNeeded) withObject:nil afterDelay:EditorAutosaveDelay];
+}
+
+- (void)autosaveIfNeeded {
+    if (!_dirty || !_filePath) {
+        return;
+    }
+    [self saveFile];
+}
+
+- (void)reloadFileFromDiskIfNeeded {
+    if (_dirty || !_filePath) {
+        return;
+    }
+    if (![self openFile]) {
+        [self.fileWatcher stopWatching];
+    }
+}
+
+- (void)promptForOpenURLWithCompletionHandler:(void (^ _Nullable)(BOOL result))handler {
+    [self.dialogPresenter showOpenFilePanelForWindow:self.view.window
+                                         initialPath:self.defaultDirectoryPath
+                                   completionHandler:^(NSURL * _Nullable selectedURL) {
         BOOL success = NO;
-        if (result == NSModalResponseOK) {
-            self->_filePath = panel.URL.path;
+        if (selectedURL) {
+            self->_filePath = selectedURL.path;
             success = [self openFile];
         }
-        handler(success);
+        if (handler) {
+            handler(success);
+        }
     }];
 }
 
-- (void)showOpenFilePanel {
-    [self showOpenFilePanelWithCompletionHandler:^(BOOL result) {
-        ;
-    }];
-}
-
-- (void)showSaveFilePanelWithCompletionHandler:(void (^)(BOOL result))handler {
-    NSString *path = _filePath;
-    if (!path) {
-        path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, NO).firstObject;
-    }
-    NSSavePanel *panel = [NSSavePanel savePanel];
-    panel.directoryURL = [NSURL fileURLWithPath:path];
-    panel.allowedFileTypes = @[@"md", @"markdwon"];
-    panel.canSelectHiddenExtension = YES;
-    [panel beginSheetModalForWindow:self.view.window completionHandler:^(NSModalResponse result) {
+- (void)promptForSaveURLWithCompletionHandler:(void (^ _Nullable)(BOOL result))handler {
+    [self.dialogPresenter showSaveFilePanelForWindow:self.view.window
+                                         initialPath:self.defaultDirectoryPath
+                                   completionHandler:^(NSURL * _Nullable selectedURL) {
         BOOL success = NO;
-        if (result == NSModalResponseOK) {
-            self->_filePath = panel.URL.path;
+        if (selectedURL) {
+            self->_filePath = selectedURL.path;
             success = [self saveFile];
         }
-        handler(success);
-    }];
-}
-
-- (void)showSaveFilePanel {
-    [self showSaveFilePanelWithCompletionHandler:^(BOOL result) {
-        ;
+        if (handler) {
+            handler(success);
+        }
     }];
 }
 
 - (void)newFile {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveIfNeeded) object:nil];
     self.textView.string = @"New File";
     [ConverterManager.sharedInstance setContentWithString:self.textView.string];
     _filePath = nil;
     _dirty = NO;
+    [self.fileWatcher stopWatching];
 }
 
 - (BOOL)openFile {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveIfNeeded) object:nil];
     if (!_filePath) {
         return NO;
     }
@@ -374,8 +317,9 @@
     if (isDirectory) {
         return NO;
     }
-    NSData *data = [NSData dataWithContentsOfFile:_filePath];
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    EditorDocumentStore *store = [[EditorDocumentStore alloc] init];
+    NSError *error = nil;
+    NSString *string = [store readStringFromURL:[NSURL fileURLWithPath:_filePath] error:&error];
     if (!string) {
         return NO;
     }
@@ -383,10 +327,12 @@
     _dirty = NO;
     self.textView.string = string;
     [ConverterManager.sharedInstance setContentWithString:self.textView.string];
+    [self startWatchingCurrentFile];
     return YES;
 }
 
 - (BOOL)saveFile {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(autosaveIfNeeded) object:nil];
     if (!_filePath) {
         return NO;
     }
@@ -398,8 +344,13 @@
     }
     
     _dirty = NO;
-    NSData *data = [self.textView.string dataUsingEncoding:NSUTF8StringEncoding];
-    return [data writeToFile:_filePath atomically:YES];
+    EditorDocumentStore *store = [[EditorDocumentStore alloc] init];
+    NSError *error = nil;
+    BOOL success = [store writeString:self.textView.string toURL:[NSURL fileURLWithPath:_filePath] error:&error];
+    if (success) {
+        [self startWatchingCurrentFile];
+    }
+    return success;
 }
 
 @end

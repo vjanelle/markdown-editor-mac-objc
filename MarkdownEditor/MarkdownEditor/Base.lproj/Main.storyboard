@@ -718,44 +718,10 @@
                                     </popUpButton>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="zLE-yQ-Nvv"/>
-                                <toolbarItem implicitItemIdentifier="5416F42E-1164-4414-997A-1A6842B21EE4" label="" paletteLabel="" image="ic_github_32pt" id="DIL-EY-KD2">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="82" height="32"/>
-                                    <size key="maxSize" width="82" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" id="OB9-0N-GaY">
-                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" bezelStyle="rounded" image="ic_github_32pt" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="aO8-k7-az9">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="loginButtonClicked:" target="B8D-0N-5wS" id="4qP-2G-ACY"/>
-                                    </connections>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="D378BA4F-E8D7-40A9-8BE6-6883F6FFE968" label="" paletteLabel="" id="kJK-K8-feo">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="82" height="32"/>
-                                    <size key="maxSize" width="82" height="32"/>
-                                    <button key="view" verticalHuggingPriority="750" id="Zak-sX-yDe">
-                                        <rect key="frame" x="0.0" y="14" width="82" height="32"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <buttonCell key="cell" type="push" title="Upload" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="58r-IT-AyC">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="system"/>
-                                        </buttonCell>
-                                    </button>
-                                    <connections>
-                                        <action selector="uploadDocument:" target="Oky-zY-oP4" id="ecG-se-hpq"/>
-                                    </connections>
-                                </toolbarItem>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="grI-lK-Y4O"/>
                                 <toolbarItem reference="zLE-yQ-Nvv"/>
-                                <toolbarItem reference="DIL-EY-KD2"/>
-                                <toolbarItem reference="kJK-K8-feo"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -804,7 +770,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiR-Yz-1hy">
-                                <rect key="frame" x="0.0" y="37" width="450" height="235"/>
+                                <rect key="frame" x="0.0" y="37" width="450" height="263"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="9vL-R4-GZT">
                                     <rect key="frame" x="1" y="1" width="448" height="233"/>
@@ -813,7 +779,7 @@
                                         <textView ambiguous="YES" importsGraphics="NO" richText="NO" verticallyResizable="YES" usesFontPanel="YES" selectionGranularity="word" findStyle="panel" incrementalSearchingEnabled="YES" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" smartInsertDelete="YES" id="OK6-y4-1mW">
                                             <rect key="frame" x="0.0" y="0.0" width="448" height="233"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             <size key="minSize" width="448" height="233"/>
                                             <size key="maxSize" width="466" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -822,7 +788,7 @@
                                             </connections>
                                         </textView>
                                     </subviews>
-                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="91I-tB-JAq">
                                     <rect key="frame" x="-100" y="-100" width="87" height="18"/>
@@ -833,19 +799,10 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <textField verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1pc-y9-WOF">
-                                <rect key="frame" x="0.0" y="270" width="450" height="30"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Title" drawsBackground="YES" id="3b4-OX-mJz">
-                                    <font key="font" metaFont="system"/>
-                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                </textFieldCell>
-                            </textField>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cgO-Rd-8cz">
                                 <rect key="frame" x="291" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_bulleted_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WNM-Yo-QKR">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_bulleted_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WNM-Yo-QKR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -856,7 +813,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tJD-zX-4Ek">
                                 <rect key="frame" x="238" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_insert_link_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hn9-N0-AxR">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_insert_link_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hn9-N0-AxR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -867,7 +824,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pLd-T1-wfE">
                                 <rect key="frame" x="181" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_code_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="syL-e9-bCL">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_code_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="syL-e9-bCL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -878,7 +835,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8B-JZ-2c4">
                                 <rect key="frame" x="141" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_quote_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UCW-xC-ad2">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_quote_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UCW-xC-ad2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -889,7 +846,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZC-vH-Ipq">
                                 <rect key="frame" x="85" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_italic_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXn-HN-5Uc">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_italic_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXn-HN-5Uc">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -900,7 +857,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-ss-Z06">
                                 <rect key="frame" x="5" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_bold_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hRg-OI-h2k">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_bold_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hRg-OI-h2k">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -911,7 +868,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-ON-XBf">
                                 <rect key="frame" x="45" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_strikethrough_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Aky-xj-IKC">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_strikethrough_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Aky-xj-IKC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -922,7 +879,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTd-Jo-LS6">
                                 <rect key="frame" x="331" y="5" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_numbered_48pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RnI-sn-uhd">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_numbered_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RnI-sn-uhd">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -934,7 +891,6 @@
                     </view>
                     <connections>
                         <outlet property="textView" destination="OK6-y4-1mW" id="40E-4d-Slc"/>
-                        <outlet property="titleTextField" destination="1pc-y9-WOF" id="IVb-K0-Q1Q"/>
                     </connections>
                 </viewController>
                 <customObject id="bB9-gD-jzy" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
@@ -964,23 +920,12 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1S-Ha-xc4">
                                 <rect key="frame" x="412" y="273" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_refresh_48pt" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Udd-dG-KDm">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_refresh_18pt" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Udd-dG-KDm">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                                 <connections>
                                     <action selector="reloadButtonClicked:" target="fDo-d1-ebe" id="gfL-Jn-PxK"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="E8q-Uf-9V0">
-                                <rect key="frame" x="18" y="277" width="179" height="18"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="check" title="Automatically reload page" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="p1W-aW-0GJ">
-                                    <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <binding destination="ZWO-ys-s51" name="value" keyPath="values.AutoReloadEnabled" id="1s7-Km-vjZ"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -990,21 +935,19 @@
                     </connections>
                 </viewController>
                 <customObject id="a1O-bo-B4z" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <userDefaultsController representsSharedInstance="YES" id="ZWO-ys-s51"/>
             </objects>
             <point key="canvasLocation" x="750" y="1187"/>
         </scene>
     </scenes>
     <resources>
-        <image name="ic_code_48pt" width="96" height="96"/>
-        <image name="ic_format_bold_48pt" width="96" height="96"/>
-        <image name="ic_format_italic_48pt" width="96" height="96"/>
-        <image name="ic_format_list_bulleted_48pt" width="96" height="96"/>
-        <image name="ic_format_list_numbered_48pt" width="96" height="96"/>
-        <image name="ic_format_quote_48pt" width="96" height="96"/>
-        <image name="ic_format_strikethrough_48pt" width="96" height="96"/>
-        <image name="ic_github_32pt" width="64" height="64"/>
-        <image name="ic_insert_link_48pt" width="96" height="96"/>
-        <image name="ic_refresh_48pt" width="96" height="96"/>
+        <image name="ic_code_18pt" width="36" height="36"/>
+        <image name="ic_format_bold_18pt" width="36" height="36"/>
+        <image name="ic_format_italic_18pt" width="36" height="36"/>
+        <image name="ic_format_list_bulleted_18pt" width="36" height="36"/>
+        <image name="ic_format_list_numbered_18pt" width="36" height="36"/>
+        <image name="ic_format_quote_18pt" width="36" height="36"/>
+        <image name="ic_format_strikethrough_18pt" width="36" height="36"/>
+        <image name="ic_insert_link_18pt" width="36" height="36"/>
+        <image name="ic_refresh_18pt" width="36" height="36"/>
     </resources>
 </document>

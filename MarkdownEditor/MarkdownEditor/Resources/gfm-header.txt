@@ -1,1 +1,55 @@
+<style>
+  :root {
+    color-scheme: light dark;
+  }
 
+  @media (prefers-color-scheme: dark) {
+    html, body {
+      background: #1c1c1e !important;
+      color: #f2f2f7 !important;
+    }
+
+    a {
+      color: #7dc4ff !important;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      color: #ffffff !important;
+    }
+
+    h2,
+    blockquote,
+    table tr,
+    table tr th,
+    table tr td,
+    span.frame > span,
+    hr {
+      border-color: #3a3a3c !important;
+    }
+
+    blockquote,
+    h6,
+    dl dt,
+    dl dd,
+    span.frame span span {
+      color: #b0b0b8 !important;
+    }
+
+    table tr,
+    table tr:nth-child(2n),
+    code,
+    tt,
+    pre {
+      background: #2c2c2e !important;
+      color: #f2f2f7 !important;
+    }
+
+    pre code {
+      background: transparent !important;
+    }
+
+    hr {
+      background: #3a3a3c !important;
+    }
+  }
+</style>

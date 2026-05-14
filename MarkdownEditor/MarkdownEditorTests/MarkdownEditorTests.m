@@ -3,10 +3,20 @@
 //  MarkdownEditorTests
 //
 //  Created by Iwaki Satoshi on 2018/02/27.
-//  Copyright © 2018年 Satoshi Iwaki. All rights reserved.
+//  Copyright © 2018 Satoshi Iwaki and 2026 Vincent Janelle. All rights reserved.
 //
 
 #import <XCTest/XCTest.h>
+#import "../MarkdownEditor/Sources/Converter/GfmConverter.h"
+#import "../MarkdownEditor/Sources/Converter/MarkdownConverter.h"
+#import "../MarkdownEditor/Sources/Converter/PhpMarkdownConverter.h"
+#import "../MarkdownEditor/Sources/Converter/StrictMarkdownConverter.h"
+
+@interface TextConverter (Testing)
+- (NSString *)format;
+- (NSString *)css;
+- (NSString *)script;
+@end
 
 @interface MarkdownEditorTests : XCTestCase
 
@@ -14,26 +24,64 @@
 
 @implementation MarkdownEditorTests
 
-- (void)setUp {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+- (NSArray<TextConverter *> *)markdownConverters {
+    return @[
+        [[MarkdownConverter alloc] init],
+        [[GfmConverter alloc] init],
+        [[StrictMarkdownConverter alloc] init],
+        [[PhpMarkdownConverter alloc] init],
+    ];
 }
 
-- (void)tearDown {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+- (void)testInlineMarkdownFormatting {
+    NSDictionary<NSNumber *, NSString *> *expectations = @{
+        @(TextConverterFormatBold): @"**text**",
+        @(TextConverterFormatItalic): @"*text*",
+        @(TextConverterFormatStrikeThrough): @"~~text~~",
+        @(TextConverterFormatLink): @"[text](url)",
+    };
+
+    for (TextConverter *converter in self.markdownConverters) {
+        for (NSNumber *format in expectations) {
+            NSString *actual = [converter formattedStringWithString:@"text" format:format.unsignedIntegerValue];
+            XCTAssertEqualObjects(actual, expectations[format], @"%@", converter.title);
+        }
+    }
 }
 
-- (void)testExample {
-    // This is an example of a functional test case.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
+- (void)testBlockMarkdownFormatting {
+    NSDictionary<NSNumber *, NSString *> *expectations = @{
+        @(TextConverterFormatCode): @"```\none\ntwo\n```",
+        @(TextConverterFormatQuote): @"> one\n> two\n",
+        @(TextConverterFormatListBulleted): @"- one\n- two\n",
+        @(TextConverterFormatListNumbered): @"1. one\n1. two\n",
+    };
+
+    for (TextConverter *converter in self.markdownConverters) {
+        for (NSNumber *format in expectations) {
+            NSString *actual = [converter formattedStringWithString:@"one\ntwo" format:format.unsignedIntegerValue];
+            XCTAssertEqualObjects(actual, expectations[format], @"%@", converter.title);
+        }
+    }
 }
 
-- (void)testPerformanceExample {
-    // This is an example of a performance test case.
-    [self measureBlock:^{
-        // Put the code you want to measure the time of here.
-    }];
+- (void)testBaseTextConverterDoesNotFormatText {
+    TextConverter *converter = [[TextConverter alloc] initWithTitle:@"Text"];
+
+    XCTAssertEqualObjects([converter formattedStringWithString:@"text" format:TextConverterFormatBold], @"text");
+}
+
+- (void)testBaseTextConverterDefaultProperties {
+    TextConverter *converter = [[TextConverter alloc] initWithTitle:@"Text"];
+
+    XCTAssertEqualObjects([converter format], @"markdown");
+    XCTAssertNil([converter css]);
+    XCTAssertNil([converter script]);
+    XCTAssertTrue([converter.html containsString:@"<html lang=\"ja\">"]);
+
+    [converter setContentWithString:@"# Title"];
+
+    XCTAssertTrue([converter.html containsString:@"<body></body>"]);
 }
 
 @end

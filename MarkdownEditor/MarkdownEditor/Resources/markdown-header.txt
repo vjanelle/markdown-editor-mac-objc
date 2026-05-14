@@ -1,2 +1,51 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" media="(prefers-color-scheme: light)">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" media="(prefers-color-scheme: dark)">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<style>
+  :root {
+    color-scheme: light dark;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    html, body {
+      background: #1c1c1e !important;
+      color: #f2f2f7 !important;
+    }
+
+    a {
+      color: #7dc4ff !important;
+    }
+
+    blockquote,
+    h1, h2, h3, h4, h5, h6,
+    table th,
+    table td,
+    hr {
+      border-color: #3a3a3c !important;
+    }
+
+    blockquote,
+    figcaption,
+    .secondary {
+      color: #b0b0b8 !important;
+    }
+
+    table tr,
+    table tr:nth-child(2n),
+    pre,
+    code,
+    tt {
+      background: #2c2c2e !important;
+      color: #f2f2f7 !important;
+    }
+
+    pre code {
+      background: transparent !important;
+    }
+
+    mark {
+      background: #665c00 !important;
+      color: #fff7c2 !important;
+    }
+  }
+</style>

@@ -3,13 +3,12 @@
 //  MarkdownEditor
 //
 //  Created by Iwaki Satoshi on 2018/02/27.
-//  Copyright © 2018年 Satoshi Iwaki. All rights reserved.
+//  Copyright © 2018 Satoshi Iwaki and 2026 Vincent Janelle. All rights reserved.
 //
 
 #import <WebKit/WebKit.h>
 #import "PreviewViewController.h"
 #import "ConverterManager.h"
-#import "PreferenceManager.h"
 
 @interface PreviewViewController () <WKNavigationDelegate, WKUIDelegate>
 
@@ -31,7 +30,11 @@
                                              object:nil];
     
     _visibleRect = NSZeroRect;
-    [self relaodHtml];
+    [self reloadHtml];
+}
+
+- (void)dealloc {
+    [NSNotificationCenter.defaultCenter removeObserver:self];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -49,14 +52,12 @@
 #pragma mark - Notification Handler
 
 - (void)didChangeContentNotification:(NSNotification *)notification {
-    if (PreferenceManager.sharedManager.autoReloadEnabled) {
-        [self relaodHtml];
-    }
+    [self reloadHtml];
 }
 
 #pragma mark - Private Methods
 
-- (void)relaodHtml {
+- (void)reloadHtml {
     _visibleRect = self.webView.visibleRect;
     _navigation = [self.webView loadHTMLString:ConverterManager.sharedInstance.html
                                        baseURL:NSBundle.mainBundle.resourceURL];
@@ -66,7 +67,7 @@
 #pragma mark - Handler
 
 - (IBAction)reloadButtonClicked:(NSButton *)sender {
-    [self relaodHtml];
+    [self reloadHtml];
 }
 
 @end

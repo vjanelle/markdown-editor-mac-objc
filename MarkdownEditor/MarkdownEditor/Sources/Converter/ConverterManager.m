@@ -3,7 +3,7 @@
 //  MarkdownEditor
 //
 //  Created by Iwaki Satoshi on 2018/02/27.
-//  Copyright © 2018年 Satoshi Iwaki. All rights reserved.
+//  Copyright © 2018 Satoshi Iwaki and 2026 Vincent Janelle. All rights reserved.
 //
 
 #import "ConverterManager.h"
@@ -81,7 +81,7 @@ NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterMan
     @synchronized (self) {
         _selectedConverterIndex = selectedConverterIndex;
         if (_string) {
-            [self relaod];
+            [self reload];
         }
     }
 }
@@ -108,7 +108,7 @@ NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterMan
                                                       object:nil];
 }
 
-- (void)relaod {
+- (void)reload {
     [self setContentWithString:_string];
 }
 
@@ -143,7 +143,12 @@ NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterMan
     {
         return [GCDWebServerDataResponse responseWithData:weakSelf->_data contentType:@"text/html"];
     }];
-    [_webServer startWithPort:8080 bonjourName:nil];
+    NSError *error = nil;
+    BOOL started = [_webServer startWithOptions:@{GCDWebServerOption_Port: @8080} error:&error];
+    if (!started) {
+        LogV(@"Failed to bind preview server to port 8080: %@", error.localizedDescription);
+        [_webServer startWithOptions:@{GCDWebServerOption_Port: @0} error:nil];
+    }
 }
 
 @end

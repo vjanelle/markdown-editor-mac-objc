@@ -3,12 +3,12 @@
 //  MarkdownEditor
 //
 //  Created by Iwaki Satoshi on 2018/04/11.
-//  Copyright © 2018年 Satoshi Iwaki. All rights reserved.
+//  Copyright © 2018 Satoshi Iwaki and 2026 Vincent Janelle. All rights reserved.
 //
 
 #import "PreferenceManager.h"
 
-static NSString *AutoReloadEnabledKey = @"AutoReloadEnabled";
+static NSString *const AutoReloadEnabledKey = @"AutoReloadEnabled";
 
 @implementation PreferenceManager
 
@@ -23,7 +23,11 @@ static NSString *AutoReloadEnabledKey = @"AutoReloadEnabled";
 
 - (BOOL)autoReloadEnabled {
     @synchronized (self) {
-        return [NSUserDefaults.standardUserDefaults boolForKey:AutoReloadEnabledKey];
+        NSNumber *storedValue = [NSUserDefaults.standardUserDefaults objectForKey:AutoReloadEnabledKey];
+        if (!storedValue) {
+            return YES;
+        }
+        return storedValue.boolValue;
     }
 }
 
@@ -35,9 +39,7 @@ static NSString *AutoReloadEnabledKey = @"AutoReloadEnabled";
 
 - (void)resetToDefaults {
     @synchronized (self) {
-        [NSUserDefaults resetStandardUserDefaults];
         [NSUserDefaults.standardUserDefaults removeObjectForKey:AutoReloadEnabledKey];
-        [NSUserDefaults.standardUserDefaults synchronize];
     }
 }
 

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A88A1FB057DE7269E0F0179 /* libPods-MarkdownEditor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7CEF9D156198D1322062BF8F /* libPods-MarkdownEditor.a */; };
 		4F3A889D2052C7F500A0050E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A88832052C7F400A0050E /* AppDelegate.m */; };
 		4F3A889E2052C7F500A0050E /* ConverterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A88852052C7F400A0050E /* ConverterManager.m */; };
 		4F3A889F2052C7F500A0050E /* TextConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A88882052C7F400A0050E /* TextConverter.m */; };
@@ -21,8 +22,6 @@
 		4F3A88A92052C7F500A0050E /* PreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F3A889C2052C7F400A0050E /* PreviewViewController.m */; };
 		4F5AE299207D0F9700C72733 /* gfm-header.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F5AE298207D0F9700C72733 /* gfm-header.txt */; };
 		4F5AE29C207E425F00C72733 /* PreferenceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F5AE29B207E425F00C72733 /* PreferenceManager.m */; };
-		4F7B193E208CCF04009BE0ED /* GitHubGistsClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B193D208CCF04009BE0ED /* GitHubGistsClient.m */; };
-		4F7B1941208CD17F009BE0ED /* GitHubGistsContent.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F7B1940208CD17F009BE0ED /* GitHubGistsContent.m */; };
 		4F94D3F420458A3B00D85BEA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D3F320458A3B00D85BEA /* Assets.xcassets */; };
 		4F94D3F720458A3B00D85BEA /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D3F520458A3B00D85BEA /* Main.storyboard */; };
 		4F94D40520458A3B00D85BEA /* MarkdownEditorTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4F94D40420458A3B00D85BEA /* MarkdownEditorTests.m */; };
@@ -32,6 +31,18 @@
 		4F94D42D2046E8A600D85BEA /* sample.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D42C2046E8A600D85BEA /* sample.md */; };
 		4F94D4312048488500D85BEA /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D4302048488500D85BEA /* markdown.css */; };
 		4F94D43520484F7300D85BEA /* markdown-header.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D43420484F7300D85BEA /* markdown-header.txt */; };
+		D00000000000000000000001 /* EditorTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000012 /* EditorTextFormatter.m */; };
+		D00000000000000000000002 /* EditorDocumentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000014 /* EditorDocumentStore.m */; };
+		D00000000000000000000004 /* ContentAndPreferencesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000017 /* ContentAndPreferencesTests.m */; };
+		D00000000000000000000005 /* EditorTextFormatterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000018 /* EditorTextFormatterTests.m */; };
+		D00000000000000000000006 /* EditorDocumentStoreTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000019 /* EditorDocumentStoreTests.m */; };
+		D00000000000000000000008 /* PandocConverterTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0000000000000000000001B /* PandocConverterTests.m */; };
+		D00000000000000000000009 /* ConverterManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0000000000000000000001C /* ConverterManagerTests.m */; };
+		D0000000000000000000000A /* EditorViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0000000000000000000001D /* EditorViewControllerTests.m */; };
+		D0000000000000000000000C /* PreviewViewControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D0000000000000000000001F /* PreviewViewControllerTests.m */; };
+		D0000000000000000000000D /* AppLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000020 /* AppLifecycleTests.m */; };
+		D0000000000000000000000E /* EditorDialogPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000022 /* EditorDialogPresenter.m */; };
+		D0000000000000000000000F /* EditorFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000024 /* EditorFileWatcher.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,6 +63,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2A7C865235AFAFA55E8E9E0A /* Pods-MarkdownEditor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarkdownEditor.release.xcconfig"; path = "Target Support Files/Pods-MarkdownEditor/Pods-MarkdownEditor.release.xcconfig"; sourceTree = "<group>"; };
 		4F3A88822052C7F400A0050E /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4F3A88832052C7F400A0050E /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		4F3A88842052C7F400A0050E /* ConverterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConverterManager.h; sourceTree = "<group>"; };
@@ -79,10 +91,6 @@
 		4F5AE298207D0F9700C72733 /* gfm-header.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gfm-header.txt"; sourceTree = "<group>"; };
 		4F5AE29A207E425F00C72733 /* PreferenceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferenceManager.h; sourceTree = "<group>"; };
 		4F5AE29B207E425F00C72733 /* PreferenceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferenceManager.m; sourceTree = "<group>"; };
-		4F7B193C208CCF04009BE0ED /* GitHubGistsClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubGistsClient.h; sourceTree = "<group>"; };
-		4F7B193D208CCF04009BE0ED /* GitHubGistsClient.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GitHubGistsClient.m; sourceTree = "<group>"; };
-		4F7B193F208CD17F009BE0ED /* GitHubGistsContent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GitHubGistsContent.h; sourceTree = "<group>"; };
-		4F7B1940208CD17F009BE0ED /* GitHubGistsContent.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GitHubGistsContent.m; sourceTree = "<group>"; };
 		4F94D3EA20458A3B00D85BEA /* Markdown Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Markdown Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94D3F320458A3B00D85BEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F94D3F620458A3B00D85BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -99,6 +107,24 @@
 		4F94D42C2046E8A600D85BEA /* sample.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = sample.md; sourceTree = "<group>"; };
 		4F94D4302048488500D85BEA /* markdown.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = markdown.css; sourceTree = "<group>"; };
 		4F94D43420484F7300D85BEA /* markdown-header.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "markdown-header.txt"; sourceTree = "<group>"; };
+		7CEF9D156198D1322062BF8F /* libPods-MarkdownEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MarkdownEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarkdownEditor.debug.xcconfig"; path = "Target Support Files/Pods-MarkdownEditor/Pods-MarkdownEditor.debug.xcconfig"; sourceTree = "<group>"; };
+		D00000000000000000000011 /* EditorTextFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorTextFormatter.h; sourceTree = "<group>"; };
+		D00000000000000000000012 /* EditorTextFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorTextFormatter.m; sourceTree = "<group>"; };
+		D00000000000000000000013 /* EditorDocumentStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorDocumentStore.h; sourceTree = "<group>"; };
+		D00000000000000000000014 /* EditorDocumentStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorDocumentStore.m; sourceTree = "<group>"; };
+		D00000000000000000000017 /* ContentAndPreferencesTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ContentAndPreferencesTests.m; sourceTree = "<group>"; };
+		D00000000000000000000018 /* EditorTextFormatterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorTextFormatterTests.m; sourceTree = "<group>"; };
+		D00000000000000000000019 /* EditorDocumentStoreTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorDocumentStoreTests.m; sourceTree = "<group>"; };
+		D0000000000000000000001B /* PandocConverterTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PandocConverterTests.m; sourceTree = "<group>"; };
+		D0000000000000000000001C /* ConverterManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ConverterManagerTests.m; sourceTree = "<group>"; };
+		D0000000000000000000001D /* EditorViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorViewControllerTests.m; sourceTree = "<group>"; };
+		D0000000000000000000001F /* PreviewViewControllerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreviewViewControllerTests.m; sourceTree = "<group>"; };
+		D00000000000000000000020 /* AppLifecycleTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppLifecycleTests.m; sourceTree = "<group>"; };
+		D00000000000000000000021 /* EditorDialogPresenter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorDialogPresenter.h; sourceTree = "<group>"; };
+		D00000000000000000000022 /* EditorDialogPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorDialogPresenter.m; sourceTree = "<group>"; };
+		D00000000000000000000023 /* EditorFileWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorFileWatcher.h; sourceTree = "<group>"; };
+		D00000000000000000000024 /* EditorFileWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorFileWatcher.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +132,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A88A1FB057DE7269E0F0179 /* libPods-MarkdownEditor.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +157,7 @@
 			isa = PBXGroup;
 			children = (
 				4F3A88862052C7F400A0050E /* Converter */,
+				D00000000000000000000031 /* Editor */,
 				4F3A88822052C7F400A0050E /* AppDelegate.h */,
 				4F3A88832052C7F400A0050E /* AppDelegate.m */,
 				4F3A88952052C7F400A0050E /* EditorViewController.h */,
@@ -142,10 +170,6 @@
 				4F3A889C2052C7F400A0050E /* PreviewViewController.m */,
 				4F5AE29A207E425F00C72733 /* PreferenceManager.h */,
 				4F5AE29B207E425F00C72733 /* PreferenceManager.m */,
-				4F7B193C208CCF04009BE0ED /* GitHubGistsClient.h */,
-				4F7B193D208CCF04009BE0ED /* GitHubGistsClient.m */,
-				4F7B193F208CD17F009BE0ED /* GitHubGistsContent.h */,
-				4F7B1940208CD17F009BE0ED /* GitHubGistsContent.m */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -178,6 +202,8 @@
 				4F94D40320458A3B00D85BEA /* MarkdownEditorTests */,
 				4F94D40E20458A3B00D85BEA /* MarkdownEditorUITests */,
 				4F94D3EB20458A3B00D85BEA /* Products */,
+				6BA887DDC0C4FBC994353724 /* Pods */,
+				D79AF362E1BC54892162FDB4 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -208,7 +234,15 @@
 		4F94D40320458A3B00D85BEA /* MarkdownEditorTests */ = {
 			isa = PBXGroup;
 			children = (
+				D00000000000000000000020 /* AppLifecycleTests.m */,
+				D00000000000000000000017 /* ContentAndPreferencesTests.m */,
+				D0000000000000000000001C /* ConverterManagerTests.m */,
+				D00000000000000000000019 /* EditorDocumentStoreTests.m */,
+				D00000000000000000000018 /* EditorTextFormatterTests.m */,
+				D0000000000000000000001D /* EditorViewControllerTests.m */,
 				4F94D40420458A3B00D85BEA /* MarkdownEditorTests.m */,
+				D0000000000000000000001B /* PandocConverterTests.m */,
+				D0000000000000000000001F /* PreviewViewControllerTests.m */,
 				4F94D40620458A3B00D85BEA /* Info.plist */,
 			);
 			path = MarkdownEditorTests;
@@ -243,6 +277,39 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		6BA887DDC0C4FBC994353724 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */,
+				2A7C865235AFAFA55E8E9E0A /* Pods-MarkdownEditor.release.xcconfig */,
+			);
+			name = Pods;
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		D00000000000000000000031 /* Editor */ = {
+			isa = PBXGroup;
+			children = (
+				D00000000000000000000021 /* EditorDialogPresenter.h */,
+				D00000000000000000000022 /* EditorDialogPresenter.m */,
+				D00000000000000000000023 /* EditorFileWatcher.h */,
+				D00000000000000000000024 /* EditorFileWatcher.m */,
+				D00000000000000000000013 /* EditorDocumentStore.h */,
+				D00000000000000000000014 /* EditorDocumentStore.m */,
+				D00000000000000000000011 /* EditorTextFormatter.h */,
+				D00000000000000000000012 /* EditorTextFormatter.m */,
+			);
+			path = Editor;
+			sourceTree = "<group>";
+		};
+		D79AF362E1BC54892162FDB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				7CEF9D156198D1322062BF8F /* libPods-MarkdownEditor.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -250,6 +317,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4F94D41420458A3B00D85BEA /* Build configuration list for PBXNativeTarget "MarkdownEditor" */;
 			buildPhases = (
+				264780C402416C8B3E4815E6 /* [CP] Check Pods Manifest.lock */,
 				4F7B1945208E1774009BE0ED /* ShellScript */,
 				4F94D3E620458A3B00D85BEA /* Sources */,
 				4F94D3E720458A3B00D85BEA /* Frameworks */,
@@ -383,6 +451,28 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		264780C402416C8B3E4815E6 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-MarkdownEditor-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 		4F7B1945208E1774009BE0ED /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -391,6 +481,7 @@
 			inputPaths = (
 			);
 			outputPaths = (
+				"${PROJECT_DIR}/MarkdownEditor/Binaries/pandoc",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -414,10 +505,12 @@
 				4F3A88A52052C7F500A0050E /* StrictMarkdownConverter.m in Sources */,
 				4F3A88A12052C7F500A0050E /* MarkdownConverter.m in Sources */,
 				4F3A88A02052C7F500A0050E /* GfmConverter.m in Sources */,
-				4F7B1941208CD17F009BE0ED /* GitHubGistsContent.m in Sources */,
-				4F7B193E208CCF04009BE0ED /* GitHubGistsClient.m in Sources */,
 				4F3A88A72052C7F500A0050E /* main.m in Sources */,
 				4F3A88A22052C7F500A0050E /* PandocConverter.m in Sources */,
+				D0000000000000000000000E /* EditorDialogPresenter.m in Sources */,
+				D0000000000000000000000F /* EditorFileWatcher.m in Sources */,
+				D00000000000000000000002 /* EditorDocumentStore.m in Sources */,
+				D00000000000000000000001 /* EditorTextFormatter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -425,7 +518,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0000000000000000000000D /* AppLifecycleTests.m in Sources */,
+				D00000000000000000000004 /* ContentAndPreferencesTests.m in Sources */,
+				D00000000000000000000009 /* ConverterManagerTests.m in Sources */,
+				D00000000000000000000006 /* EditorDocumentStoreTests.m in Sources */,
+				D00000000000000000000005 /* EditorTextFormatterTests.m in Sources */,
+				D0000000000000000000000A /* EditorViewControllerTests.m in Sources */,
 				4F94D40520458A3B00D85BEA /* MarkdownEditorTests.m in Sources */,
+				D00000000000000000000008 /* PandocConverterTests.m in Sources */,
+				D0000000000000000000000C /* PreviewViewControllerTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -514,7 +615,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -565,7 +666,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 26.4;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 			};
@@ -573,6 +674,7 @@
 		};
 		4F94D41520458A3B00D85BEA /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -586,6 +688,7 @@
 		};
 		4F94D41620458A3B00D85BEA /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2A7C865235AFAFA55E8E9E0A /* Pods-MarkdownEditor.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -607,7 +710,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarkdownEditor.app/Contents/MacOS/MarkdownEditor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
 			};
 			name = Debug;
 		};
@@ -621,7 +724,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarkdownEditor.app/Contents/MacOS/MarkdownEditor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
 			};
 			name = Release;
 		};
