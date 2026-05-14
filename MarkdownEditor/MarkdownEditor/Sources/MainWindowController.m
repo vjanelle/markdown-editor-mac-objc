@@ -16,6 +16,7 @@
 @implementation MainWindowController
 
 static const NSSize MainWindowMinimumContentSize = {1200.0, 800.0};
+static NSString * const MainWindowFrameAutosaveName = @"MarkdownEditorMainWindow";
 
 - (NSArray<NSString *> *)converters {
     return ConverterManager.sharedInstance.converters;
@@ -31,6 +32,7 @@ static const NSSize MainWindowMinimumContentSize = {1200.0, 800.0};
 
 - (void)windowDidLoad {
     [super windowDidLoad];
+    [self setWindowFrameAutosaveName:MainWindowFrameAutosaveName];
     self.window.contentMinSize = MainWindowMinimumContentSize;
     if (self.window.contentView.frame.size.width < MainWindowMinimumContentSize.width ||
         self.window.contentView.frame.size.height < MainWindowMinimumContentSize.height) {

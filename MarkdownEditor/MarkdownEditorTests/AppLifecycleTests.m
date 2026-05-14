@@ -27,7 +27,7 @@
 
 - (MainWindowController *)instantiateMainWindowController {
     NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
-    return (MainWindowController *)[storyboard instantiateInitialController];
+    return (MainWindowController *)[storyboard instantiateControllerWithIdentifier:@"MainWindowController"];
 }
 
 - (NSString *)mainStoryboardContents {
@@ -60,6 +60,7 @@
     XCTAssertGreaterThanOrEqual(window.contentMinSize.height, 800.0);
     XCTAssertGreaterThanOrEqual(window.contentView.frame.size.width, 1200.0);
     XCTAssertGreaterThanOrEqual(window.contentView.frame.size.height, 800.0);
+    XCTAssertEqualObjects(controller.windowFrameAutosaveName, @"MarkdownEditorMainWindow");
 }
 
 - (void)testMainWindowStoryboardInstantiatesContentController {
@@ -87,6 +88,7 @@
     XCTAssertTrue([storyboard containsString:@"visibleAtLaunch=\"NO\""]);
     XCTAssertTrue([storyboard containsString:@"relationship=\"window.shadowedContentViewController\""]);
     XCTAssertFalse([storyboard containsString:@"property=\"mainWindowController\""]);
+    XCTAssertTrue([storyboard containsString:@"storyboardIdentifier=\"MainWindowController\""]);
 }
 
 - (void)testAppDelegateReopensMainWindowWhenNoVisibleWindows {
