@@ -31,6 +31,7 @@
 		4F94D42D2046E8A600D85BEA /* sample.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D42C2046E8A600D85BEA /* sample.md */; };
 		4F94D4312048488500D85BEA /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D4302048488500D85BEA /* markdown.css */; };
 		4F94D43520484F7300D85BEA /* markdown-header.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D43420484F7300D85BEA /* markdown-header.txt */; };
+		D00000000000000000000040 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000041 /* mermaid.min.js */; };
 		D00000000000000000000001 /* EditorTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000012 /* EditorTextFormatter.m */; };
 		D00000000000000000000002 /* EditorDocumentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000014 /* EditorDocumentStore.m */; };
 		D00000000000000000000004 /* ContentAndPreferencesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000017 /* ContentAndPreferencesTests.m */; };
@@ -109,6 +110,7 @@
 		4F94D43420484F7300D85BEA /* markdown-header.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "markdown-header.txt"; sourceTree = "<group>"; };
 		7CEF9D156198D1322062BF8F /* libPods-MarkdownEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MarkdownEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarkdownEditor.debug.xcconfig"; path = "Target Support Files/Pods-MarkdownEditor/Pods-MarkdownEditor.debug.xcconfig"; sourceTree = "<group>"; };
+		D00000000000000000000041 /* mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "vendor/mermaid/mermaid.min.js"; sourceTree = "<group>"; };
 		D00000000000000000000011 /* EditorTextFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorTextFormatter.h; sourceTree = "<group>"; };
 		D00000000000000000000012 /* EditorTextFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorTextFormatter.m; sourceTree = "<group>"; };
 		D00000000000000000000013 /* EditorDocumentStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorDocumentStore.h; sourceTree = "<group>"; };
@@ -272,6 +274,7 @@
 				4F94D42A2046E6C300D85BEA /* gfm.css */,
 				4F94D43420484F7300D85BEA /* markdown-header.txt */,
 				4F94D4302048488500D85BEA /* markdown.css */,
+				D00000000000000000000041 /* mermaid.min.js */,
 				4F94D42C2046E8A600D85BEA /* sample.md */,
 			);
 			path = Resources;
@@ -426,6 +429,7 @@
 				4F94D42B2046E6C300D85BEA /* gfm.css in Resources */,
 				4F94D3F420458A3B00D85BEA /* Assets.xcassets in Resources */,
 				4F5AE299207D0F9700C72733 /* gfm-header.txt in Resources */,
+				D00000000000000000000040 /* mermaid.min.js in Resources */,
 				4F94D42D2046E8A600D85BEA /* sample.md in Resources */,
 				4F94D4282045903100D85BEA /* pandoc in Resources */,
 				4F94D3F720458A3B00D85BEA /* Main.storyboard in Resources */,

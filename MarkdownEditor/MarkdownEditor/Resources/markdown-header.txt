@@ -1,6 +1,50 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css" media="(prefers-color-scheme: light)">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/atom-one-dark.min.css" media="(prefers-color-scheme: dark)">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script src="mermaid.min.js"></script>
+<script>
+  (function() {
+    function mermaidSourceNode(root) {
+      return root.querySelector('pre > code.language-mermaid, pre > code.mermaid, code.language-mermaid, code.mermaid, pre.mermaid');
+    }
+
+    function promoteMermaidBlocks() {
+      var nodeList = document.querySelectorAll('pre > code.language-mermaid, pre > code.mermaid, pre.mermaid');
+      nodeList.forEach(function(node) {
+        var pre = node.tagName === 'PRE' ? node : node.parentElement;
+        if (!pre || pre.dataset.mermaidProcessed === 'true') {
+          return;
+        }
+        var container = document.createElement('div');
+        container.className = 'mermaid';
+        container.textContent = node.textContent;
+        pre.dataset.mermaidProcessed = 'true';
+        pre.replaceWith(container);
+      });
+    }
+
+    function renderMermaid() {
+      if (!window.mermaid || !mermaidSourceNode(document)) {
+        return;
+      }
+      promoteMermaidBlocks();
+      window.mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'loose',
+        theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
+      });
+      window.mermaid.run({ querySelector: '.mermaid' }).catch(function(error) {
+        console.error('Failed to render Mermaid diagram.', error);
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', renderMermaid);
+    } else {
+      renderMermaid();
+    }
+  })();
+</script>
 <style>
   :root {
     color-scheme: light dark;
@@ -46,6 +90,12 @@
     mark {
       background: #665c00 !important;
       color: #fff7c2 !important;
+    }
+
+    .mermaid {
+      background: #2c2c2e !important;
+      border-radius: 6px;
+      padding: 16px;
     }
   }
 </style>

@@ -21,6 +21,20 @@
                ReferencedContainer = "container:MarkdownEditor.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F94D40A20458A3B00D85BEA"
+               BuildableName = "MarkdownEditorUITests.xctest"
+               BlueprintName = "MarkdownEditorUITests"
+               ReferencedContainer = "container:MarkdownEditor.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -36,6 +50,16 @@
                BlueprintIdentifier = "4F94D3FF20458A3B00D85BEA"
                BuildableName = "MarkdownEditorTests.xctest"
                BlueprintName = "MarkdownEditorTests"
+               ReferencedContainer = "container:MarkdownEditor.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4F94D40A20458A3B00D85BEA"
+               BuildableName = "MarkdownEditorUITests.xctest"
+               BlueprintName = "MarkdownEditorUITests"
                ReferencedContainer = "container:MarkdownEditor.xcodeproj">
             </BuildableReference>
          </TestableReference>

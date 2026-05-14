@@ -13,6 +13,14 @@
 
 @implementation ConverterManagerTests
 
+- (NSString *)sampleMarkdown {
+    NSString *testFilePath = [NSString stringWithUTF8String:__FILE__];
+    NSString *testsDirectory = [testFilePath stringByDeletingLastPathComponent];
+    NSString *samplePath = [[testsDirectory stringByDeletingLastPathComponent]
+                            stringByAppendingPathComponent:@"MarkdownEditor/Resources/sample.md"];
+    return [NSString stringWithContentsOfFile:samplePath encoding:NSUTF8StringEncoding error:nil];
+}
+
 - (void)testConverterTitlesAreExposedInDisplayOrder {
     NSArray<NSString *> *titles = ConverterManager.sharedInstance.converters;
 
@@ -53,6 +61,13 @@
     XCTAssertNotNil(url);
     XCTAssertEqualObjects(url.path, @"/index.html");
     XCTAssertGreaterThan(url.port.integerValue, 0);
+}
+
+- (void)testSampleMarkdownIncludesMermaidDiagramBlock {
+    NSString *sample = [self sampleMarkdown];
+
+    XCTAssertTrue([sample containsString:@"```mermaid"]);
+    XCTAssertTrue([sample containsString:@"graph TD"]);
 }
 
 @end

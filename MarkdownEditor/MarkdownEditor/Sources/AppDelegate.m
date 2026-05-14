@@ -7,20 +7,34 @@
 //
 
 #import "AppDelegate.h"
+#import "MainWindowController.h"
 
 @interface AppDelegate ()
+
+@property (nonatomic, strong) MainWindowController *mainWindowController;
 
 @end
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    // Insert code here to initialize your application
+    NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+    self.mainWindowController = (MainWindowController *)[storyboard instantiateInitialController];
+    [self.mainWindowController showWindow:self];
+    [self.mainWindowController.window makeKeyAndOrderFront:self];
 }
 
 
 - (void)applicationWillTerminate:(NSNotification *)aNotification {
     // Insert code here to tear down your application
+}
+
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag {
+    if (!flag) {
+        [self.mainWindowController showWindow:self];
+        [self.mainWindowController.window makeKeyAndOrderFront:self];
+    }
+    return YES;
 }
 
 

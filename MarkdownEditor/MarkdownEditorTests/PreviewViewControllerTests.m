@@ -19,6 +19,14 @@
 
 @implementation PreviewViewControllerTests
 
+- (NSString *)resourceTextNamed:(NSString *)name {
+    NSString *testFilePath = [NSString stringWithUTF8String:__FILE__];
+    NSString *testsDirectory = [testFilePath stringByDeletingLastPathComponent];
+    NSString *resourcePath = [[testsDirectory stringByDeletingLastPathComponent]
+                              stringByAppendingPathComponent:[NSString stringWithFormat:@"MarkdownEditor/Resources/%@", name]];
+    return [NSString stringWithContentsOfFile:resourcePath encoding:NSUTF8StringEncoding error:nil];
+}
+
 - (PreviewViewController *)makeController {
     PreviewViewController *controller = [[PreviewViewController alloc] init];
     self.webView = [[WKWebView alloc] initWithFrame:NSMakeRect(0, 0, 320, 240)];
@@ -60,6 +68,16 @@
     [controller webView:self.webView didFinishNavigation:nil];
 
     XCTAssertNotNil(controller);
+}
+
+- (void)testPreviewHeadersIncludeMermaidSupport {
+    NSString *gfmHeader = [self resourceTextNamed:@"gfm-header.txt"];
+    NSString *markdownHeader = [self resourceTextNamed:@"markdown-header.txt"];
+
+    XCTAssertTrue([gfmHeader containsString:@"mermaid.min.js"]);
+    XCTAssertTrue([markdownHeader containsString:@"mermaid.min.js"]);
+    XCTAssertFalse([gfmHeader containsString:@"cdn.jsdelivr.net/npm/mermaid"]);
+    XCTAssertFalse([markdownHeader containsString:@"cdn.jsdelivr.net/npm/mermaid"]);
 }
 
 @end

@@ -89,3 +89,20 @@ $.facebox({div:'#foo'})
 }
 ```
 
+## Mermaid
+
+```mermaid
+graph TD
+  A[Markdown] --> B[Preview]
+  B --> C[Mermaid]
+```
+
+```mermaid
+sequenceDiagram
+  participant U as User
+  participant E as Editor
+  participant P as Preview
+  U->>E: Edit markdown
+  E->>P: Reload preview
+  P->>U: Render diagram
+```
