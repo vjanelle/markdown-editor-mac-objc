@@ -39,9 +39,14 @@
 - (void)testExample {
     XCUIApplication *app = [self launchApplication];
     XCUIElement *window = app.windows[@"Markdown Editor"];
+    XCUIElement *editorTextView = app.textViews[@"EditorTextView"];
+    XCUIElement *converterPopup = app.popUpButtons[@"ConverterPopup"];
 
     XCTAssertTrue([window waitForExistenceWithTimeout:5]);
-    XCTAssertTrue(app.popUpButtons.firstMatch.exists);
+    XCTAssertTrue([editorTextView waitForExistenceWithTimeout:5]);
+    XCTAssertTrue([converterPopup waitForExistenceWithTimeout:5]);
+    XCTAssertTrue(editorTextView.isHittable);
+    XCTAssertTrue(converterPopup.isHittable);
     XCTAssertGreaterThan(app.buttons.count, 1U);
 }
 

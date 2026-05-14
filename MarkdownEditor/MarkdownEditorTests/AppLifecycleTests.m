@@ -18,16 +18,17 @@
     return self.stubWindowController ?: [super mainWindowController];
 }
 
-- (void)setMainWindowController:(MainWindowController *)mainWindowController {
-    self.stubWindowController = mainWindowController;
-}
-
 @end
 
 @interface AppLifecycleTests : XCTestCase
 @end
 
 @implementation AppLifecycleTests
+
+- (MainWindowController *)instantiateMainWindowController {
+    NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
+    return (MainWindowController *)[storyboard instantiateInitialController];
+}
 
 - (NSString *)mainStoryboardContents {
     NSString *testFilePath = [NSString stringWithUTF8String:__FILE__];
@@ -45,6 +46,29 @@
     XCTAssertEqual(ConverterManager.sharedInstance.selectedConverterIndex, 2);
 }
 
+- (void)testMainWindowControllerSetsMinimumContentSize {
+    MainWindowController *controller = [[MainWindowController alloc] init];
+    NSWindow *window = [[NSWindow alloc] initWithContentRect:NSMakeRect(0, 0, 200, 200)
+                                                   styleMask:NSWindowStyleMaskTitled
+                                                     backing:NSBackingStoreBuffered
+                                                       defer:NO];
+    [controller setValue:window forKey:@"window"];
+
+    [controller windowDidLoad];
+
+    XCTAssertGreaterThanOrEqual(window.contentMinSize.width, 1000.0);
+    XCTAssertGreaterThanOrEqual(window.contentMinSize.height, 600.0);
+}
+
+- (void)testMainWindowStoryboardInstantiatesContentController {
+    MainWindowController *controller = [self instantiateMainWindowController];
+
+    [controller window];
+
+    XCTAssertNotNil(controller);
+    XCTAssertNotNil(controller.window);
+}
+
 - (void)testAppDelegateAcceptsTerminationNotification {
     AppDelegate *delegate = [[AppDelegate alloc] init];
     NSNotification *notification = [NSNotification notificationWithName:NSApplicationWillTerminateNotification
@@ -59,6 +83,8 @@
     NSString *storyboard = [self mainStoryboardContents];
 
     XCTAssertTrue([storyboard containsString:@"visibleAtLaunch=\"NO\""]);
+    XCTAssertTrue([storyboard containsString:@"relationship=\"window.shadowedContentViewController\""]);
+    XCTAssertFalse([storyboard containsString:@"property=\"mainWindowController\""]);
 }
 
 - (void)testAppDelegateReopensMainWindowWhenNoVisibleWindows {

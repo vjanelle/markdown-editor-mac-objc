@@ -691,39 +691,6 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="0111CAD2-44B3-449F-B8E0-23621B768943" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="dWm-gl-GYv">
-                            <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="A39FF6F0-0677-4C88-BBEB-104ACFFCAF9A" label="" paletteLabel="" id="grI-lK-Y4O">
-                                    <nil key="toolTip"/>
-                                    <size key="minSize" width="100" height="28"/>
-                                    <size key="maxSize" width="200" height="28"/>
-                                    <popUpButton key="view" verticalHuggingPriority="750" id="Duo-Ip-fSB">
-                                        <rect key="frame" x="0.0" y="14" width="150" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                        <popUpButtonCell key="cell" type="roundTextured" title="Item 1" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="giG-os-8Re" id="9bg-3D-lrL">
-                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                            <font key="font" metaFont="menu"/>
-                                            <menu key="menu" id="wy9-Qn-P3M">
-                                                <items>
-                                                    <menuItem title="Item 1" state="on" id="giG-os-8Re"/>
-                                                    <menuItem title="Item 2" id="7Zc-KW-0sB"/>
-                                                    <menuItem title="Item 3" id="pEx-qX-gWk"/>
-                                                </items>
-                                            </menu>
-                                        </popUpButtonCell>
-                                        <connections>
-                                            <binding destination="B8D-0N-5wS" name="contentValues" keyPath="converters" id="u2V-Lc-2Em"/>
-                                            <binding destination="B8D-0N-5wS" name="selectedIndex" keyPath="selectedConverterIndex" previousBinding="u2V-Lc-2Em" id="u5q-is-yKK"/>
-                                        </connections>
-                                    </popUpButton>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="zLE-yQ-Nvv"/>
-                            </allowedToolbarItems>
-                            <defaultToolbarItems>
-                                <toolbarItem reference="grI-lK-Y4O"/>
-                                <toolbarItem reference="zLE-yQ-Nvv"/>
-                            </defaultToolbarItems>
-                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -769,8 +736,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
+                            <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Ip-fSB">
+                                <rect key="frame" x="194" y="271" width="250" height="25"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
+                                <popUpButtonCell key="cell" type="roundTextured" title="GitHub Flavored Markdown" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="giG-os-8Re" id="9bg-3D-lrL">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="menu"/>
+                                    <menu key="menu" id="wy9-Qn-P3M">
+                                        <items>
+                                            <menuItem title="GitHub Flavored Markdown" state="on" id="giG-os-8Re"/>
+                                            <menuItem title="Markdown" id="7Zc-KW-0sB"/>
+                                            <menuItem title="PHP Markdown Extra" id="pEx-qX-gWk"/>
+                                            <menuItem title="Strict Markdown" id="N1c-v2-4Kf"/>
+                                        </items>
+                                    </menu>
+                                </popUpButtonCell>
+                                <connections>
+                                    <binding destination="B8D-0N-5wS" name="contentValues" keyPath="converters" id="u2V-Lc-2Em"/>
+                                    <binding destination="B8D-0N-5wS" name="selectedIndex" keyPath="selectedConverterIndex" previousBinding="u2V-Lc-2Em" id="u5q-is-yKK"/>
+                                </connections>
+                            </popUpButton>
                             <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GiR-Yz-1hy">
-                                <rect key="frame" x="0.0" y="37" width="450" height="263"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="263"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <clipView key="contentView" ambiguous="YES" id="9vL-R4-GZT">
                                     <rect key="frame" x="1" y="1" width="448" height="233"/>
@@ -800,7 +787,7 @@
                                 </scroller>
                             </scrollView>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cgO-Rd-8cz">
-                                <rect key="frame" x="291" y="5" width="32" height="25"/>
+                                <rect key="frame" x="291" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_bulleted_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WNM-Yo-QKR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -811,7 +798,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tJD-zX-4Ek">
-                                <rect key="frame" x="238" y="5" width="32" height="25"/>
+                                <rect key="frame" x="238" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_insert_link_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hn9-N0-AxR">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -822,7 +809,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pLd-T1-wfE">
-                                <rect key="frame" x="181" y="5" width="32" height="25"/>
+                                <rect key="frame" x="181" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_code_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="syL-e9-bCL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -833,7 +820,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8B-JZ-2c4">
-                                <rect key="frame" x="141" y="5" width="32" height="25"/>
+                                <rect key="frame" x="141" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_quote_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UCW-xC-ad2">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -844,7 +831,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZC-vH-Ipq">
-                                <rect key="frame" x="85" y="5" width="32" height="25"/>
+                                <rect key="frame" x="85" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_italic_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXn-HN-5Uc">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -855,7 +842,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-ss-Z06">
-                                <rect key="frame" x="5" y="5" width="32" height="25"/>
+                                <rect key="frame" x="5" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_bold_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hRg-OI-h2k">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -866,7 +853,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-ON-XBf">
-                                <rect key="frame" x="45" y="5" width="32" height="25"/>
+                                <rect key="frame" x="45" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_strikethrough_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Aky-xj-IKC">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -877,7 +864,7 @@
                                 </connections>
                             </button>
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTd-Jo-LS6">
-                                <rect key="frame" x="331" y="5" width="32" height="25"/>
+                                <rect key="frame" x="331" y="270" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_numbered_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RnI-sn-uhd">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -890,6 +877,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="converterPopup" destination="Duo-Ip-fSB" id="K1u-7v-q7P"/>
                         <outlet property="textView" destination="OK6-y4-1mW" id="40E-4d-Slc"/>
                     </connections>
                 </viewController>

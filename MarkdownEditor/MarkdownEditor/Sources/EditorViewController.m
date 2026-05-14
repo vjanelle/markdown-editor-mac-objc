@@ -20,6 +20,7 @@
 }
 
 @property (unsafe_unretained) IBOutlet NSTextView *textView;
+@property (unsafe_unretained) IBOutlet NSPopUpButton *converterPopup;
 @property (nonatomic, strong) EditorDialogPresenter *dialogPresenter;
 @property (nonatomic, strong) EditorFileWatcher *fileWatcher;
 
@@ -28,6 +29,12 @@
 @implementation EditorViewController
 
 static const NSTimeInterval EditorAutosaveDelay = 0.5;
+static const CGFloat EditorFormattingButtonWidth = 32.0;
+static const CGFloat EditorFormattingButtonHeight = 25.0;
+static const CGFloat EditorFormattingButtonGap = 8.0;
+static const CGFloat EditorFormattingToolbarPadding = 6.0;
+static const CGFloat EditorConverterPopupWidth = 170.0;
+static const CGFloat EditorConverterPopupHeight = 25.0;
 
 - (EditorDialogPresenter *)dialogPresenter {
     if (!_dialogPresenter) {
@@ -47,8 +54,15 @@ static const NSTimeInterval EditorAutosaveDelay = 0.5;
     [super viewDidLoad];
     // Do view setup here.
     
+    self.textView.accessibilityIdentifier = @"EditorTextView";
+    self.converterPopup.accessibilityIdentifier = @"ConverterPopup";
     self.textView.string = [self loadSample];
     [ConverterManager.sharedInstance setContentWithString:self.textView.string];
+}
+
+- (void)viewDidLayout {
+    [super viewDidLayout];
+    [self layoutFormattingToolbar];
 }
 
 - (void)setRepresentedObject:(id)representedObject {
@@ -186,6 +200,75 @@ static const NSTimeInterval EditorAutosaveDelay = 0.5;
 }
 
 #pragma mark - Private Methods
+
+- (NSArray<NSButton *> *)formattingButtons {
+    NSArray<NSString *> *selectorNames = @[
+        NSStringFromSelector(@selector(boldButtonClicked:)),
+        NSStringFromSelector(@selector(strikeThroughButtonClicked:)),
+        NSStringFromSelector(@selector(italicButtonClicked:)),
+        NSStringFromSelector(@selector(quoteButtonClicked:)),
+        NSStringFromSelector(@selector(codeButtonClicked:)),
+        NSStringFromSelector(@selector(insertLinkButtonClicked:)),
+        NSStringFromSelector(@selector(listBulletedButtonClicked:)),
+        NSStringFromSelector(@selector(listNumberedButtonClicked:)),
+    ];
+    NSMutableArray<NSButton *> *buttons = [NSMutableArray array];
+    for (NSString *selectorName in selectorNames) {
+        NSButton *button = [self formattingButtonInView:self.view matchingSelectorName:selectorName];
+        if (button) {
+            [buttons addObject:button];
+        }
+    }
+    return buttons;
+}
+
+- (NSButton *)formattingButtonInView:(NSView *)view matchingSelectorName:(NSString *)selectorName {
+    for (NSView *subview in view.subviews) {
+        if ([subview isKindOfClass:[NSButton class]]) {
+            NSButton *button = (NSButton *)subview;
+            if (NSStringFromSelector(button.action) && [NSStringFromSelector(button.action) isEqualToString:selectorName]) {
+                return button;
+            }
+        }
+        NSButton *button = [self formattingButtonInView:subview matchingSelectorName:selectorName];
+        if (button) {
+            return button;
+        }
+    }
+    return nil;
+}
+
+- (void)layoutFormattingToolbar {
+    NSRect bounds = self.view.bounds;
+    NSScrollView *scrollView = self.textView.enclosingScrollView;
+    if (!scrollView) {
+        return;
+    }
+
+    NSArray<NSButton *> *buttons = [self formattingButtons];
+    CGFloat top = NSMaxY(bounds) - EditorFormattingToolbarPadding;
+    CGFloat buttonY = top - EditorFormattingButtonHeight;
+    CGFloat x = EditorFormattingToolbarPadding;
+    for (NSButton *button in buttons) {
+        button.frame = NSMakeRect(x,
+                                  buttonY,
+                                  EditorFormattingButtonWidth,
+                                  EditorFormattingButtonHeight);
+        x += EditorFormattingButtonWidth + EditorFormattingButtonGap;
+    }
+
+    if (self.converterPopup) {
+        CGFloat popupWidth = MIN(EditorConverterPopupWidth, MAX(0.0, NSWidth(bounds) - (2.0 * EditorFormattingToolbarPadding)));
+        CGFloat popupX = MAX(x, NSWidth(bounds) - popupWidth - EditorFormattingToolbarPadding);
+        self.converterPopup.frame = NSMakeRect(popupX,
+                                               buttonY,
+                                               popupWidth,
+                                               EditorConverterPopupHeight);
+    }
+
+    CGFloat scrollViewHeight = MAX(0.0, buttonY - EditorFormattingToolbarPadding);
+    scrollView.frame = NSMakeRect(0.0, 0.0, NSWidth(bounds), scrollViewHeight);
+}
 
 - (NSString *)loadSample {
     return ConverterManager.sharedInstance.selectedConverter.sample;
