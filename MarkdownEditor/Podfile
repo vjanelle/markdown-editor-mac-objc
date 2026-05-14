@@ -1,7 +1,7 @@
 platform :osx, '26.4'
 
 target 'MarkdownEditor' do
-  pod 'GCDWebServer'
+  pod 'GCDWebServer', :inhibit_warnings => true
 
 end
 

@@ -89,6 +89,7 @@
     XCTAssertTrue([storyboard containsString:@"relationship=\"window.shadowedContentViewController\""]);
     XCTAssertFalse([storyboard containsString:@"property=\"mainWindowController\""]);
     XCTAssertTrue([storyboard containsString:@"storyboardIdentifier=\"MainWindowController\""]);
+    XCTAssertTrue([storyboard containsString:@"selector=\"showAboutPanel:\""]);
 }
 
 - (void)testAppDelegateReopensMainWindowWhenNoVisibleWindows {

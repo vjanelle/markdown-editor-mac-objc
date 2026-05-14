@@ -7,25 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		19DE2DE0E48764E98FE33C258D69741E /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CD4151A32C1B3B5143E2E50E0F7D68 /* GCDWebServerFileRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		1F1A4D921E869785D6F238904415A926 /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C830DD0DF46EB4985A1C7A545191F4 /* GCDWebServerDataRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		05F2A4C4A7086BC6923B3DAD4387652D /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB631CF6DE4D516A941959A8B683F58 /* GCDWebServerErrorResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		13D49449906D80D6F520F12C23208878 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E51DB18D2836AF217A59D2BDD339 /* GCDWebServerURLEncodedFormRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		20767FCE889FF0B18FDE651134908606 /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C194E61AF82D645BA74A992EF6DBDA /* GCDWebServerFunctions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2BFB8DA1C24313C4B2479C9745562919 /* GCDWebServerFileResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 293BDF0FBC699824E7E8A201A02E4729 /* GCDWebServerFileResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		3185613EDB341CCACFD88C95A815561E /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E76CD9D1076EA44DDC45D753B73B04C0 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		372D575183B26816A0C25CEF9D6645B5 /* GCDWebServerErrorResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = AD5E96EEB1CD369D1B91843D069429E9 /* GCDWebServerErrorResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		491A41F789BDC7C196C75934DE8B1CC2 /* GCDWebServerFileRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 4888CB4815B08891972494BF3AC59B0C /* GCDWebServerFileRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		4A45B79C71FF88DE0972672E2B34659E /* GCDWebServerErrorResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = 4EB631CF6DE4D516A941959A8B683F58 /* GCDWebServerErrorResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		4DB7DE1551C149B58F9014F05F9F0EB1 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D153C39477A5661E7EE1B4D325AE9DE4 /* GCDWebServerMultiPartFormRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		4E476A261EA6880BCFE94BEA54E4345F /* GCDWebServerFunctions.m in Sources */ = {isa = PBXBuildFile; fileRef = 35C194E61AF82D645BA74A992EF6DBDA /* GCDWebServerFunctions.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		5D9C4DA09E140771FE2B0680547B33E8 /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D93C45EABD16C510012C579D12AB8CB1 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		7C778CB1E3E649B92721A419B77AC2FE /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C566DDBCB4388411FEF2156531C754 /* GCDWebServerRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		4A90CC191A54F3C3D8945B86F0DD7DE6 /* GCDWebServerMultiPartFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = D153C39477A5661E7EE1B4D325AE9DE4 /* GCDWebServerMultiPartFormRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		5F11384F696CBF6EEF937D582C2A7F86 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E10225027BA107A76B88B9A9F8928F50 /* GCDWebServerFileResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		6B69DB709539D961177B0B53D3CE4723 /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C45D66C17229A0DEACA61B8D9ED182 /* GCDWebServerStreamedResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		72F5EC732D08F09F5B672227FFF7D32B /* GCDWebServerFileRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 14CD4151A32C1B3B5143E2E50E0F7D68 /* GCDWebServerFileRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		886E4D705064667444E220FB3B9137AA /* GCDWebServerDataResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 5BFA48B46D3D9FA583D11D7F59C637AA /* GCDWebServerDataResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		8D8B6A2F8E1B1A32E28C5A8860926959 /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CA15CE92BF8421CCB3814E11869758 /* GCDWebServerDataResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		8F07ECB6E0E91943998040587D38DB7A /* GCDWebServer.h in Headers */ = {isa = PBXBuildFile; fileRef = 4E6EF0CDC99008FF1309C4DF47B3B74B /* GCDWebServer.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		954F655E2FB02B7A89D60C15A4A3A8FA /* Pods-MarkdownEditor-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FF33F08FD78280B116C3DE7AA0A28CE2 /* Pods-MarkdownEditor-dummy.m */; };
+		97D7ACC6D79785CFCB8264E564221D2F /* GCDWebServerDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 76C830DD0DF46EB4985A1C7A545191F4 /* GCDWebServerDataRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
+		9A521D4C4FAC80564CE2A3DCDF3BA617 /* GCDWebServerRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 21C566DDBCB4388411FEF2156531C754 /* GCDWebServerRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		9A62FD4A508175ABB7D454300E97EF56 /* GCDWebServerPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = F0A2B6A56F01733812C23BA4F8E73376 /* GCDWebServerPrivate.h */; settings = {ATTRIBUTES = (Project, ); }; };
+		9DAA6A325DAAE6C7F38286CE966C9FFE /* GCDWebServer.m in Sources */ = {isa = PBXBuildFile; fileRef = D93C45EABD16C510012C579D12AB8CB1 /* GCDWebServer.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		A84EFD90F2B56423C8949ECFF8E8449C /* GCDWebServerConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 352CC5DB74881980715A3AED276860D2 /* GCDWebServerConnection.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		AE7B797669EDF8DB1D413E7137FB4FEA /* GCDWebServerDataResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E5CA15CE92BF8421CCB3814E11869758 /* GCDWebServerDataResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		AB1366A5AB60ECF91793FB2D7E056F00 /* GCDWebServerResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E76CD9D1076EA44DDC45D753B73B04C0 /* GCDWebServerResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		AF2000BA203A59642B97818E702D7D6A /* GCDWebServerResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DE4A3363635207AF2FB0622B8D1561 /* GCDWebServerResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		B68FD4D0A977594A9475DB78E78C5230 /* GCDWebServerURLEncodedFormRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 20D8E51DB18D2836AF217A59D2BDD339 /* GCDWebServerURLEncodedFormRequest.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
+		C39D299779C257C295D02BAAB06E960F /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 954764C873410062EB12B9A049A86D54 /* GCDWebServerConnection.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0 -w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		C483849E5E5D0970243CBF356F66C50F /* GCDWebServer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 677C7C1772C16F270B2CDC6FB9428742 /* GCDWebServer-dummy.m */; };
 		C4FB8F33C6F5C98E210AF92B1BD61E2E /* GCDWebServerHTTPStatusCodes.h in Headers */ = {isa = PBXBuildFile; fileRef = FC9C1EB3EB0452145EA735C4DB07B508 /* GCDWebServerHTTPStatusCodes.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		D19D48A12A8C3393C72533088EE7FADA /* GCDWebServerFunctions.h in Headers */ = {isa = PBXBuildFile; fileRef = 4EA7D3F5EC5C37E0076435DBDEF62F61 /* GCDWebServerFunctions.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -33,10 +36,7 @@
 		E09761AC717B3103D8403D52DF5EB930 /* GCDWebServerMultiPartFormRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 24754422276EE72CEFA860F69CCEA2CC /* GCDWebServerMultiPartFormRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		E4CCB77FD5C81FF5EA109802C6DD140C /* GCDWebServerStreamedResponse.h in Headers */ = {isa = PBXBuildFile; fileRef = 99B71B6E42F1020C2D33E0D036ED157A /* GCDWebServerStreamedResponse.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		EF019CD74855CFF4FB3E839F13A77BB1 /* GCDWebServerRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F18CEA60C3507261915A551B93B51B5C /* GCDWebServerRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		EFD497EBF05E1C3C1B48BBF10B8BE444 /* GCDWebServerFileResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = E10225027BA107A76B88B9A9F8928F50 /* GCDWebServerFileResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 		F22A5A75FCE7872AF9D86EF7847BDB18 /* GCDWebServerDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = F19732FCBF5AB3C406754B80D02764CE /* GCDWebServerDataRequest.h */; settings = {ATTRIBUTES = (Project, ); }; };
-		FF05D265490EFB0374324204E8A9C062 /* GCDWebServerConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 954764C873410062EB12B9A049A86D54 /* GCDWebServerConnection.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
-		FF8836635C8BF846BDCE62F8F47DBBFA /* GCDWebServerStreamedResponse.m in Sources */ = {isa = PBXBuildFile; fileRef = D7C45D66C17229A0DEACA61B8D9ED182 /* GCDWebServerStreamedResponse.m */; settings = {COMPILER_FLAGS = "-DOS_OBJECT_USE_OBJC=0"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -336,20 +336,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				5D9C4DA09E140771FE2B0680547B33E8 /* GCDWebServer.m in Sources */,
+				9DAA6A325DAAE6C7F38286CE966C9FFE /* GCDWebServer.m in Sources */,
 				C483849E5E5D0970243CBF356F66C50F /* GCDWebServer-dummy.m in Sources */,
-				FF05D265490EFB0374324204E8A9C062 /* GCDWebServerConnection.m in Sources */,
-				1F1A4D921E869785D6F238904415A926 /* GCDWebServerDataRequest.m in Sources */,
-				AE7B797669EDF8DB1D413E7137FB4FEA /* GCDWebServerDataResponse.m in Sources */,
-				4A45B79C71FF88DE0972672E2B34659E /* GCDWebServerErrorResponse.m in Sources */,
-				19DE2DE0E48764E98FE33C258D69741E /* GCDWebServerFileRequest.m in Sources */,
-				EFD497EBF05E1C3C1B48BBF10B8BE444 /* GCDWebServerFileResponse.m in Sources */,
-				4E476A261EA6880BCFE94BEA54E4345F /* GCDWebServerFunctions.m in Sources */,
-				4DB7DE1551C149B58F9014F05F9F0EB1 /* GCDWebServerMultiPartFormRequest.m in Sources */,
-				7C778CB1E3E649B92721A419B77AC2FE /* GCDWebServerRequest.m in Sources */,
-				3185613EDB341CCACFD88C95A815561E /* GCDWebServerResponse.m in Sources */,
-				FF8836635C8BF846BDCE62F8F47DBBFA /* GCDWebServerStreamedResponse.m in Sources */,
-				B68FD4D0A977594A9475DB78E78C5230 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
+				C39D299779C257C295D02BAAB06E960F /* GCDWebServerConnection.m in Sources */,
+				97D7ACC6D79785CFCB8264E564221D2F /* GCDWebServerDataRequest.m in Sources */,
+				8D8B6A2F8E1B1A32E28C5A8860926959 /* GCDWebServerDataResponse.m in Sources */,
+				05F2A4C4A7086BC6923B3DAD4387652D /* GCDWebServerErrorResponse.m in Sources */,
+				72F5EC732D08F09F5B672227FFF7D32B /* GCDWebServerFileRequest.m in Sources */,
+				5F11384F696CBF6EEF937D582C2A7F86 /* GCDWebServerFileResponse.m in Sources */,
+				20767FCE889FF0B18FDE651134908606 /* GCDWebServerFunctions.m in Sources */,
+				4A90CC191A54F3C3D8945B86F0DD7DE6 /* GCDWebServerMultiPartFormRequest.m in Sources */,
+				9A521D4C4FAC80564CE2A3DCDF3BA617 /* GCDWebServerRequest.m in Sources */,
+				AB1366A5AB60ECF91793FB2D7E056F00 /* GCDWebServerResponse.m in Sources */,
+				6B69DB709539D961177B0B53D3CE4723 /* GCDWebServerStreamedResponse.m in Sources */,
+				13D49449906D80D6F520F12C23208878 /* GCDWebServerURLEncodedFormRequest.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
