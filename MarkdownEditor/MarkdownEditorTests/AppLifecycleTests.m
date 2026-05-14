@@ -56,8 +56,10 @@
 
     [controller windowDidLoad];
 
-    XCTAssertGreaterThanOrEqual(window.contentMinSize.width, 1000.0);
-    XCTAssertGreaterThanOrEqual(window.contentMinSize.height, 600.0);
+    XCTAssertGreaterThanOrEqual(window.contentMinSize.width, 1200.0);
+    XCTAssertGreaterThanOrEqual(window.contentMinSize.height, 800.0);
+    XCTAssertGreaterThanOrEqual(window.contentView.frame.size.width, 1200.0);
+    XCTAssertGreaterThanOrEqual(window.contentView.frame.size.height, 800.0);
 }
 
 - (void)testMainWindowStoryboardInstantiatesContentController {

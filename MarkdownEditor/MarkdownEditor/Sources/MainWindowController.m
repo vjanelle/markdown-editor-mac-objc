@@ -15,6 +15,8 @@
 
 @implementation MainWindowController
 
+static const NSSize MainWindowMinimumContentSize = {1200.0, 800.0};
+
 - (NSArray<NSString *> *)converters {
     return ConverterManager.sharedInstance.converters;
 }
@@ -29,7 +31,12 @@
 
 - (void)windowDidLoad {
     [super windowDidLoad];
-    self.window.contentMinSize = NSMakeSize(1000.0, 600.0);
+    self.window.contentMinSize = MainWindowMinimumContentSize;
+    if (self.window.contentView.frame.size.width < MainWindowMinimumContentSize.width ||
+        self.window.contentView.frame.size.height < MainWindowMinimumContentSize.height) {
+        [self.window setContentSize:MainWindowMinimumContentSize];
+        [self.window center];
+    }
 }
 
 @end

@@ -17,11 +17,22 @@
 
 @implementation AppDelegate
 
+- (void)closeDuplicateWindows {
+    for (NSWindow *window in NSApp.windows.copy) {
+        if (window == self.mainWindowController.window) {
+            continue;
+        }
+        [window orderOut:self];
+        [window close];
+    }
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
     self.mainWindowController = (MainWindowController *)[storyboard instantiateInitialController];
     [self.mainWindowController showWindow:self];
     [self.mainWindowController.window makeKeyAndOrderFront:self];
+    [self closeDuplicateWindows];
 }
 
 
@@ -33,6 +44,7 @@
     if (!flag) {
         [self.mainWindowController showWindow:self];
         [self.mainWindowController.window makeKeyAndOrderFront:self];
+        [self closeDuplicateWindows];
     }
     return YES;
 }

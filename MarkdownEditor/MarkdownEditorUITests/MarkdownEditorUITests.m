@@ -43,6 +43,7 @@
     XCUIElement *converterPopup = app.popUpButtons[@"ConverterPopup"];
 
     XCTAssertTrue([window waitForExistenceWithTimeout:5]);
+    XCTAssertEqual(app.windows.count, 1U);
     XCTAssertTrue([editorTextView waitForExistenceWithTimeout:5]);
     XCTAssertTrue([converterPopup waitForExistenceWithTimeout:5]);
     XCTAssertTrue(editorTextView.isHittable);
