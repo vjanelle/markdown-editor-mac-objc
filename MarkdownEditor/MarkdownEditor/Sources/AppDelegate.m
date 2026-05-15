@@ -17,7 +17,7 @@
 
 @implementation AppDelegate
 
-static NSString * const MarkdownEditorRepositoryURLString = @"https://github.com/satoshi-iwaki/markdown-editor-mac-objc";
+static NSString * const MarkdownEditorRepositoryURLString = @"https://github.com/vjanelle/markdown-editor-mac-objc";
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
     NSStoryboard *storyboard = [NSStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -28,14 +28,14 @@ static NSString * const MarkdownEditorRepositoryURLString = @"https://github.com
 
 - (IBAction)showAboutPanel:(id)sender {
     NSMutableAttributedString *credits = [[NSMutableAttributedString alloc] initWithString:@"Portions Copyright (c) 2026 Vincent Janelle\n"];
-    NSAttributedString *prefix = [[NSAttributedString alloc] initWithString:@"Portions Copyright (c) 2018 Satoshi Iwaki, "];
+    NSAttributedString *prefix = [[NSAttributedString alloc] initWithString:@"Portions Copyright (c) 2018 Satoshi Iwaki, GitHub: "];
     [credits appendAttributedString:prefix];
     NSDictionary *linkAttributes = @{
         NSLinkAttributeName: [NSURL URLWithString:MarkdownEditorRepositoryURLString],
         NSForegroundColorAttributeName: NSColor.linkColor,
         NSUnderlineStyleAttributeName: @(NSUnderlineStyleSingle)
     };
-    NSAttributedString *link = [[NSAttributedString alloc] initWithString:@"Github"
+    NSAttributedString *link = [[NSAttributedString alloc] initWithString:MarkdownEditorRepositoryURLString
                                                                attributes:linkAttributes];
     [credits appendAttributedString:link];
 

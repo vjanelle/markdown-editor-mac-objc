@@ -25,8 +25,8 @@
 			<string>Editor</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>oauth.iwaki.info</string>
-				<string>qiita.oauth.iwaki.info</string>
+				<string>oauth.vjanelle.info</string>
+				<string>qiita.oauth.vjanelle.info</string>
 			</array>
 		</dict>
 	</array>

@@ -31,7 +31,6 @@
 		4F94D42D2046E8A600D85BEA /* sample.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D42C2046E8A600D85BEA /* sample.md */; };
 		4F94D4312048488500D85BEA /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D4302048488500D85BEA /* markdown.css */; };
 		4F94D43520484F7300D85BEA /* markdown-header.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D43420484F7300D85BEA /* markdown-header.txt */; };
-		D00000000000000000000040 /* mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000041 /* mermaid.min.js */; };
 		D00000000000000000000001 /* EditorTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000012 /* EditorTextFormatter.m */; };
 		D00000000000000000000002 /* EditorDocumentStore.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000014 /* EditorDocumentStore.m */; };
 		D00000000000000000000004 /* ContentAndPreferencesTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000017 /* ContentAndPreferencesTests.m */; };
@@ -44,6 +43,7 @@
 		D0000000000000000000000D /* AppLifecycleTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000020 /* AppLifecycleTests.m */; };
 		D0000000000000000000000E /* EditorDialogPresenter.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000022 /* EditorDialogPresenter.m */; };
 		D0000000000000000000000F /* EditorFileWatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000024 /* EditorFileWatcher.m */; };
+		D00000000000000000000040 /* vendor/mermaid/mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -110,7 +110,6 @@
 		4F94D43420484F7300D85BEA /* markdown-header.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "markdown-header.txt"; sourceTree = "<group>"; };
 		7CEF9D156198D1322062BF8F /* libPods-MarkdownEditor.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-MarkdownEditor.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MarkdownEditor.debug.xcconfig"; path = "Target Support Files/Pods-MarkdownEditor/Pods-MarkdownEditor.debug.xcconfig"; sourceTree = "<group>"; };
-		D00000000000000000000041 /* mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = "vendor/mermaid/mermaid.min.js"; sourceTree = "<group>"; };
 		D00000000000000000000011 /* EditorTextFormatter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorTextFormatter.h; sourceTree = "<group>"; };
 		D00000000000000000000012 /* EditorTextFormatter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorTextFormatter.m; sourceTree = "<group>"; };
 		D00000000000000000000013 /* EditorDocumentStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorDocumentStore.h; sourceTree = "<group>"; };
@@ -127,6 +126,7 @@
 		D00000000000000000000022 /* EditorDialogPresenter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorDialogPresenter.m; sourceTree = "<group>"; };
 		D00000000000000000000023 /* EditorFileWatcher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EditorFileWatcher.h; sourceTree = "<group>"; };
 		D00000000000000000000024 /* EditorFileWatcher.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = EditorFileWatcher.m; sourceTree = "<group>"; };
+		D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = vendor/mermaid/mermaid.min.js; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -274,7 +274,7 @@
 				4F94D42A2046E6C300D85BEA /* gfm.css */,
 				4F94D43420484F7300D85BEA /* markdown-header.txt */,
 				4F94D4302048488500D85BEA /* markdown.css */,
-				D00000000000000000000041 /* mermaid.min.js */,
+				D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */,
 				4F94D42C2046E8A600D85BEA /* sample.md */,
 			);
 			path = Resources;
@@ -286,7 +286,6 @@
 				91034D8D38611A91809B87F3 /* Pods-MarkdownEditor.debug.xcconfig */,
 				2A7C865235AFAFA55E8E9E0A /* Pods-MarkdownEditor.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -429,7 +428,7 @@
 				4F94D42B2046E6C300D85BEA /* gfm.css in Resources */,
 				4F94D3F420458A3B00D85BEA /* Assets.xcassets in Resources */,
 				4F5AE299207D0F9700C72733 /* gfm-header.txt in Resources */,
-				D00000000000000000000040 /* mermaid.min.js in Resources */,
+				D00000000000000000000040 /* vendor/mermaid/mermaid.min.js in Resources */,
 				4F94D42D2046E8A600D85BEA /* sample.md in Resources */,
 				4F94D4282045903100D85BEA /* pandoc in Resources */,
 				4F94D3F720458A3B00D85BEA /* Main.storyboard in Resources */,
@@ -683,9 +682,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 6VTHZTZF59;
 				INFOPLIST_FILE = MarkdownEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditor;
 				PRODUCT_NAME = "Markdown Editor";
 			};
 			name = Debug;
@@ -697,9 +697,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 6VTHZTZF59;
 				INFOPLIST_FILE = MarkdownEditor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditor;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditor;
 				PRODUCT_NAME = "Markdown Editor";
 			};
 			name = Release;
@@ -712,7 +713,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MarkdownEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorTests;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
 			};
@@ -726,7 +727,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MarkdownEditorTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorTests;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
 			};
@@ -739,7 +740,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MarkdownEditorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = MarkdownEditor;
 			};
@@ -752,7 +753,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = MarkdownEditorUITests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = info.iwaki.MarkdownEditorUITests;
+				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_TARGET_NAME = MarkdownEditor;
 			};
