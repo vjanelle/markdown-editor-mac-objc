@@ -1,29 +1,31 @@
-GitHub Flavored Markdownのサンプル
+GitHub Flavored Markdown Sample
 
-## テーブル
+Original sample by Satoshi Iwaki from [markdown-editor-mac-objc](https://github.com/satoshi-iwaki/markdown-editor-mac-objc).
 
-| カラム1      |カラム2       | カラム3             | カラム4|
-| --------------- |:---------------:| -------------------- | -------:|
-|2018-01-01 | あいうえお | かきくけこ | 123     |
-|2018-01-02 | アイウエオ | カキクケコ | 456     |
+## Table
 
-## 打ち消し線
-~~打ち消し線~~
+| Column 1   | Column 2 | Column 3     | Column 4 |
+| ---------- | :------: | ------------ | -------: |
+| 2018-01-01 | Alpha    | Example text |      123 |
+| 2018-01-02 | Bravo    | More text    |      456 |
 
-## 強調
-*斜体*
+## Strikethrough
+~~Strikethrough~~
 
-_斜体_
+## Emphasis
+*Italic*
 
-**太字**
+_Italic_
 
-__太字__
+**Bold**
 
-***太字+斜体***
+__Bold__
 
-___太字+斜体___
+***Bold + Italic***
 
-## 絵文字
+___Bold + Italic___
+
+## Emoji
 :smile:
 :laughing:
 :blush:
@@ -31,55 +33,55 @@ ___太字+斜体___
 
 [Emoji cheat sheet](http://www.emoji-cheat-sheet.com/)
 
-## リンク
+## Link
 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/)
 
-## 引用
+## Quote
 
-> アイウエオ
-> カキクケコ
-> サシスセソ
+> First line
+> Second line
+> Third line
 
 
-
----
-# 見出し1
-本文
-
-## 見出し2
-本文
-
-### 見出し3
-本文
-
-#### 見出し4
-本文
-
-##### 見出し5
-本文
-
-###### 見出し6
-本文
 
 ---
+# Heading 1
+Body text
 
-## 番号なし箇条書き
-- 番号なし箇条書き1
-- 番号なし箇条書き2
+## Heading 2
+Body text
+
+### Heading 3
+Body text
+
+#### Heading 4
+Body text
+
+##### Heading 5
+Body text
+
+###### Heading 6
+Body text
+
+---
+
+## Unordered List
+- Unordered item 1
+- Unordered item 2
 
 
-* 番号なし箇条書き1
-* 番号なし箇条書き2
+* Unordered item 1
+* Unordered item 2
 
-## 番号あり箇条書き
-1. 番号あり箇条書き1
-1. 番号あり箇条書き1-1
-1. 番号あり箇条書き1-2
-1. 番号あり箇条書き2
-1. 番号あり箇条書き2-1
-1. 番号あり箇条書き2-2
+## Ordered List
+1. Ordered item 1
+1. Ordered item 1-1
+1. Ordered item 1-2
+1. Ordered item 2
+1. Ordered item 2-1
+1. Ordered item 2-2
 
-## シンタックスハイライト
+## Syntax Highlighting
 
 ```javascript
 function fancyAlert(arg) {

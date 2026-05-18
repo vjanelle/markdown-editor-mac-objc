@@ -15,7 +15,6 @@ FOUNDATION_EXPORT NSNotificationName ConverterManagerDidChangeContentNotificatio
 
 @interface ConverterManager : NSObject
 
-@property (readonly) NSURL *url;
 @property (copy, readonly) NSString *html;
 @property (copy, readonly) NSArray<NSString *> *converters;
 @property NSUInteger selectedConverterIndex;

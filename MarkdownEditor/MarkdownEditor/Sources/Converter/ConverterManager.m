@@ -13,14 +13,10 @@
 #import "PhpMarkdownConverter.h"
 #import "StrictMarkdownConverter.h"
 #import "Logger.h"
-#import "GCDWebServer/GCDWebServer.h"
-#import "GCDWebServer/GCDWebServerDataResponse.h"
 
 NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterManagerDidChangeContentNotification";
 
 @implementation ConverterManager {
-    GCDWebServer *_webServer;
-    NSData *_data;
     NSString *_string;
     NSUInteger _selectedConverterIndex;
     NSArray<TextConverter *> *_converters;
@@ -44,15 +40,8 @@ NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterMan
                         [[StrictMarkdownConverter alloc] init],
                         ];
         self.selectedConverterIndex = 0;
-        [self startWebServer];
     }
     return self;
-}
-
-- (NSURL *)url {
-    NSURLComponents *urlComponents = [[NSURLComponents alloc] initWithString:_webServer.serverURL.absoluteString];
-    urlComponents.path = @"/index.html";
-    return urlComponents.URL;
 }
 
 - (NSString *)html {
@@ -110,45 +99,6 @@ NSNotificationName ConverterManagerDidChangeContentNotification = @"ConverterMan
 
 - (void)reload {
     [self setContentWithString:_string];
-}
-
-- (void)startWebServer {
-    __unsafe_unretained typeof(self) weakSelf = self;
-    [GCDWebServer setLogLevel:4];
-    _webServer = [[GCDWebServer alloc] init];
-    [_webServer addDefaultHandlerForMethod:@"GET"
-                              requestClass:[GCDWebServerRequest class]
-                              processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request)
-    {
-        NSString *path = [NSString pathWithComponents:@[NSBundle.mainBundle.resourcePath,
-                                                        request.path]];
-        if (![NSFileManager.defaultManager fileExistsAtPath:path]) {
-            return [GCDWebServerResponse responseWithStatusCode:404];
-        }
-        NSData *data = [[NSData alloc] initWithContentsOfFile:path];
-        NSString *contentType = @"text/plain";
-        if ([path.pathExtension isEqualToString:@"js"]) {
-            contentType = @"text/javascript";
-        } else if ([path.pathExtension isEqualToString:@"css"]) {
-            contentType = @"text/css";
-        } else if ([path.pathExtension isEqualToString:@"html"]) {
-            contentType = @"text/html";
-        }
-        return [GCDWebServerDataResponse responseWithData:data contentType:contentType];
-    }];
-    [_webServer addHandlerForMethod:@"GET"
-                               path:@"/index.html"
-                       requestClass:[GCDWebServerRequest class]
-                       processBlock:^GCDWebServerResponse * _Nullable(__kindof GCDWebServerRequest * _Nonnull request)
-    {
-        return [GCDWebServerDataResponse responseWithData:weakSelf->_data contentType:@"text/html"];
-    }];
-    NSError *error = nil;
-    BOOL started = [_webServer startWithOptions:@{GCDWebServerOption_Port: @8080} error:&error];
-    if (!started) {
-        LogV(@"Failed to bind preview server to port 8080: %@", error.localizedDescription);
-        [_webServer startWithOptions:@{GCDWebServerOption_Port: @0} error:nil];
-    }
 }
 
 @end

@@ -1,8 +1,6 @@
 platform :osx, '26.4'
 
 target 'MarkdownEditor' do
-  pod 'GCDWebServer', :inhibit_warnings => true
-
 end
 
 post_install do |installer|

@@ -55,12 +55,8 @@
     [NSNotificationCenter.defaultCenter removeObserver:observer];
 }
 
-- (void)testURLPointsToIndexHtml {
-    NSURL *url = ConverterManager.sharedInstance.url;
-
-    XCTAssertNotNil(url);
-    XCTAssertEqualObjects(url.path, @"/index.html");
-    XCTAssertGreaterThan(url.port.integerValue, 0);
+- (void)testConverterManagerDoesNotExposeEmbeddedPreviewServerURL {
+    XCTAssertFalse([ConverterManager.sharedInstance respondsToSelector:@selector(url)]);
 }
 
 - (void)testSampleMarkdownIncludesMermaidDiagramBlock {
