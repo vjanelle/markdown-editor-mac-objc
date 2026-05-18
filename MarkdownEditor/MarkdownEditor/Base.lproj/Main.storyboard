@@ -746,7 +746,6 @@
                                         <items>
                                             <menuItem title="GitHub Flavored Markdown" state="on" id="giG-os-8Re"/>
                                             <menuItem title="Markdown" id="7Zc-KW-0sB"/>
-                                            <menuItem title="PHP Markdown Extra" id="pEx-qX-gWk"/>
                                             <menuItem title="Strict Markdown" id="N1c-v2-4Kf"/>
                                         </items>
                                     </menu>
