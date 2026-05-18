@@ -1,0 +1,24 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build-and-test:
+    runs-on: macos-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Install CocoaPods dependencies
+        working-directory: MarkdownEditor
+        run: pod install
+
+      - name: Build
+        working-directory: MarkdownEditor
+        run: xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor build
+
+      - name: Test
+        working-directory: MarkdownEditor
+        run: xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor test
