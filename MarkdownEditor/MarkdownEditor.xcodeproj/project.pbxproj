@@ -92,7 +92,7 @@
 		4F5AE298207D0F9700C72733 /* gfm-header.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "gfm-header.txt"; sourceTree = "<group>"; };
 		4F5AE29A207E425F00C72733 /* PreferenceManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PreferenceManager.h; sourceTree = "<group>"; };
 		4F5AE29B207E425F00C72733 /* PreferenceManager.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PreferenceManager.m; sourceTree = "<group>"; };
-		4F94D3EA20458A3B00D85BEA /* Markdown Editor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Markdown Editor.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4F94D3EA20458A3B00D85BEA /* MarkdownEditor Lite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "MarkdownEditor Lite.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4F94D3F320458A3B00D85BEA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		4F94D3F620458A3B00D85BEA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		4F94D3F820458A3B00D85BEA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -212,7 +212,7 @@
 		4F94D3EB20458A3B00D85BEA /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4F94D3EA20458A3B00D85BEA /* Markdown Editor.app */,
+				4F94D3EA20458A3B00D85BEA /* MarkdownEditor Lite.app */,
 				4F94D40020458A3B00D85BEA /* MarkdownEditorTests.xctest */,
 				4F94D40B20458A3B00D85BEA /* MarkdownEditorUITests.xctest */,
 			);
@@ -331,7 +331,7 @@
 			);
 			name = MarkdownEditor;
 			productName = MarkdownEditor;
-			productReference = 4F94D3EA20458A3B00D85BEA /* Markdown Editor.app */;
+			productReference = 4F94D3EA20458A3B00D85BEA /* MarkdownEditor Lite.app */;
 			productType = "com.apple.product-type.application";
 		};
 		4F94D3FF20458A3B00D85BEA /* MarkdownEditorTests */ = {
@@ -701,7 +701,7 @@
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditor;
-				PRODUCT_NAME = "Markdown Editor";
+				PRODUCT_NAME = "MarkdownEditor Lite";
 			};
 			name = Debug;
 		};
@@ -721,7 +721,7 @@
 					"@executable_path/../Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditor;
-				PRODUCT_NAME = "Markdown Editor";
+				PRODUCT_NAME = "MarkdownEditor Lite";
 			};
 			name = Release;
 		};
@@ -740,7 +740,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarkdownEditor Lite.app/Contents/MacOS/MarkdownEditor Lite";
 			};
 			name = Debug;
 		};
@@ -759,7 +759,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = info.vjanelle.MarkdownEditorTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Markdown Editor.app/Contents/MacOS/Markdown Editor";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/MarkdownEditor Lite.app/Contents/MacOS/MarkdownEditor Lite";
 			};
 			name = Release;
 		};

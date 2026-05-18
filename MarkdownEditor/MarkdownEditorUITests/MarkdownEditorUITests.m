@@ -38,7 +38,7 @@
 
 - (void)testExample {
     XCUIApplication *app = [self launchApplication];
-    XCUIElement *window = app.windows[@"Markdown Editor"];
+    XCUIElement *window = app.windows[@"MarkdownEditor Lite"];
     XCUIElement *editorTextView = app.textViews[@"EditorTextView"];
     XCUIElement *converterPopup = app.popUpButtons[@"ConverterPopup"];
 

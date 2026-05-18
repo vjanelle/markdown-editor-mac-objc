@@ -16,7 +16,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "4F94D3E920458A3B00D85BEA"
-               BuildableName = "Markdown Editor.app"
+               BuildableName = "MarkdownEditor Lite.app"
                BlueprintName = "MarkdownEditor"
                ReferencedContainer = "container:MarkdownEditor.xcodeproj">
             </BuildableReference>
@@ -80,7 +80,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4F94D3E920458A3B00D85BEA"
-            BuildableName = "Markdown Editor.app"
+            BuildableName = "MarkdownEditor Lite.app"
             BlueprintName = "MarkdownEditor"
             ReferencedContainer = "container:MarkdownEditor.xcodeproj">
          </BuildableReference>
@@ -97,7 +97,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "4F94D3E920458A3B00D85BEA"
-            BuildableName = "Markdown Editor.app"
+            BuildableName = "MarkdownEditor Lite.app"
             BlueprintName = "MarkdownEditor"
             ReferencedContainer = "container:MarkdownEditor.xcodeproj">
          </BuildableReference>
