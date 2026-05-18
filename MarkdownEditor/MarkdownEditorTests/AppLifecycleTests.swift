@@ -30,6 +30,8 @@ final class AppLifecycleTests: XCTestCase {
         controller.selectedConverterIndex = 2
 
         XCTAssertEqual(ConverterManager.shared.selectedConverterIndex, 2)
+        XCTAssertEqual(controller.selectedConverterIndex, 2)
+        XCTAssertEqual(controller.converters, ["GitHub Flavored Markdown", "Markdown", "Strict Markdown"])
     }
 
     func testMainWindowControllerSetsMinimumContentSize() {
@@ -67,6 +69,16 @@ final class AppLifecycleTests: XCTestCase {
         delegate.applicationWillTerminate(notification)
 
         XCTAssertNotNil(delegate)
+    }
+
+    func testAppDelegateShowsAboutPanel() {
+        let delegate = AppDelegate()
+
+        delegate.showAboutPanel(nil)
+
+        NSApp.windows
+            .filter { $0.title.localizedCaseInsensitiveContains("about") }
+            .forEach { $0.close() }
     }
 
     func testMainWindowNotVisibleAtLaunchInStoryboard() {

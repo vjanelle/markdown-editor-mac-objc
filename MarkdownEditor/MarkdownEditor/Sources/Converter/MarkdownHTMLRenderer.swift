@@ -11,7 +11,7 @@ import Markdown
 public final class MarkdownHTMLRenderer: NSObject {
     @objc(htmlStringFromMarkdown:css:header:)
     public func htmlString(fromMarkdown markdown: String, css: String?, header: String?) -> String {
-        let document = Document(parsing: markdown)
+        let document = Document(parsing: markdown, options: [.parseSymbolLinks])
         var renderer = SafeHTMLRenderer()
         let body = renderer.visit(document)
         let cssLink = css.map { "<link rel=\"stylesheet\" href=\"\(Self.escapeAttribute($0))\" />\n" } ?? ""

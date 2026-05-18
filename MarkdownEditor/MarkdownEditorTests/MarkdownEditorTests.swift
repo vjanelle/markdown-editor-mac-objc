@@ -52,10 +52,19 @@ final class MarkdownEditorTests: XCTestCase {
         XCTAssertEqual(converter.format, "markdown")
         XCTAssertNil(converter.css)
         XCTAssertNil(converter.script)
+        XCTAssertEqual(converter.data as Data?, converter.html.data(using: .utf8))
         XCTAssertTrue(converter.html.contains("<html lang=\"ja\">"))
 
         converter.setContent(with: "# Title")
 
         XCTAssertTrue(converter.html.contains("<body></body>"))
+    }
+
+    func testLoggerFunctionsAcceptMessages() {
+        logError("error")
+        logWarning("warning")
+        logInfo("info")
+        logDebug("debug")
+        logVerbose("verbose")
     }
 }

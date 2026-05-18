@@ -40,6 +40,7 @@
 		D0000000000000000000000D /* AppLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000020 /* AppLifecycleTests.swift */; };
 		D0000000000000000000000E /* EditorDialogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000022 /* EditorDialogPresenter.swift */; };
 		D0000000000000000000000F /* EditorFileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000024 /* EditorFileWatcher.swift */; };
+		D00000000000000000000070 /* EditorDialogPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000071 /* EditorDialogPresenterTests.swift */; };
 		D00000000000000000000040 /* vendor/mermaid/mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */; };
 		D00000000000000000000060 /* ThirdPartyAcknowledgements.md in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000061 /* ThirdPartyAcknowledgements.md */; };
 /* End PBXBuildFile section */
@@ -100,6 +101,7 @@
 		D00000000000000000000020 /* AppLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleTests.swift; sourceTree = "<group>"; };
 		D00000000000000000000022 /* EditorDialogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDialogPresenter.swift; sourceTree = "<group>"; };
 		D00000000000000000000024 /* EditorFileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFileWatcher.swift; sourceTree = "<group>"; };
+		D00000000000000000000071 /* EditorDialogPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDialogPresenterTests.swift; sourceTree = "<group>"; };
 		D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = vendor/mermaid/mermaid.min.js; sourceTree = "<group>"; };
 		D00000000000000000000061 /* ThirdPartyAcknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ThirdPartyAcknowledgements.md; sourceTree = "<group>"; };
 		D00000000000000000000051 /* MarkdownHTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownHTMLRenderer.swift; sourceTree = "<group>"; };
@@ -199,6 +201,7 @@
 				D00000000000000000000017 /* ContentAndPreferencesTests.swift */,
 				D0000000000000000000001C /* ConverterManagerTests.swift */,
 				D00000000000000000000019 /* EditorDocumentStoreTests.swift */,
+				D00000000000000000000071 /* EditorDialogPresenterTests.swift */,
 				D00000000000000000000018 /* EditorTextFormatterTests.swift */,
 				D0000000000000000000001D /* EditorViewControllerTests.swift */,
 				4F94D40420458A3B00D85BEA /* MarkdownEditorTests.swift */,
@@ -427,6 +430,7 @@
 				D00000000000000000000004 /* ContentAndPreferencesTests.swift in Sources */,
 				D00000000000000000000009 /* ConverterManagerTests.swift in Sources */,
 				D00000000000000000000006 /* EditorDocumentStoreTests.swift in Sources */,
+				D00000000000000000000070 /* EditorDialogPresenterTests.swift in Sources */,
 				D00000000000000000000005 /* EditorTextFormatterTests.swift in Sources */,
 				D0000000000000000000000A /* EditorViewControllerTests.swift in Sources */,
 				4F94D40520458A3B00D85BEA /* MarkdownEditorTests.swift in Sources */,

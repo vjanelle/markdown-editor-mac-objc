@@ -40,6 +40,7 @@ class TestableEditorViewController: EditorViewController {
     var saveFileCallCount = 0
     var openFileCallCount = 0
     var saveFileResult = false
+    var openFileResult = true
 
     override func newFile() {
         newFileCallCount += 1
@@ -52,7 +53,7 @@ class TestableEditorViewController: EditorViewController {
 
     override func openFile() -> Bool {
         openFileCallCount += 1
-        return true
+        return openFileResult
     }
 }
 
@@ -92,6 +93,12 @@ final class EditorViewControllerTests: XCTestCase {
     func testDocumentMetadataFallsBackWhenOutletsAreMissing() {
         let controller = EditorViewController()
         XCTAssertEqual(controller.documentBody(), "Unknown")
+    }
+
+    func testDefaultDialogPresenterIsCreatedLazily() {
+        let controller = EditorViewController()
+
+        XCTAssertNotNil(controller.dialogPresenter)
     }
 
     func testSetRepresentedObjectIsAccepted() {
@@ -304,6 +311,41 @@ final class EditorViewControllerTests: XCTestCase {
         controller.dirty = true
         controller.reloadFileFromDiskIfNeeded()
         XCTAssertEqual(controller.openFileCallCount, 1)
+    }
+
+    func testReloadFileFromDiskStopsAfterFailedOpen() {
+        let controller = makeTestableController(text: "body")
+        controller.filePath = "/tmp/example.md"
+        controller.openFileResult = false
+
+        controller.reloadFileFromDiskIfNeeded()
+
+        XCTAssertEqual(controller.openFileCallCount, 1)
+    }
+
+    func testAutosaveIfNeededWritesDirtyDocumentWithPath() throws {
+        let controller = makeController(text: "# Autosaved")
+        let path = temporaryPath(name: "markdown-editor-autosave.md")
+        controller.filePath = path
+        controller.dirty = true
+
+        controller.autosaveIfNeeded()
+
+        let saved = try String(contentsOfFile: path, encoding: .utf8)
+        XCTAssertEqual(saved, "# Autosaved")
+        XCTAssertFalse(controller.dirty)
+    }
+
+    func testAutosaveIfNeededIgnoresCleanOrUnsavedDocuments() {
+        let controller = makeController(text: "# Unsaved")
+
+        controller.autosaveIfNeeded()
+        XCTAssertNil(controller.filePath)
+
+        controller.filePath = temporaryPath(name: "markdown-editor-clean-autosave.md")
+        controller.dirty = false
+        controller.autosaveIfNeeded()
+        XCTAssertFalse(FileManager.default.fileExists(atPath: controller.filePath ?? ""))
     }
 
     func testReplaceCharactersUpdatesTextAndDirtyState() {

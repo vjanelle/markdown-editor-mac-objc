@@ -63,10 +63,29 @@ final class MarkdownRendererConverterTests: XCTestCase {
     func testRelativeMarkdownImagesAreRenderedAsImages() {
         let converter = MarkdownRendererConverter(title: "Title", format: "gfm", header: nil, css: "style.css")
 
-        converter.setContent(with: "![Diagram](diagram.png)")
+        converter.setContent(with: "![Diagram](diagram.png \"Architecture\")")
 
         XCTAssertTrue(converter.html.contains("<img src=\"diagram.png\""))
         XCTAssertTrue(converter.html.contains("alt=\"Diagram\""))
+        XCTAssertTrue(converter.html.contains("title=\"Architecture\""))
+    }
+
+    func testInlineCodeLineBreaksAndInlineHTMLAreRenderedSafely() {
+        let converter = MarkdownRendererConverter(title: "Title", format: "gfm", header: nil, css: "style.css")
+
+        converter.setContent(with: "`let value = 1`\n\nfirst\\\nsecond\n\n<span>raw</span>")
+
+        XCTAssertTrue(converter.html.contains("<code>let value = 1</code>"))
+        XCTAssertTrue(converter.html.contains("first<br />"))
+        XCTAssertTrue(converter.html.contains("&lt;span&gt;raw&lt;/span&gt;"))
+    }
+
+    func testSymbolLinksRenderAsEscapedCode() {
+        let converter = MarkdownRendererConverter(title: "Title", format: "gfm", header: nil, css: nil)
+
+        converter.setContent(with: "See ``MarkdownHTMLRenderer``.")
+
+        XCTAssertTrue(converter.html.contains("<code>MarkdownHTMLRenderer</code>"))
     }
 
     func testInlineFormattingMatchesMarkdownSyntax() {

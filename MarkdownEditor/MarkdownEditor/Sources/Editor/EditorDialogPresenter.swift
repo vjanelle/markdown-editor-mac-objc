@@ -5,21 +5,19 @@ import UniformTypeIdentifiers
 class EditorDialogPresenter: NSObject {
     @objc(showAlertWithTitle:message:forWindow:)
     func showAlert(title: String, message: String, for window: NSWindow?) {
-        if !Thread.isMainThread {
-            DispatchQueue.main.sync {
-                showAlert(title: title, message: message, for: window)
-            }
-            return
+        let alert = warningAlert(title: title, message: message)
+        if let window {
+            alert.beginSheetModal(for: window)
         }
+    }
 
+    private func warningAlert(title: String, message: String) -> NSAlert {
         let alert = NSAlert()
         alert.informativeText = title
         alert.messageText = message
         alert.alertStyle = .warning
         alert.addButton(withTitle: "OK")
-        if let window {
-            alert.beginSheetModal(for: window)
-        }
+        return alert
     }
 
     @objc(confirmDiscardingChangesForWindow:completionHandler:)
