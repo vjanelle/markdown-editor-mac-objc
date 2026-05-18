@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "PandocConverter.h"
+#import "MarkdownRendererConverter.h"
 
-@interface MarkdownConverter : PandocConverter
+@interface MarkdownConverter : MarkdownRendererConverter
 
 @end

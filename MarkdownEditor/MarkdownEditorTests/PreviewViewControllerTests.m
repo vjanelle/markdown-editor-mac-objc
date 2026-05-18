@@ -10,6 +10,9 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation;
 - (void)didChangeContentNotification:(NSNotification *)notification;
 - (void)reloadHtml;
+- (BOOL)isAllowedPreviewNavigationURL:(NSURL *)URL;
+- (BOOL)isExternalPreviewNavigationURL:(NSURL *)URL;
+- (NSString *)lockedDownPreviewHTMLWithHTML:(NSString *)HTML;
 - (IBAction)reloadButtonClicked:(NSButton *)sender;
 @end
 
@@ -78,6 +81,49 @@
     XCTAssertTrue([markdownHeader containsString:@"mermaid.min.js"]);
     XCTAssertFalse([gfmHeader containsString:@"cdn.jsdelivr.net/npm/mermaid"]);
     XCTAssertFalse([markdownHeader containsString:@"cdn.jsdelivr.net/npm/mermaid"]);
+    XCTAssertTrue([gfmHeader containsString:@"securityLevel: 'strict'"]);
+    XCTAssertTrue([markdownHeader containsString:@"securityLevel: 'strict'"]);
+    XCTAssertFalse([gfmHeader containsString:@"securityLevel: 'loose'"]);
+    XCTAssertFalse([markdownHeader containsString:@"securityLevel: 'loose'"]);
+    XCTAssertFalse([gfmHeader containsString:@"https://"]);
+    XCTAssertFalse([markdownHeader containsString:@"https://"]);
+}
+
+- (void)testPreviewNavigationAllowsLocalPreviewURLs {
+    PreviewViewController *controller = [self makeController];
+
+    XCTAssertTrue([controller isAllowedPreviewNavigationURL:nil]);
+    XCTAssertTrue([controller isAllowedPreviewNavigationURL:[NSURL URLWithString:@"about:blank"]]);
+    XCTAssertTrue([controller isAllowedPreviewNavigationURL:NSBundle.mainBundle.resourceURL]);
+}
+
+- (void)testPreviewNavigationBlocksExternalNetworkURLs {
+    PreviewViewController *controller = [self makeController];
+
+    XCTAssertFalse([controller isAllowedPreviewNavigationURL:[NSURL URLWithString:@"https://example.com"]]);
+    XCTAssertFalse([controller isAllowedPreviewNavigationURL:[NSURL URLWithString:@"http://example.com"]]);
+}
+
+- (void)testPreviewNavigationRecognizesExternalBrowserURLs {
+    PreviewViewController *controller = [self makeController];
+
+    XCTAssertTrue([controller isExternalPreviewNavigationURL:[NSURL URLWithString:@"https://example.com"]]);
+    XCTAssertTrue([controller isExternalPreviewNavigationURL:[NSURL URLWithString:@"http://example.com"]]);
+    XCTAssertFalse([controller isExternalPreviewNavigationURL:[NSURL URLWithString:@"about:blank"]]);
+    XCTAssertFalse([controller isExternalPreviewNavigationURL:NSBundle.mainBundle.resourceURL]);
+}
+
+- (void)testPreviewHTMLAddsLocalOnlyContentSecurityPolicy {
+    PreviewViewController *controller = [self makeController];
+    NSString *HTML = @"<html><head><title>Preview</title></head><body><img src=\"https://example.com/image.png\"></body></html>";
+
+    NSString *lockedDownHTML = [controller lockedDownPreviewHTMLWithHTML:HTML];
+
+    XCTAssertTrue([lockedDownHTML containsString:@"Content-Security-Policy"]);
+    XCTAssertTrue([lockedDownHTML containsString:@"default-src 'none'"]);
+    XCTAssertTrue([lockedDownHTML containsString:@"connect-src 'none'"]);
+    XCTAssertTrue([lockedDownHTML containsString:@"img-src file:"]);
+    XCTAssertFalse([lockedDownHTML containsString:@"data:"]);
 }
 
 @end

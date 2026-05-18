@@ -1,7 +1,8 @@
-WORKSPACE := MarkdownEditor/MarkdownEditor.xcworkspace
+ROOT_DIR := $(abspath .)
+WORKSPACE := $(ROOT_DIR)/MarkdownEditor/MarkdownEditor.xcworkspace
 SCHEME := MarkdownEditor
 DERIVED_DATA := /private/tmp/MarkdownEditorDerivedData
-APP_PATH := $(DERIVED_DATA)/Build/Products/Debug/Markdown\ Editor.app
+APP_PATH := $(DERIVED_DATA)/Build/Products/Debug/MarkdownEditor\ Lite.app
 
 .PHONY: build test run app-path clean
 
@@ -15,7 +16,7 @@ run: build
 	open $(APP_PATH)
 
 app-path:
-	@printf '%s\n' "$(DERIVED_DATA)/Build/Products/Debug/Markdown Editor.app"
+	@printf '%s\n' "$(DERIVED_DATA)/Build/Products/Debug/MarkdownEditor Lite.app"
 
 clean:
 	rm -rf $(DERIVED_DATA)

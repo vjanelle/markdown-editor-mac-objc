@@ -27,7 +27,7 @@
       promoteMermaidBlocks();
       window.mermaid.initialize({
         startOnLoad: false,
-        securityLevel: 'loose',
+        securityLevel: 'strict',
         theme: window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'default'
       });
       window.mermaid.run({ querySelector: '.mermaid' }).catch(function(error) {

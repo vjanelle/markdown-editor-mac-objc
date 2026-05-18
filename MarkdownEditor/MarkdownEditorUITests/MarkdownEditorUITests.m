@@ -41,13 +41,21 @@
     XCUIElement *window = app.windows[@"MarkdownEditor Lite"];
     XCUIElement *editorTextView = app.textViews[@"EditorTextView"];
     XCUIElement *converterPopup = app.popUpButtons[@"ConverterPopup"];
+    NSPredicate *previewPaneIdentifier = [NSPredicate predicateWithFormat:@"identifier == %@", @"PreviewPane"];
+    XCUIElement *previewPane = [[app descendantsMatchingType:XCUIElementTypeAny] elementMatchingPredicate:previewPaneIdentifier];
+    XCUIElement *previewHeading = app.staticTexts[@"GitHub Flavored Markdown Sample"];
 
     XCTAssertTrue([window waitForExistenceWithTimeout:5]);
     XCTAssertEqual(app.windows.count, 1U);
     XCTAssertTrue([editorTextView waitForExistenceWithTimeout:5]);
     XCTAssertTrue([converterPopup waitForExistenceWithTimeout:5]);
+    XCTAssertTrue([previewPane waitForExistenceWithTimeout:5]);
+    XCTAssertTrue([previewHeading waitForExistenceWithTimeout:10]);
     XCTAssertTrue(editorTextView.isHittable);
     XCTAssertTrue(converterPopup.isHittable);
+    XCTAssertFalse(CGRectIsEmpty(previewPane.frame));
+    XCTAssertGreaterThan(CGRectGetWidth(previewPane.frame), 100.0);
+    XCTAssertGreaterThan(CGRectGetHeight(previewPane.frame), 100.0);
     XCTAssertGreaterThan(app.buttons.count, 1U);
 }
 

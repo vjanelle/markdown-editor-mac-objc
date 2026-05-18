@@ -2,17 +2,11 @@
 
 ## Project Structure & Module Organization
 
-This repository contains a macOS Objective-C app in `MarkdownEditor/`. Open `MarkdownEditor/MarkdownEditor.xcworkspace` for development, especially after installing CocoaPods dependencies. App code lives in `MarkdownEditor/MarkdownEditor/Sources/`, with converter implementations grouped under `Sources/Converter/`. Storyboard UI is in `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`. Static resources such as Markdown templates and CSS are in `MarkdownEditor/MarkdownEditor/Resources/`, and image assets are in `MarkdownEditor/MarkdownEditor/Assets.xcassets/`. Unit tests are in `MarkdownEditor/MarkdownEditorTests/`; UI tests are in `MarkdownEditor/MarkdownEditorUITests/`.
+This repository contains a macOS Objective-C app in `MarkdownEditor/`. Open `MarkdownEditor/MarkdownEditor.xcworkspace` for development. App code lives in `MarkdownEditor/MarkdownEditor/Sources/`, with converter implementations grouped under `Sources/Converter/`. Storyboard UI is in `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`. Static resources such as Markdown templates and CSS are in `MarkdownEditor/MarkdownEditor/Resources/`, and image assets are in `MarkdownEditor/MarkdownEditor/Assets.xcassets/`. Unit tests are in `MarkdownEditor/MarkdownEditorTests/`; UI tests are in `MarkdownEditor/MarkdownEditorUITests/`.
 
 ## Build, Test, and Development Commands
 
 Run commands from `MarkdownEditor/` unless noted otherwise.
-
-```sh
-pod install
-```
-
-Installs CocoaPods dependencies declared in `Podfile` (`GCDWebServer`, `AppAuth`) and updates the workspace.
 
 ```sh
 open MarkdownEditor.xcworkspace
@@ -41,4 +35,4 @@ Recent history uses short imperative summaries, for example `Fix build script` a
 
 ## Agent-Specific Instructions
 
-Do not edit generated CocoaPods files unless dependency changes require it. Keep changes scoped to the app, tests, or project settings needed for the task, and avoid unrelated storyboard or asset churn.
+Keep changes scoped to the app, tests, or project settings needed for the task, and avoid unrelated storyboard or asset churn.
