@@ -17,7 +17,7 @@
         }
     ],
     "properties": {
-        "template-rendering-intent": "template"
+        "template-rendering-intent": "original"
     },
     "info": {
         "author": "xcode",

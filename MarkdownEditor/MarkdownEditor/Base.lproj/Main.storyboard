@@ -907,7 +907,7 @@
                             <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1S-Ha-xc4">
                                 <rect key="frame" x="412" y="273" width="32" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_refresh_18pt" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Udd-dG-KDm">
+                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Udd-dG-KDm">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
@@ -918,6 +918,7 @@
                         </subviews>
                     </view>
                     <connections>
+                        <outlet property="reloadButton" destination="m1S-Ha-xc4" id="jzZ-Tn-L3e"/>
                         <outlet property="webView" destination="5Hq-GR-HlJ" id="Yuz-am-CCk"/>
                     </connections>
                 </viewController>
@@ -935,6 +936,5 @@
         <image name="ic_format_quote_18pt" width="36" height="36"/>
         <image name="ic_format_strikethrough_18pt" width="36" height="36"/>
         <image name="ic_insert_link_18pt" width="36" height="36"/>
-        <image name="ic_refresh_18pt" width="36" height="36"/>
     </resources>
 </document>

@@ -26,12 +26,14 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         super.viewDidLoad()
         textView.setAccessibilityIdentifier("EditorTextView")
         converterPopup.setAccessibilityIdentifier("ConverterPopup")
+        configureFormattingButtons()
         textView.string = loadSample()
         ConverterManager.shared.setContent(with: textView.string)
     }
 
     override func viewDidLayout() {
         super.viewDidLayout()
+        configureFormattingButtons()
         layoutFormattingToolbar()
     }
 
@@ -158,16 +160,53 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
     }
 
     private var formattingButtons: [NSButton] {
+        formattingButtonItems.compactMap { formattingButton(in: view, matchingSelectorName: NSStringFromSelector($0.selector)) }
+    }
+
+    private var formattingButtonItems: [(selector: Selector, toolTip: String)] {
         [
-            #selector(boldButtonClicked(_:)),
-            #selector(strikeThroughButtonClicked(_:)),
-            #selector(italicButtonClicked(_:)),
-            #selector(quoteButtonClicked(_:)),
-            #selector(codeButtonClicked(_:)),
-            #selector(insertLinkButtonClicked(_:)),
-            #selector(listBulletedButtonClicked(_:)),
-            #selector(listNumberedButtonClicked(_:))
-        ].compactMap { formattingButton(in: view, matchingSelectorName: NSStringFromSelector($0)) }
+            (#selector(boldButtonClicked(_:)), "Bold"),
+            (#selector(strikeThroughButtonClicked(_:)), "Strikethrough"),
+            (#selector(italicButtonClicked(_:)), "Italic"),
+            (#selector(quoteButtonClicked(_:)), "Block Quote"),
+            (#selector(codeButtonClicked(_:)), "Code"),
+            (#selector(insertLinkButtonClicked(_:)), "Insert Link"),
+            (#selector(listBulletedButtonClicked(_:)), "Bulleted List"),
+            (#selector(listNumberedButtonClicked(_:)), "Numbered List")
+        ]
+    }
+
+    private func configureFormattingButtons() {
+        let iconColor = toolbarIconColor()
+        for item in formattingButtonItems {
+            guard let button = formattingButton(in: view, matchingSelectorName: NSStringFromSelector(item.selector)) else {
+                continue
+            }
+            if let image = button.image {
+                button.image = tintedNonTemplateImage(from: image, color: iconColor)
+            }
+            button.imagePosition = .imageOnly
+            button.contentTintColor = nil
+            button.toolTip = item.toolTip
+        }
+    }
+
+    private func toolbarIconColor() -> NSColor {
+        let appearanceName = view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua])
+        return appearanceName == .darkAqua
+            ? NSColor(calibratedWhite: 0.86, alpha: 1.0)
+            : NSColor(calibratedWhite: 0.20, alpha: 1.0)
+    }
+
+    private func tintedNonTemplateImage(from image: NSImage, color: NSColor) -> NSImage {
+        let tintedImage = NSImage(size: image.size)
+        tintedImage.lockFocus()
+        image.draw(in: NSRect(origin: .zero, size: image.size), from: .zero, operation: .sourceOver, fraction: 1.0)
+        color.setFill()
+        NSRect(origin: .zero, size: image.size).fill(using: .sourceAtop)
+        tintedImage.unlockFocus()
+        tintedImage.isTemplate = false
+        return tintedImage
     }
 
     private func formattingButton(in view: NSView, matchingSelectorName selectorName: String) -> NSButton? {
