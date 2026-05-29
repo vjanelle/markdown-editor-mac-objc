@@ -3,12 +3,6 @@ import Cocoa
 @objc(EditorViewController)
 class EditorViewController: NSViewController, NSTextViewDelegate {
     private static let autosaveDelay: TimeInterval = 0.5
-    private static let formattingButtonWidth: CGFloat = 32.0
-    private static let formattingButtonHeight: CGFloat = 25.0
-    private static let formattingButtonGap: CGFloat = 8.0
-    private static let formattingToolbarPadding: CGFloat = 6.0
-    private static let converterPopupWidth: CGFloat = 170.0
-    private static let converterPopupHeight: CGFloat = 25.0
 
     @IBOutlet weak var textView: NSTextView!
     @IBOutlet weak var converterPopup: NSPopUpButton!
@@ -26,15 +20,8 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         super.viewDidLoad()
         textView.setAccessibilityIdentifier("EditorTextView")
         converterPopup.setAccessibilityIdentifier("ConverterPopup")
-        configureFormattingButtons()
         textView.string = loadSample()
         ConverterManager.shared.setContent(with: textView.string)
-    }
-
-    override func viewDidLayout() {
-        super.viewDidLayout()
-        configureFormattingButtons()
-        layoutFormattingToolbar()
     }
 
     deinit {
@@ -62,35 +49,35 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         true
     }
 
-    @IBAction func boldButtonClicked(_ sender: NSButton?) {
+    @IBAction func boldButtonClicked(_ sender: Any?) {
         applyFormat(.bold)
     }
 
-    @IBAction func strikeThroughButtonClicked(_ sender: NSButton?) {
+    @IBAction func strikeThroughButtonClicked(_ sender: Any?) {
         applyFormat(.strikeThrough)
     }
 
-    @IBAction func italicButtonClicked(_ sender: NSButton?) {
+    @IBAction func italicButtonClicked(_ sender: Any?) {
         applyFormat(.italic)
     }
 
-    @IBAction func quoteButtonClicked(_ sender: NSButton?) {
+    @IBAction func quoteButtonClicked(_ sender: Any?) {
         applyFormat(.quote)
     }
 
-    @IBAction func codeButtonClicked(_ sender: NSButton?) {
+    @IBAction func codeButtonClicked(_ sender: Any?) {
         applyFormat(.code)
     }
 
-    @IBAction func insertLinkButtonClicked(_ sender: NSButton?) {
+    @IBAction func insertLinkButtonClicked(_ sender: Any?) {
         applyFormat(.link)
     }
 
-    @IBAction func listBulletedButtonClicked(_ sender: NSButton?) {
+    @IBAction func listBulletedButtonClicked(_ sender: Any?) {
         applyFormat(.listBulleted)
     }
 
-    @IBAction func listNumberedButtonClicked(_ sender: NSButton?) {
+    @IBAction func listNumberedButtonClicked(_ sender: Any?) {
         applyFormat(.listNumbered)
     }
 
@@ -157,104 +144,6 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
 
     @IBAction func saveDocumentAs(_ sender: Any?) {
         promptForSaveURL(completionHandler: nil)
-    }
-
-    private var formattingButtons: [NSButton] {
-        formattingButtonItems.compactMap { formattingButton(in: view, matchingSelectorName: NSStringFromSelector($0.selector)) }
-    }
-
-    private var formattingButtonItems: [(selector: Selector, toolTip: String)] {
-        [
-            (#selector(boldButtonClicked(_:)), "Bold"),
-            (#selector(strikeThroughButtonClicked(_:)), "Strikethrough"),
-            (#selector(italicButtonClicked(_:)), "Italic"),
-            (#selector(quoteButtonClicked(_:)), "Block Quote"),
-            (#selector(codeButtonClicked(_:)), "Code"),
-            (#selector(insertLinkButtonClicked(_:)), "Insert Link"),
-            (#selector(listBulletedButtonClicked(_:)), "Bulleted List"),
-            (#selector(listNumberedButtonClicked(_:)), "Numbered List")
-        ]
-    }
-
-    private func configureFormattingButtons() {
-        let iconColor = toolbarIconColor()
-        for item in formattingButtonItems {
-            guard let button = formattingButton(in: view, matchingSelectorName: NSStringFromSelector(item.selector)) else {
-                continue
-            }
-            if let image = button.image {
-                button.image = tintedNonTemplateImage(from: image, color: iconColor)
-            }
-            button.imagePosition = .imageOnly
-            button.contentTintColor = nil
-            button.toolTip = item.toolTip
-        }
-    }
-
-    private func toolbarIconColor() -> NSColor {
-        let appearanceName = view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua])
-        return appearanceName == .darkAqua
-            ? NSColor(calibratedWhite: 0.86, alpha: 1.0)
-            : NSColor(calibratedWhite: 0.20, alpha: 1.0)
-    }
-
-    private func tintedNonTemplateImage(from image: NSImage, color: NSColor) -> NSImage {
-        let tintedImage = NSImage(size: image.size)
-        tintedImage.lockFocus()
-        image.draw(in: NSRect(origin: .zero, size: image.size), from: .zero, operation: .sourceOver, fraction: 1.0)
-        color.setFill()
-        NSRect(origin: .zero, size: image.size).fill(using: .sourceAtop)
-        tintedImage.unlockFocus()
-        tintedImage.isTemplate = false
-        return tintedImage
-    }
-
-    private func formattingButton(in view: NSView, matchingSelectorName selectorName: String) -> NSButton? {
-        for subview in view.subviews {
-            if let button = subview as? NSButton,
-               let action = button.action,
-               NSStringFromSelector(action) == selectorName {
-                return button
-            }
-            if let button = formattingButton(in: subview, matchingSelectorName: selectorName) {
-                return button
-            }
-        }
-        return nil
-    }
-
-    private func layoutFormattingToolbar() {
-        let bounds = view.bounds
-        guard let scrollView = textView.enclosingScrollView else {
-            return
-        }
-
-        let top = bounds.maxY - Self.formattingToolbarPadding
-        let buttonY = top - Self.formattingButtonHeight
-        var x = Self.formattingToolbarPadding
-        for button in formattingButtons {
-            button.frame = NSRect(
-                x: x,
-                y: buttonY,
-                width: Self.formattingButtonWidth,
-                height: Self.formattingButtonHeight
-            )
-            x += Self.formattingButtonWidth + Self.formattingButtonGap
-        }
-
-        if let converterPopup {
-            let popupWidth = min(Self.converterPopupWidth, max(0.0, bounds.width - (2.0 * Self.formattingToolbarPadding)))
-            let popupX = max(x, bounds.width - popupWidth - Self.formattingToolbarPadding)
-            converterPopup.frame = NSRect(
-                x: popupX,
-                y: buttonY,
-                width: popupWidth,
-                height: Self.converterPopupHeight
-            )
-        }
-
-        let scrollViewHeight = max(0.0, buttonY - Self.formattingToolbarPadding)
-        scrollView.frame = NSRect(x: 0.0, y: 0.0, width: bounds.width, height: scrollViewHeight)
     }
 
     private func loadSample() -> String {

@@ -2,7 +2,7 @@ import Cocoa
 
 @objc(MainWindowController)
 class MainWindowController: NSWindowController {
-    private static let minimumContentSize = NSSize(width: 1200.0, height: 800.0)
+    private static let minimumContentSize = NSSize(width: 720.0, height: 480.0)
     private static let frameAutosaveName = "MarkdownEditorMainWindow"
 
     @objc var converters: [String] {

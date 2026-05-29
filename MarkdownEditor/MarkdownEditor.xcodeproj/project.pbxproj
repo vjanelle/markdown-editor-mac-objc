@@ -26,8 +26,6 @@
 		4F94D42D2046E8A600D85BEA /* sample.md in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D42C2046E8A600D85BEA /* sample.md */; };
 		4F94D4312048488500D85BEA /* markdown.css in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D4302048488500D85BEA /* markdown.css */; };
 		4F94D43520484F7300D85BEA /* markdown-header.txt in Resources */ = {isa = PBXBuildFile; fileRef = 4F94D43420484F7300D85BEA /* markdown-header.txt */; };
-		D00000000000000000000050 /* MarkdownHTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000051 /* MarkdownHTMLRenderer.swift */; };
-		D00000000000000000000052 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = D00000000000000000000053 /* Markdown */; };
 		D00000000000000000000001 /* EditorTextFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000012 /* EditorTextFormatter.swift */; };
 		D00000000000000000000002 /* EditorDocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000014 /* EditorDocumentStore.swift */; };
 		D00000000000000000000004 /* ContentAndPreferencesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000017 /* ContentAndPreferencesTests.swift */; };
@@ -40,9 +38,11 @@
 		D0000000000000000000000D /* AppLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000020 /* AppLifecycleTests.swift */; };
 		D0000000000000000000000E /* EditorDialogPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000022 /* EditorDialogPresenter.swift */; };
 		D0000000000000000000000F /* EditorFileWatcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000024 /* EditorFileWatcher.swift */; };
-		D00000000000000000000070 /* EditorDialogPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000071 /* EditorDialogPresenterTests.swift */; };
 		D00000000000000000000040 /* vendor/mermaid/mermaid.min.js in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */; };
+		D00000000000000000000050 /* MarkdownHTMLRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000051 /* MarkdownHTMLRenderer.swift */; };
+		D00000000000000000000052 /* Markdown in Frameworks */ = {isa = PBXBuildFile; productRef = D00000000000000000000053 /* Markdown */; };
 		D00000000000000000000060 /* ThirdPartyAcknowledgements.md in Resources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000061 /* ThirdPartyAcknowledgements.md */; };
+		D00000000000000000000070 /* EditorDialogPresenterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00000000000000000000071 /* EditorDialogPresenterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,10 +101,10 @@
 		D00000000000000000000020 /* AppLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLifecycleTests.swift; sourceTree = "<group>"; };
 		D00000000000000000000022 /* EditorDialogPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDialogPresenter.swift; sourceTree = "<group>"; };
 		D00000000000000000000024 /* EditorFileWatcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorFileWatcher.swift; sourceTree = "<group>"; };
-		D00000000000000000000071 /* EditorDialogPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDialogPresenterTests.swift; sourceTree = "<group>"; };
 		D00000000000000000000041 /* vendor/mermaid/mermaid.min.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = vendor/mermaid/mermaid.min.js; sourceTree = "<group>"; };
-		D00000000000000000000061 /* ThirdPartyAcknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ThirdPartyAcknowledgements.md; sourceTree = "<group>"; };
 		D00000000000000000000051 /* MarkdownHTMLRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarkdownHTMLRenderer.swift; sourceTree = "<group>"; };
+		D00000000000000000000061 /* ThirdPartyAcknowledgements.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = ThirdPartyAcknowledgements.md; sourceTree = "<group>"; };
+		D00000000000000000000071 /* EditorDialogPresenterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditorDialogPresenterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -326,9 +326,9 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
-								com.apple.Sandbox = {
-									enabled = 1;
-								};
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
 						};
 					};
 					4F94D3FF20458A3B00D85BEA = {
@@ -594,8 +594,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = MarkdownEditor/MarkdownEditor.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6VTHZTZF59;
@@ -615,8 +616,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
 				CODE_SIGN_ENTITLEMENTS = MarkdownEditor/MarkdownEditor.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_TEAM = 6VTHZTZF59;
@@ -632,24 +634,6 @@
 			};
 			name = Release;
 		};
-/* Begin XCRemoteSwiftPackageReference section */
-		D00000000000000000000054 /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/swiftlang/swift-markdown.git";
-			requirement = {
-				kind = revision;
-				revision = ba1fbd1b242972b9aa79a3d1f213b5eed2e84921;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		D00000000000000000000053 /* Markdown */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D00000000000000000000054 /* XCRemoteSwiftPackageReference "swift-markdown" */;
-			productName = Markdown;
-		};
-/* End XCSwiftPackageProductDependency section */
 		4F94D41820458A3B00D85BEA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -768,6 +752,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D00000000000000000000054 /* XCRemoteSwiftPackageReference "swift-markdown" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/swiftlang/swift-markdown.git";
+			requirement = {
+				kind = revision;
+				revision = ba1fbd1b242972b9aa79a3d1f213b5eed2e84921;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D00000000000000000000053 /* Markdown */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D00000000000000000000054 /* XCRemoteSwiftPackageReference "swift-markdown" */;
+			productName = Markdown;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4F94D3E220458A3B00D85BEA /* Project object */;
 }

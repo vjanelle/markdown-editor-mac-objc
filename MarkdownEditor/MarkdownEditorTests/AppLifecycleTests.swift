@@ -34,7 +34,7 @@ final class AppLifecycleTests: XCTestCase {
         XCTAssertEqual(controller.converters, ["GitHub Flavored Markdown", "Markdown", "Strict Markdown"])
     }
 
-    func testMainWindowControllerSetsMinimumContentSize() {
+    func testMainWindowControllerUsesAdaptiveMinimumContentSize() {
         let controller = MainWindowController()
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 200, height: 200),
@@ -46,10 +46,10 @@ final class AppLifecycleTests: XCTestCase {
 
         controller.windowDidLoad()
 
-        XCTAssertGreaterThanOrEqual(window.contentMinSize.width, 1200.0)
-        XCTAssertGreaterThanOrEqual(window.contentMinSize.height, 800.0)
-        XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.width ?? 0, 1200.0)
-        XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.height ?? 0, 800.0)
+        XCTAssertLessThanOrEqual(window.contentMinSize.width, 900.0)
+        XCTAssertLessThanOrEqual(window.contentMinSize.height, 600.0)
+        XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.width ?? 0, window.contentMinSize.width)
+        XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.height ?? 0, window.contentMinSize.height)
         XCTAssertEqual(controller.windowFrameAutosaveName, "MarkdownEditorMainWindow")
     }
 
@@ -89,6 +89,37 @@ final class AppLifecycleTests: XCTestCase {
         XCTAssertFalse(storyboard.contains("property=\"mainWindowController\""))
         XCTAssertTrue(storyboard.contains("storyboardIdentifier=\"MainWindowController\""))
         XCTAssertTrue(storyboard.contains("selector=\"showAboutPanel:\""))
+    }
+
+    func testMainWindowUsesRealToolbarInsteadOfContentToolbar() {
+        let controller = instantiateMainWindowController()
+        let window = controller.window
+        
+        // Verify we have a valid window with toolbar
+        XCTAssertNotNil(window)
+        XCTAssertNotNil(window?.toolbar)
+        
+        // Check that the toolbar has the expected items
+        let toolbarItems = window?.toolbar?.items ?? []
+        
+        // Ensure toolbar item identifiers include expected identifiers (matching the actual identifiers)
+        let itemIdentifiers = toolbarItems.map { $0.itemIdentifier.rawValue }
+        
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.bold"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.strikethrough"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.italic"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.quote"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.code"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.link"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.bulletedList"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.numberedList"))
+        XCTAssertTrue(itemIdentifiers.contains("com.markdowneditor.reloadPreview"))
+        
+        // Verify that the toolbar has the correct identifier
+        XCTAssertEqual(window?.toolbar?.identifier, "MarkdownEditorMainToolbar.v2")
+        
+        // Optional: Check that no in-content toolbar buttons remain (they should be removed from content)
+        // Since we're checking the window's toolbar, not the storyboard content, this test is more robust
     }
 
     func testAppDelegateReopensMainWindowWhenNoVisibleWindows() {

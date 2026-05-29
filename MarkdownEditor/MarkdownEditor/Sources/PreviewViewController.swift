@@ -8,7 +8,6 @@ class PreviewViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
     private static let httpsScheme = "https"
 
     @IBOutlet weak var webView: WKWebView!
-    @IBOutlet weak var reloadButton: NSButton?
 
     @objc var navigation: WKNavigation?
     private var visibleRect = NSRect.zero
@@ -20,7 +19,6 @@ class PreviewViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
         view.setAccessibilityElement(true)
         view.setAccessibilityRole(.group)
         webView.setAccessibilityIdentifier("PreviewWebView")
-        configureReloadButton()
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(didChangeContentNotification(_:)),
@@ -32,10 +30,6 @@ class PreviewViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
         reloadHtml()
     }
 
-    override func viewDidLayout() {
-        super.viewDidLayout()
-        configureReloadButton()
-    }
     deinit {
         NotificationCenter.default.removeObserver(self)
     }
@@ -99,39 +93,6 @@ class PreviewViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
         webView = lockedDownWebView
     }
 
-    private func configureReloadButton() {
-        guard let reloadButton else {
-            return
-        }
-
-        let configuration = NSImage.SymbolConfiguration(pointSize: 15.0, weight: .semibold, scale: .medium)
-        let symbolImage = NSImage(systemSymbolName: "arrow.clockwise", accessibilityDescription: "Reload Preview")?
-            .withSymbolConfiguration(configuration)
-
-        reloadButton.image = symbolImage.map { tintedNonTemplateImage(from: $0, color: toolbarIconColor()) }
-        reloadButton.imagePosition = .imageOnly
-        reloadButton.contentTintColor = nil
-        reloadButton.toolTip = "Reload Preview"
-    }
-
-    private func toolbarIconColor() -> NSColor {
-        let appearanceName = view.effectiveAppearance.bestMatch(from: [.darkAqua, .aqua])
-        return appearanceName == .darkAqua
-            ? NSColor(calibratedWhite: 0.86, alpha: 1.0)
-            : NSColor(calibratedWhite: 0.20, alpha: 1.0)
-    }
-
-    private func tintedNonTemplateImage(from image: NSImage, color: NSColor) -> NSImage {
-        let tintedImage = NSImage(size: image.size)
-        tintedImage.lockFocus()
-        image.draw(in: NSRect(origin: .zero, size: image.size), from: .zero, operation: .sourceOver, fraction: 1.0)
-        color.setFill()
-        NSRect(origin: .zero, size: image.size).fill(using: .sourceAtop)
-        tintedImage.unlockFocus()
-        tintedImage.isTemplate = false
-        return tintedImage
-    }
-
     @objc func reloadHtml() {
         visibleRect = webView.visibleRect
         let html = lockedDownPreviewHTML(withHTML: ConverterManager.shared.html)
@@ -178,7 +139,7 @@ class PreviewViewController: NSViewController, WKNavigationDelegate, WKUIDelegat
         return scheme == Self.httpScheme || scheme == Self.httpsScheme
     }
 
-    @IBAction func reloadButtonClicked(_ sender: NSButton?) {
+    @IBAction func reloadButtonClicked(_ sender: Any?) {
         reloadHtml()
     }
 }

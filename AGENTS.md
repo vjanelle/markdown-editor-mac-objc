@@ -2,28 +2,22 @@
 
 ## Project Structure & Module Organization
 
-This repository contains a macOS Objective-C app in `MarkdownEditor/`. Open `MarkdownEditor/MarkdownEditor.xcworkspace` for development. App code lives in `MarkdownEditor/MarkdownEditor/Sources/`, with converter implementations grouped under `Sources/Converter/`. Storyboard UI is in `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`. Static resources such as Markdown templates and CSS are in `MarkdownEditor/MarkdownEditor/Resources/`, and image assets are in `MarkdownEditor/MarkdownEditor/Assets.xcassets/`. Unit tests are in `MarkdownEditor/MarkdownEditorTests/`; UI tests are in `MarkdownEditor/MarkdownEditorUITests/`.
+This repository contains a macOS Swift app in `MarkdownEditor/`. Open `MarkdownEditor/MarkdownEditor.xcworkspace` for development. App code lives in `MarkdownEditor/MarkdownEditor/Sources/`, with converter implementations grouped under `Sources/Converter/`. Storyboard UI is in `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`. Static resources such as Markdown templates and CSS are in `MarkdownEditor/MarkdownEditor/Resources/`, and image assets are in `MarkdownEditor/MarkdownEditor/Assets.xcassets/`. Unit tests are in `MarkdownEditor/MarkdownEditorTests/`; UI tests are in `MarkdownEditor/MarkdownEditorUITests/`.
 
 ## Build, Test, and Development Commands
 
 Run commands from `MarkdownEditor/` unless noted otherwise.
 
 ```sh
-open MarkdownEditor.xcworkspace
+make build
+make test
 ```
 
-Opens the app in Xcode for local builds, signing settings, and storyboard editing.
-
-```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor build
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor test
-```
-
-Builds or tests from the command line when a shared `MarkdownEditor` scheme is available. If Xcode reports that the scheme is missing, create and share the scheme before relying on CI-style commands.
+Builds or tests from the command line using the Makefile.
 
 ## Coding Style & Naming Conventions
 
-Use Objective-C conventions already present in `Sources/`: four-space indentation, braces on method lines, `#pragma mark` sections for delegate and action groups, and paired `.h`/`.m` files for classes. Name classes with descriptive PascalCase, such as `EditorViewController` or `ConverterManager`. Use lower camelCase for methods, properties, and local variables. Keep IBOutlet and IBAction names aligned with storyboard controls.
+Use Swift conventions already present in `Sources/`: four-space indentation, braces on method lines, `#pragma mark` sections for delegate and action groups, and paired `.h`/`.m` files for classes. Name classes with descriptive PascalCase, such as `EditorViewController` or `ConverterManager`. Use lower camelCase for methods, properties, and local variables. Keep IBOutlet and IBAction names aligned with storyboard controls.
 
 ## Testing Guidelines
 
@@ -36,3 +30,16 @@ Recent history uses short imperative summaries, for example `Fix build script` a
 ## Agent-Specific Instructions
 
 Keep changes scoped to the app, tests, or project settings needed for the task, and avoid unrelated storyboard or asset churn.
+
+## Task Completion Status
+
+- Task 1: Complete (baseline verification)
+- Task 2: Complete (real toolbar implementation)
+- Task 3: Complete (adaptive window sizing)
+- Task 4: Complete (discoverable Markdown menu commands)
+
+## Implementation Notes
+
+The app now uses a real NSToolbar in the main window (replacing the fake content toolbar), and has implemented adaptive window sizing (reduced from 1200x800 to 720x480 minimum). Testing has been enhanced to verify toolbar content and window properties via the actual instantiated controller rather than parsing storyboard XML.
+
+Task 4 has been completed by adding Markdown formatting commands to the macOS menu bar for discoverability, following the Apple Human Interface Guidelines.
