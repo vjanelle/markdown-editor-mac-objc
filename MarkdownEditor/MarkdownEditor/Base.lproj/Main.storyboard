@@ -339,6 +339,62 @@
                                     </items>
                                 </menu>
                             </menuItem>
+                            <menuItem title="Markdown" id="8o8-3V-D3d">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Markdown" id="uNV-rT-6uR">
+                                    <items>
+                                        <menuItem title="Bold" keyEquivalent="b" id="gCR-3y-d2r">
+                                            <connections>
+                                                <action selector="boldButtonClicked:" target="Wyk-aA-02j" id="SGp-5Q-GFA"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Italic" keyEquivalent="i" id="B4Y-5a-9Vt">
+                                            <connections>
+                                                <action selector="italicButtonClicked:" target="Wyk-aA-02j" id="0PD-Qg-1OR"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Strikethrough" keyEquivalent="s" id="Ijf-TE-pbi">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="strikeThroughButtonClicked:" target="Wyk-aA-02j" id="WE7-NT-Pl6"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Block Quote" keyEquivalent="q" id="OYp-lG-ZJi">
+                                            <connections>
+                                                <action selector="quoteButtonClicked:" target="Wyk-aA-02j" id="xQz-Rv-ASB"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Code" keyEquivalent="c" id="neD-C7-7bL">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="codeButtonClicked:" target="Wyk-aA-02j" id="reE-OL-2SN"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Insert Link" keyEquivalent="k" id="j2J-7p-FxR">
+                                            <connections>
+                                                <action selector="insertLinkButtonClicked:" target="Wyk-aA-02j" id="qYc-HI-G9O"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Bulleted List" keyEquivalent="l" id="3qg-Dk-Xfi">
+                                            <connections>
+                                                <action selector="listBulletedButtonClicked:" target="Wyk-aA-02j" id="2fZ-yq-k2l"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Numbered List" keyEquivalent="n" id="Qba-0f-xhg">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="listNumberedButtonClicked:" target="Wyk-aA-02j" id="1R2-BF-I1k"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Reload Preview" keyEquivalent="r" id="0DM-sx-1v7">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="reloadButtonClicked:" target="fDo-d1-ebe" id="xxX-Ev-0fa"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
                             <menuItem title="Format" id="jxT-CU-nIS">
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="Format" id="GEO-Iw-cKr">
@@ -689,8 +745,68 @@
                     <window key="window" title="MarkdownEditor Lite" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IQv-IB-iLA">
                         <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-                        <rect key="contentRect" x="196" y="240" width="1200" height="800"/>
+                        <rect key="contentRect" x="196" y="240" width="960" height="640"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                        <toolbar key="toolbar" implicitIdentifier="MarkdownEditorMainToolbar.v2" autosavesConfiguration="YES" allowsUserCustomization="YES" displayMode="iconOnly" sizeMode="regular" id="HIG-main-toolbar">
+                            <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.bold" label="Bold" paletteLabel="Bold" toolTip="Bold" image="bold" catalog="system" id="HIG-toolbar-bold">
+                                    <connections>
+                                        <action selector="boldButtonClicked:" target="Wyk-aA-02j" id="HIG-action-bold"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.italic" label="Italic" paletteLabel="Italic" toolTip="Italic" image="italic" catalog="system" id="HIG-toolbar-italic">
+                                    <connections>
+                                        <action selector="italicButtonClicked:" target="Wyk-aA-02j" id="HIG-action-italic"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.strikethrough" label="Strike" paletteLabel="Strikethrough" toolTip="Strikethrough" image="strikethrough" catalog="system" id="HIG-toolbar-strike">
+                                    <connections>
+                                        <action selector="strikeThroughButtonClicked:" target="Wyk-aA-02j" id="HIG-action-strike"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.quote" label="Quote" paletteLabel="Block Quote" toolTip="Block Quote" image="quote.bubble" catalog="system" id="HIG-toolbar-quote">
+                                    <connections>
+                                        <action selector="quoteButtonClicked:" target="Wyk-aA-02j" id="HIG-action-quote"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.code" label="Code" paletteLabel="Code" toolTip="Code" image="chevron.left.forwardslash.chevron.right" catalog="system" id="HIG-toolbar-code">
+                                    <connections>
+                                        <action selector="codeButtonClicked:" target="Wyk-aA-02j" id="HIG-action-code"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.link" label="Link" paletteLabel="Insert Link" toolTip="Insert Link" image="link" catalog="system" id="HIG-toolbar-link">
+                                    <connections>
+                                        <action selector="insertLinkButtonClicked:" target="Wyk-aA-02j" id="HIG-action-link"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.bulletedList" label="Bullets" paletteLabel="Bulleted List" toolTip="Bulleted List" image="list.bullet" catalog="system" id="HIG-toolbar-bullets">
+                                    <connections>
+                                        <action selector="listBulletedButtonClicked:" target="Wyk-aA-02j" id="HIG-action-bullets"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.numberedList" label="Numbers" paletteLabel="Numbered List" toolTip="Numbered List" image="list.number" catalog="system" id="HIG-toolbar-numbers">
+                                    <connections>
+                                        <action selector="listNumberedButtonClicked:" target="Wyk-aA-02j" id="HIG-action-numbers"/>
+                                    </connections>
+                                </toolbarItem>
+                                <toolbarItem implicitItemIdentifier="com.markdowneditor.reloadPreview" label="Reload" paletteLabel="Reload Preview" toolTip="Reload Preview" image="arrow.clockwise" catalog="system" id="HIG-toolbar-reload">
+                                    <connections>
+                                        <action selector="reloadButtonClicked:" target="fDo-d1-ebe" id="HIG-action-reload"/>
+                                    </connections>
+                                </toolbarItem>
+                            </allowedToolbarItems>
+                            <defaultToolbarItems>
+                                <toolbarItem reference="HIG-toolbar-bold"/>
+                                <toolbarItem reference="HIG-toolbar-italic"/>
+                                <toolbarItem reference="HIG-toolbar-strike"/>
+                                <toolbarItem reference="HIG-toolbar-quote"/>
+                                <toolbarItem reference="HIG-toolbar-code"/>
+                                <toolbarItem reference="HIG-toolbar-link"/>
+                                <toolbarItem reference="HIG-toolbar-bullets"/>
+                                <toolbarItem reference="HIG-toolbar-numbers"/>
+                                <toolbarItem reference="HIG-toolbar-reload"/>
+                            </defaultToolbarItems>
+                        </toolbar>
                         <connections>
                             <outlet property="delegate" destination="B8D-0N-5wS" id="98r-iN-zZc"/>
                         </connections>
@@ -739,14 +855,13 @@
                             <popUpButton verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Duo-Ip-fSB">
                                 <rect key="frame" x="194" y="271" width="250" height="25"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <popUpButtonCell key="cell" type="roundTextured" title="GitHub Flavored Markdown" bezelStyle="texturedRounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="giG-os-8Re" id="9bg-3D-lrL">
+                                <popUpButtonCell key="cell" type="push" title="GitHub Flavored Markdown" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="giG-os-8Re" id="9bg-3D-lrL">
                                     <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
                                     <menu key="menu" id="wy9-Qn-P3M">
                                         <items>
                                             <menuItem title="GitHub Flavored Markdown" state="on" id="giG-os-8Re"/>
                                             <menuItem title="Markdown" id="7Zc-KW-0sB"/>
-                                            <menuItem title="PHP Markdown Extra" id="pEx-qX-gWk"/>
                                             <menuItem title="Strict Markdown" id="N1c-v2-4Kf"/>
                                         </items>
                                     </menu>
@@ -786,94 +901,6 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cgO-Rd-8cz">
-                                <rect key="frame" x="291" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_bulleted_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WNM-Yo-QKR">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="listBulletedButtonClicked:" target="Wyk-aA-02j" id="Uef-eu-ksa"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tJD-zX-4Ek">
-                                <rect key="frame" x="238" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_insert_link_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Hn9-N0-AxR">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="insertLinkButtonClicked:" target="Wyk-aA-02j" id="gKL-fI-g7Q"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pLd-T1-wfE">
-                                <rect key="frame" x="181" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_code_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="syL-e9-bCL">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="codeButtonClicked:" target="Wyk-aA-02j" id="6a9-5P-8GQ"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="H8B-JZ-2c4">
-                                <rect key="frame" x="141" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_quote_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="UCW-xC-ad2">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="quoteButtonClicked:" target="Wyk-aA-02j" id="UAp-s3-aYd"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="DZC-vH-Ipq">
-                                <rect key="frame" x="85" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_italic_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pXn-HN-5Uc">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="italicButtonClicked:" target="Wyk-aA-02j" id="y61-YI-1LG"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="OQj-ss-Z06">
-                                <rect key="frame" x="5" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_bold_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="hRg-OI-h2k">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="boldButtonClicked:" target="Wyk-aA-02j" id="0ol-1X-U2H"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Hpn-ON-XBf">
-                                <rect key="frame" x="45" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_strikethrough_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Aky-xj-IKC">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="strikeThroughButtonClicked:" target="Wyk-aA-02j" id="L26-ZE-0A5"/>
-                                </connections>
-                            </button>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="CTd-Jo-LS6">
-                                <rect key="frame" x="331" y="270" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_format_list_numbered_18pt" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="RnI-sn-uhd">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="listNumberedButtonClicked:" target="Wyk-aA-02j" id="9Qx-nk-oxo"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -894,7 +921,7 @@
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
                             <wkWebView wantsLayer="YES" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5Hq-GR-HlJ">
-                                <rect key="frame" x="0.0" y="37" width="450" height="235"/>
+                                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <wkWebViewConfiguration key="configuration">
                                     <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
@@ -905,17 +932,6 @@
                                     <outlet property="navigationDelegate" destination="fDo-d1-ebe" id="SYb-AA-bHN"/>
                                 </connections>
                             </wkWebView>
-                            <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="m1S-Ha-xc4">
-                                <rect key="frame" x="412" y="273" width="32" height="25"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
-                                <buttonCell key="cell" type="roundTextured" bezelStyle="texturedRounded" image="ic_refresh_18pt" imagePosition="overlaps" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Udd-dG-KDm">
-                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                    <font key="font" metaFont="system"/>
-                                </buttonCell>
-                                <connections>
-                                    <action selector="reloadButtonClicked:" target="fDo-d1-ebe" id="gfL-Jn-PxK"/>
-                                </connections>
-                            </button>
                         </subviews>
                     </view>
                     <connections>
@@ -936,6 +952,5 @@
         <image name="ic_format_quote_18pt" width="36" height="36"/>
         <image name="ic_format_strikethrough_18pt" width="36" height="36"/>
         <image name="ic_insert_link_18pt" width="36" height="36"/>
-        <image name="ic_refresh_18pt" width="36" height="36"/>
     </resources>
 </document>

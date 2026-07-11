@@ -34,22 +34,12 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
-	<key>CFBundleURLTypes</key>
-	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>oauth.vjanelle.info</string>
-				<string>qiita.oauth.vjanelle.info</string>
-			</array>
-		</dict>
-	</array>
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
+	<key>LSApplicationCategoryType</key>
+	<string>public.app-category.productivity</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>Portions Copyright (c) 2026 Vincent Janelle
 Portions Copyright (c) 2018 Satoshi Iwaki, Github: https://github.com/satoshi-iwaki/markdown-editor-mac-objc</string>

@@ -11,14 +11,11 @@ jobs:
       - name: Check out repository
         uses: actions/checkout@v4
 
-      - name: Install CocoaPods dependencies
-        working-directory: MarkdownEditor
-        run: pod install
+      - name: Resolve Swift package dependencies
+        run: xcodebuild -resolvePackageDependencies -workspace MarkdownEditor/MarkdownEditor.xcworkspace -scheme MarkdownEditor
 
       - name: Build
-        working-directory: MarkdownEditor
-        run: xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor build
+        run: make build
 
       - name: Test
-        working-directory: MarkdownEditor
-        run: xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor test
+        run: make test
