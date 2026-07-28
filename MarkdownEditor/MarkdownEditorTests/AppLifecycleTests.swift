@@ -139,4 +139,10 @@ final class AppLifecycleTests: XCTestCase {
         XCTAssertTrue(result)
         XCTAssertTrue(window.isVisible)
     }
+
+    func testAppDelegateTerminatesAfterLastWindowCloses() {
+        let delegate = AppDelegate()
+
+        XCTAssertTrue(delegate.applicationShouldTerminateAfterLastWindowClosed(.shared))
+    }
 }
