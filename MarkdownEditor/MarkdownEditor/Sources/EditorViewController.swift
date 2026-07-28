@@ -207,6 +207,34 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         _ = saveFile()
     }
 
+    func confirmClosing(completionHandler handler: @escaping (Bool) -> Void) {
+        guard dirty else {
+            handler(true)
+            return
+        }
+
+        dialogPresenter.confirmDiscardingChanges(for: presentationWindow) { [weak self] returnCode in
+            guard let self else {
+                handler(false)
+                return
+            }
+            switch returnCode {
+            case .alertFirstButtonReturn:
+                if self.saveFile() {
+                    handler(true)
+                } else {
+                    self.promptForSaveURL(completionHandler: handler)
+                }
+            case .alertThirdButtonReturn:
+                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
+                self.dirty = false
+                handler(true)
+            default:
+                handler(false)
+            }
+        }
+    }
+
     @objc func reloadFileFromDiskIfNeeded() {
         guard !dirty, filePath != nil else {
             return

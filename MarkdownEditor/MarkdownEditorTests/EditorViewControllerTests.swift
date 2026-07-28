@@ -348,6 +348,43 @@ final class EditorViewControllerTests: XCTestCase {
         XCTAssertFalse(FileManager.default.fileExists(atPath: controller.filePath ?? ""))
     }
 
+    func testConfirmClosingCleanDocumentCompletesImmediately() {
+        let controller = makeController(text: "body")
+        var shouldClose = false
+
+        controller.confirmClosing { shouldClose = $0 }
+
+        XCTAssertTrue(shouldClose)
+        XCTAssertEqual(dialogPresenter.confirmCallCount, 0)
+    }
+
+    func testConfirmClosingDirtyDocumentDiscardsWithoutSaving() {
+        let controller = makeTestableController(text: "body")
+        controller.dirty = true
+        dialogPresenter.confirmationResponse = .alertThirdButtonReturn
+        var shouldClose = false
+
+        controller.confirmClosing { shouldClose = $0 }
+
+        XCTAssertTrue(shouldClose)
+        XCTAssertFalse(controller.dirty)
+        XCTAssertEqual(controller.saveFileCallCount, 0)
+        XCTAssertEqual(dialogPresenter.confirmCallCount, 1)
+    }
+
+    func testConfirmClosingDirtyDocumentCancels() {
+        let controller = makeTestableController(text: "body")
+        controller.dirty = true
+        dialogPresenter.confirmationResponse = .alertSecondButtonReturn
+        var shouldClose = true
+
+        controller.confirmClosing { shouldClose = $0 }
+
+        XCTAssertFalse(shouldClose)
+        XCTAssertTrue(controller.dirty)
+        XCTAssertEqual(controller.saveFileCallCount, 0)
+    }
+
     func testReplaceCharactersUpdatesTextAndDirtyState() {
         let controller = makeController(text: "Hello world")
 

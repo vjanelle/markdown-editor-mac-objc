@@ -145,4 +145,38 @@ final class AppLifecycleTests: XCTestCase {
 
         XCTAssertTrue(delegate.applicationShouldTerminateAfterLastWindowClosed(.shared))
     }
+
+    func testMainWindowControllerDelaysDirtyWindowCloseUntilEditorConfirms() {
+        let controller = MainWindowController()
+        let editor = makeCloseTestEditor()
+        let window = NSWindow(
+            contentRect: NSRect(x: 0, y: 0, width: 100, height: 100),
+            styleMask: .titled,
+            backing: .buffered,
+            defer: false
+        )
+        controller.setValue(window, forKey: "window")
+        controller.contentViewController = editor
+        window.delegate = controller
+
+        XCTAssertFalse(controller.windowShouldClose(window))
+        XCTAssertTrue(editor.dirty)
+    }
+
+    private func makeCloseTestEditor() -> EditorViewController {
+        let editor = TestableEditorViewController()
+        let view = NSView(frame: NSRect(x: 0, y: 0, width: 320, height: 200))
+        let textView = NSTextView(frame: NSRect(x: 0, y: 0, width: 320, height: 200))
+        let converterPopup = NSPopUpButton(frame: NSRect(x: 0, y: 0, width: 200, height: 25))
+        let presenter = StubEditorDialogPresenter()
+        presenter.confirmationResponse = .alertSecondButtonReturn
+        view.addSubview(textView)
+        view.addSubview(converterPopup)
+        editor.view = view
+        editor.textView = textView
+        editor.converterPopup = converterPopup
+        editor.dialogPresenter = presenter
+        editor.dirty = true
+        return editor
+    }
 }
