@@ -102,6 +102,20 @@ final class AppLifecycleTests: XCTestCase {
             .forEach { $0.close() }
     }
 
+    func testSettingsMenuOpensSettingsWindow() {
+        let delegate = AppDelegate()
+
+        delegate.showSettings(nil)
+
+        let settings = delegate.settingsWindowController
+        XCTAssertNotNil(settings)
+        XCTAssertEqual(settings?.window?.title, "Settings")
+        XCTAssertNotNil(settings?.window?.contentView?.subviews
+            .compactMap { $0 as? NSButton }
+            .first { $0.title == "Reset to Defaults" })
+        settings?.close()
+    }
+
     func testMainWindowNotVisibleAtLaunchInStoryboard() {
         let storyboard = mainStoryboardContents()
 
@@ -110,6 +124,8 @@ final class AppLifecycleTests: XCTestCase {
         XCTAssertFalse(storyboard.contains("property=\"mainWindowController\""))
         XCTAssertTrue(storyboard.contains("storyboardIdentifier=\"MainWindowController\""))
         XCTAssertTrue(storyboard.contains("selector=\"showAboutPanel:\""))
+        XCTAssertTrue(storyboard.contains("title=\"Settings…\""))
+        XCTAssertTrue(storyboard.contains("selector=\"showSettings:\""))
     }
 
     func testMainWindowUsesRealToolbarInsteadOfContentToolbar() {

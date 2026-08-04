@@ -20,13 +20,35 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         super.viewDidLoad()
         textView.setAccessibilityIdentifier("EditorTextView")
         converterPopup.setAccessibilityIdentifier("ConverterPopup")
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(editorFontSettingsDidChange),
+            name: PreferenceManager.editorFontSettingsDidChange,
+            object: PreferenceManager.shared
+        )
+        applyEditorFont()
         textView.string = loadSample()
         ConverterManager.shared.setContent(with: textView.string)
     }
 
     deinit {
+        NotificationCenter.default.removeObserver(self)
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
         fileWatcher.stopWatching()
+    }
+
+    @objc private func editorFontSettingsDidChange() {
+        applyEditorFont()
+    }
+
+    private func applyEditorFont() {
+        let preferences = PreferenceManager.shared
+        textView.font = NSFontManager.shared.font(
+            withFamily: preferences.editorFontName,
+            traits: [],
+            weight: 5,
+            size: preferences.editorFontSize
+        ) ?? NSFont.systemFont(ofSize: preferences.editorFontSize)
     }
 
     func textDidEndEditing(_ notification: Notification) {

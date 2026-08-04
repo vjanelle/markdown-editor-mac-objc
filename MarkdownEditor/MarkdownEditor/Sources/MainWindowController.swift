@@ -15,6 +15,10 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         set { ConverterManager.shared.selectedConverterIndex = Int(newValue) }
     }
 
+    @objc var currentEditorFont: NSFont? {
+        findEditorViewController(in: contentViewController)?.textView.font
+    }
+
     override func windowDidLoad() {
         super.windowDidLoad()
         windowFrameAutosaveName = Self.frameAutosaveName

@@ -24,9 +24,9 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="VOq-y0-SEH"/>
-                                        <menuItem title="Font &amp; Size…" keyEquivalent="," id="BOF-NM-1cW">
+                                        <menuItem title="Settings…" keyEquivalent="," id="BOF-NM-1cW">
                                             <connections>
-                                                <action selector="showFontPanel:" target="Voe-Tx-rLC" id="font-panel-action"/>
+                                                <action selector="showSettings:" target="Voe-Tx-rLC" id="settings-action"/>
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="wFC-TO-SCJ"/>

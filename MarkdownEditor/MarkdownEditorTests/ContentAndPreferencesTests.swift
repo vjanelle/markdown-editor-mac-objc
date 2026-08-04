@@ -1,3 +1,4 @@
+import Cocoa
 import XCTest
 @testable import MarkdownEditorLite
 
@@ -32,5 +33,12 @@ final class ContentAndPreferencesTests: XCTestCase {
         PreferenceManager.shared.resetToDefaults()
 
         XCTAssertTrue(PreferenceManager.shared.autoReloadEnabled)
+    }
+
+    func testPreferenceManagerDefaultsToMonospacedSystemFont() {
+        let expectedFont = NSFont.monospacedSystemFont(ofSize: NSFont.systemFontSize, weight: .regular)
+
+        XCTAssertEqual(PreferenceManager.shared.editorFontName, expectedFont.familyName)
+        XCTAssertEqual(PreferenceManager.shared.editorFontSize, NSFont.systemFontSize)
     }
 }
