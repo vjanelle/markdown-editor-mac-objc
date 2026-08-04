@@ -16,6 +16,10 @@
 			<string>Markdown</string>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
+			<key>LSItemContentTypes</key>
+			<array>
+				<string>net.daringfireball.markdown</string>
+			</array>
 			<key>LSHandlerRank</key>
 			<string>Default</string>
 		</dict>

@@ -50,6 +50,15 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         return false
     }
 
+    @objc func openFile(at path: String) -> Bool {
+        guard let editorViewController = findEditorViewController(in: contentViewController) else {
+            return false
+        }
+
+        editorViewController.filePath = path
+        return editorViewController.openFile()
+    }
+
     private func findEditorViewController(in viewController: NSViewController?) -> EditorViewController? {
         guard let viewController else {
             return nil

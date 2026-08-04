@@ -10,6 +10,16 @@ final class TestAppDelegate: AppDelegate {
     }
 }
 
+final class TestMainWindowController: MainWindowController {
+    var openedPath: String?
+    var openFileResult = true
+
+    override func openFile(at path: String) -> Bool {
+        openedPath = path
+        return openFileResult
+    }
+}
+
 final class AppLifecycleTests: XCTestCase {
     private func instantiateMainWindowController() -> MainWindowController {
         let storyboard = NSStoryboard(name: "Main", bundle: nil)
@@ -69,6 +79,17 @@ final class AppLifecycleTests: XCTestCase {
         delegate.applicationWillTerminate(notification)
 
         XCTAssertNotNil(delegate)
+    }
+
+    func testAppDelegateOpensMarkdownFilesSentByFinder() {
+        let delegate = TestAppDelegate()
+        let controller = TestMainWindowController()
+        delegate.stubWindowController = controller
+        let path = "/tmp/example.md"
+
+        delegate.application(.shared, openFiles: [path])
+
+        XCTAssertEqual(controller.openedPath, path)
     }
 
     func testAppDelegateShowsAboutPanel() {

@@ -17,6 +17,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindowController?.window?.makeKeyAndOrderFront(self)
     }
 
+    func application(_ sender: NSApplication, openFiles filenames: [String]) {
+        guard let filename = filenames.first,
+              let windowController = mainWindowController,
+              let mainWindowController = windowController as? MainWindowController,
+              mainWindowController.openFile(at: filename) else {
+            sender.reply(toOpenOrPrint: .failure)
+            return
+        }
+
+        sender.reply(toOpenOrPrint: .success)
+    }
+
     @IBAction func showAboutPanel(_ sender: Any?) {
         let credits = NSMutableAttributedString(string: "Portions Copyright (c) 2026 Vincent Janelle\n")
         credits.append(NSAttributedString(string: "Portions Copyright (c) 2018 Satoshi Iwaki, GitHub: "))
