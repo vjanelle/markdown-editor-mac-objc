@@ -32,6 +32,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         ])
     }
 
+    @IBAction func showFontPanel(_ sender: Any?) {
+        mainWindowController?.window?.makeKeyAndOrderFront(self)
+        NSApp.sendAction(#selector(NSFontManager.orderFrontFontPanel(_:)), to: NSFontManager.shared, from: sender)
+    }
+
     func applicationWillTerminate(_ notification: Notification) {
     }
 
