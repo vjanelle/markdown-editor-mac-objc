@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Raise `Markdown Editor.app` code coverage from 31.51% to at least 80% while keeping tests deterministic and avoiding fragile UI automation.
+**Goal:** Raise `Draftmark.app` code coverage from 31.51% to at least 80% while keeping tests deterministic and avoiding fragile UI automation.
 
 **Architecture:** Add unit coverage for pure models and managers first, then introduce small test seams for network/auth and editor workflows. Keep AppKit-heavy classes thin by extracting file/formatting logic into testable Objective-C collaborators instead of relying on UI tests.
 
@@ -15,16 +15,16 @@
 Latest coverage command:
 
 ```sh
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData -enableCodeCoverage YES test -quiet
-xcrun xccov view --report --only-targets /private/tmp/MarkdownEditorDerivedData/Logs/Test/Test-MarkdownEditor-2026.05.13_13-53-06--0700.xcresult
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData -enableCodeCoverage YES test -quiet
+xcrun xccov view --report --only-targets /private/tmp/DraftmarkDerivedData/Logs/Test/Test-Draftmark-2026.05.13_13-53-06--0700.xcresult
 ```
 
 Baseline:
 
 ```text
-Markdown Editor.app        31.51% (398/1263)
-MarkdownEditorTests.xctest 100.00% (37/37)
+Draftmark.app        31.51% (398/1263)
+DraftmarkTests.xctest 100.00% (37/37)
 ```
 
 Files with the largest useful gaps:
@@ -44,31 +44,31 @@ Coverage target math: app target needs about `1011/1263` covered lines for 80%. 
 
 Create:
 
-- `MarkdownEditor/MarkdownEditorTests/ContentAndPreferencesTests.m`: model and preference tests.
-- `MarkdownEditor/MarkdownEditorTests/ConverterManagerTests.m`: manager state, notification, and converter selection tests.
-- `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorTextFormatter.h`
-- `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorTextFormatter.m`
-- `MarkdownEditor/MarkdownEditorTests/EditorTextFormatterTests.m`
-- `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDocumentStore.h`
-- `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDocumentStore.m`
-- `MarkdownEditor/MarkdownEditorTests/EditorDocumentStoreTests.m`
-- `MarkdownEditor/MarkdownEditor/Sources/GitHub/GitHubGistsRequestBuilder.h`
-- `MarkdownEditor/MarkdownEditor/Sources/GitHub/GitHubGistsRequestBuilder.m`
-- `MarkdownEditor/MarkdownEditorTests/GitHubGistsRequestBuilderTests.m`
-- `MarkdownEditor/MarkdownEditorTests/PandocConverterTests.m`
+- `DraftmarkTests/ContentAndPreferencesTests.m`: model and preference tests.
+- `DraftmarkTests/ConverterManagerTests.m`: manager state, notification, and converter selection tests.
+- `Draftmark/Sources/Editor/EditorTextFormatter.h`
+- `Draftmark/Sources/Editor/EditorTextFormatter.m`
+- `DraftmarkTests/EditorTextFormatterTests.m`
+- `Draftmark/Sources/Editor/EditorDocumentStore.h`
+- `Draftmark/Sources/Editor/EditorDocumentStore.m`
+- `DraftmarkTests/EditorDocumentStoreTests.m`
+- `Draftmark/Sources/GitHub/GitHubGistsRequestBuilder.h`
+- `Draftmark/Sources/GitHub/GitHubGistsRequestBuilder.m`
+- `DraftmarkTests/GitHubGistsRequestBuilderTests.m`
+- `DraftmarkTests/PandocConverterTests.m`
 
 Modify:
 
-- `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`: add new source/test files to the correct targets.
-- `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.m`: delegate text formatting and file IO to extracted collaborators.
-- `MarkdownEditor/MarkdownEditor/Sources/GitHubGistsClient.m`: delegate request construction to `GitHubGistsRequestBuilder`.
-- `MarkdownEditor/MarkdownEditorTests/MarkdownEditorTests.m`: keep existing converter formatting tests.
+- `Draftmark.xcodeproj/project.pbxproj`: add new source/test files to the correct targets.
+- `Draftmark/Sources/EditorViewController.m`: delegate text formatting and file IO to extracted collaborators.
+- `Draftmark/Sources/GitHubGistsClient.m`: delegate request construction to `GitHubGistsRequestBuilder`.
+- `DraftmarkTests/DraftmarkTests.m`: keep existing converter formatting tests.
 
 ## Task 1: Add Model And Preference Coverage
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditorTests/ContentAndPreferencesTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `DraftmarkTests/ContentAndPreferencesTests.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -76,8 +76,8 @@ Create `ContentAndPreferencesTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/GitHubGistsContent.h"
-#import "../MarkdownEditor/Sources/PreferenceManager.h"
+#import "../Draftmark/Sources/GitHubGistsContent.h"
+#import "../Draftmark/Sources/PreferenceManager.h"
 
 @interface ContentAndPreferencesTests : XCTestCase
 @end
@@ -137,22 +137,22 @@ Create `ContentAndPreferencesTests.m`:
 Run:
 
 ```sh
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
-Expected: tests are not compiled until the new file is added to `MarkdownEditorTests` in `project.pbxproj`.
+Expected: tests are not compiled until the new file is added to `DraftmarkTests` in `project.pbxproj`.
 
-- [ ] **Step 3: Add the test file to `MarkdownEditorTests`**
+- [ ] **Step 3: Add the test file to `DraftmarkTests`**
 
-In `project.pbxproj`, add a `PBXFileReference`, `PBXBuildFile`, group child under `MarkdownEditorTests`, and source build phase entry for `ContentAndPreferencesTests.m`.
+In `project.pbxproj`, add a `PBXFileReference`, `PBXBuildFile`, group child under `DraftmarkTests`, and source build phase entry for `ContentAndPreferencesTests.m`.
 
 - [ ] **Step 4: Run tests**
 
 Run:
 
 ```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
 Expected: PASS.
@@ -160,8 +160,8 @@ Expected: PASS.
 ## Task 2: Add Converter Manager Coverage
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditorTests/ConverterManagerTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `DraftmarkTests/ConverterManagerTests.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -169,7 +169,7 @@ Create `ConverterManagerTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/Converter/ConverterManager.h"
+#import "../Draftmark/Sources/Converter/ConverterManager.h"
 
 @interface ConverterManagerTests : XCTestCase
 @end
@@ -222,14 +222,14 @@ Create `ConverterManagerTests.m`:
 
 - [ ] **Step 2: Add to test target**
 
-Add the file to the `MarkdownEditorTests` group and source build phase in `project.pbxproj`.
+Add the file to the `DraftmarkTests` group and source build phase in `project.pbxproj`.
 
 - [ ] **Step 3: Run tests**
 
 Run:
 
 ```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
 Expected: PASS. If port `8080` is already occupied, update `ConverterManager` in a later task to accept an injectable port for tests.
@@ -237,11 +237,11 @@ Expected: PASS. If port `8080` is already occupied, update `ConverterManager` in
 ## Task 3: Extract And Test Editor Text Formatting
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorTextFormatter.h`
-- Create: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorTextFormatter.m`
-- Create: `MarkdownEditor/MarkdownEditorTests/EditorTextFormatterTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `Draftmark/Sources/Editor/EditorTextFormatter.h`
+- Create: `Draftmark/Sources/Editor/EditorTextFormatter.m`
+- Create: `DraftmarkTests/EditorTextFormatterTests.m`
+- Modify: `Draftmark/Sources/EditorViewController.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -249,8 +249,8 @@ Create `EditorTextFormatterTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/Editor/EditorTextFormatter.h"
-#import "../MarkdownEditor/Sources/Converter/MarkdownConverter.h"
+#import "../Draftmark/Sources/Editor/EditorTextFormatter.h"
+#import "../Draftmark/Sources/Converter/MarkdownConverter.h"
 
 @interface EditorTextFormatterTests : XCTestCase
 @end
@@ -304,7 +304,7 @@ Create `EditorTextFormatterTests.m`:
 Run:
 
 ```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
 Expected: FAIL because `EditorTextFormatter` does not exist.
@@ -410,7 +410,7 @@ Repeat with the matching enum for italic, strike-through, quote, code, link, bul
 Run:
 
 ```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
 Expected: PASS.
@@ -418,11 +418,11 @@ Expected: PASS.
 ## Task 4: Extract And Test Editor File IO
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDocumentStore.h`
-- Create: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDocumentStore.m`
-- Create: `MarkdownEditor/MarkdownEditorTests/EditorDocumentStoreTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `Draftmark/Sources/Editor/EditorDocumentStore.h`
+- Create: `Draftmark/Sources/Editor/EditorDocumentStore.m`
+- Create: `DraftmarkTests/EditorDocumentStoreTests.m`
+- Modify: `Draftmark/Sources/EditorViewController.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -430,7 +430,7 @@ Create `EditorDocumentStoreTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/Editor/EditorDocumentStore.h"
+#import "../Draftmark/Sources/Editor/EditorDocumentStore.h"
 
 @interface EditorDocumentStoreTests : XCTestCase
 @end
@@ -521,7 +521,7 @@ Replace direct string file reads/writes in `openFile` and `saveFile` with `Edito
 Run:
 
 ```sh
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData test -quiet
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData test -quiet
 ```
 
 Expected: PASS.
@@ -529,11 +529,11 @@ Expected: PASS.
 ## Task 5: Extract And Test GitHub Gist Request Building
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditor/Sources/GitHub/GitHubGistsRequestBuilder.h`
-- Create: `MarkdownEditor/MarkdownEditor/Sources/GitHub/GitHubGistsRequestBuilder.m`
-- Create: `MarkdownEditor/MarkdownEditorTests/GitHubGistsRequestBuilderTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/GitHubGistsClient.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `Draftmark/Sources/GitHub/GitHubGistsRequestBuilder.h`
+- Create: `Draftmark/Sources/GitHub/GitHubGistsRequestBuilder.m`
+- Create: `DraftmarkTests/GitHubGistsRequestBuilderTests.m`
+- Modify: `Draftmark/Sources/GitHubGistsClient.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write failing tests**
 
@@ -541,8 +541,8 @@ Create `GitHubGistsRequestBuilderTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/GitHub/GitHubGistsRequestBuilder.h"
-#import "../MarkdownEditor/Sources/GitHubGistsContent.h"
+#import "../Draftmark/Sources/GitHub/GitHubGistsRequestBuilder.h"
+#import "../Draftmark/Sources/GitHubGistsContent.h"
 
 @interface GitHubGistsRequestBuilderTests : XCTestCase
 @end
@@ -645,8 +645,8 @@ Expected: PASS.
 ## Task 6: Complete Converter Coverage
 
 **Files:**
-- Create: `MarkdownEditor/MarkdownEditorTests/PandocConverterTests.m`
-- Modify: `MarkdownEditor/MarkdownEditor.xcodeproj/project.pbxproj`
+- Create: `DraftmarkTests/PandocConverterTests.m`
+- Modify: `Draftmark.xcodeproj/project.pbxproj`
 
 - [ ] **Step 1: Write tests**
 
@@ -654,7 +654,7 @@ Create `PandocConverterTests.m`:
 
 ```objc
 #import <XCTest/XCTest.h>
-#import "../MarkdownEditor/Sources/Converter/PandocConverter.h"
+#import "../Draftmark/Sources/Converter/PandocConverter.h"
 
 @interface ExposedPandocConverter : PandocConverter
 - (NSString *)commandWithString:(NSString *)string;
@@ -712,13 +712,13 @@ Expected: PASS.
 Run:
 
 ```sh
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData -enableCodeCoverage YES test -quiet
-LATEST_RESULT=$(ls -td /private/tmp/MarkdownEditorDerivedData/Logs/Test/*.xcresult | head -1)
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData -enableCodeCoverage YES test -quiet
+LATEST_RESULT=$(ls -td /private/tmp/DraftmarkDerivedData/Logs/Test/*.xcresult | head -1)
 xcrun xccov view --report --only-targets "$LATEST_RESULT"
 ```
 
-Expected after Tasks 1-6: `Markdown Editor.app` should be at or near 80%. If below 80%, inspect:
+Expected after Tasks 1-6: `Draftmark.app` should be at or near 80%. If below 80%, inspect:
 
 ```sh
 xcrun xccov view --report "$LATEST_RESULT"
@@ -742,16 +742,16 @@ Run:
 
 ```sh
 git diff --check
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -derivedDataPath /private/tmp/MarkdownEditorDerivedData -enableCodeCoverage YES test -quiet
-LATEST_RESULT=$(ls -td /private/tmp/MarkdownEditorDerivedData/Logs/Test/*.xcresult | head -1)
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData -enableCodeCoverage YES test -quiet
+LATEST_RESULT=$(ls -td /private/tmp/DraftmarkDerivedData/Logs/Test/*.xcresult | head -1)
 xcrun xccov view --report --only-targets "$LATEST_RESULT"
 ```
 
 Expected:
 
 ```text
-Markdown Editor.app 80.00% or higher
+Draftmark.app 80.00% or higher
 ```
 
 ## Risk Notes

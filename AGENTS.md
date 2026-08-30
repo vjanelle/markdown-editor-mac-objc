@@ -1,45 +1,36 @@
 # Repository Guidelines
 
-## Project Structure & Module Organization
+## Project Structure
 
-This repository contains a macOS Swift app in `MarkdownEditor/`. Open `MarkdownEditor/MarkdownEditor.xcworkspace` for development. App code lives in `MarkdownEditor/MarkdownEditor/Sources/`, with converter implementations grouped under `Sources/Converter/`. Storyboard UI is in `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`. Static resources such as Markdown templates and CSS are in `MarkdownEditor/MarkdownEditor/Resources/`, and image assets are in `MarkdownEditor/MarkdownEditor/Assets.xcassets/`. Unit tests are in `MarkdownEditor/MarkdownEditorTests/`; UI tests are in `MarkdownEditor/MarkdownEditorUITests/`.
+Draftmark is a macOS Swift app. Open `Draftmark.xcworkspace` in Xcode.
 
-## Build, Test, and Development Commands
+- App code: `Draftmark/Sources/`
+- Storyboard: `Draftmark/Base.lproj/Main.storyboard`
+- App resources: `Draftmark/Resources/`
+- Images: `Draftmark/Assets.xcassets/`
+- Unit tests: `DraftmarkTests/`
+- UI tests: `DraftmarkUITests/`
 
-Run commands from `MarkdownEditor/` unless noted otherwise.
+## Build and Run
+
+Run these commands from the repository root:
 
 ```sh
-make build
-make test
+make build       # Build Draftmark
+make test        # Run unit and UI tests
+make run         # Build and open the app
+make coverage    # Run tests and check 80% line coverage
+make clean       # Remove Draftmark derived data
 ```
 
-Builds or tests from the command line using the Makefile.
+## Code Style
 
-## Coding Style & Naming Conventions
+Use four spaces for indentation. Use `PascalCase` for types and `camelCase` for methods, properties, and local values. Put the opening brace on the declaration line. Keep `@IBOutlet` and `@IBAction` names aligned with storyboard objects. Keep changes small and local.
 
-Use Swift conventions already present in `Sources/`: four-space indentation, braces on method lines, `#pragma mark` sections for delegate and action groups, and paired `.h`/`.m` files for classes. Name classes with descriptive PascalCase, such as `EditorViewController` or `ConverterManager`. Use lower camelCase for methods, properties, and local variables. Keep IBOutlet and IBAction names aligned with storyboard controls.
+## Tests
 
-## Testing Guidelines
+Use XCTest. Start test method names with `test`. The Xcode test targets are `DraftmarkTests` and `DraftmarkUITests`. Put unit tests in `DraftmarkTests` and UI tests in `DraftmarkUITests`. Test converter and document behavior with unit tests. Use UI tests only for AppKit workflows.
 
-Tests use XCTest. Add unit tests in `MarkdownEditorTests` and UI tests in `MarkdownEditorUITests`. Name test methods with the `test...` prefix so XCTest discovers them. Prefer focused tests around converter behavior and content/client logic; use UI tests for workflows that require AppKit interaction.
+## Commits and Pull Requests
 
-## Commit & Pull Request Guidelines
-
-Recent history uses short imperative summaries, for example `Fix build script` and `Implements Markdown Editor`. Keep commits concise and focused on one logical change. Pull requests should include a brief description, testing performed, and screenshots or screen recordings for visible UI changes. Mention dependency, signing, or workspace changes explicitly because they affect local setup.
-
-## Agent-Specific Instructions
-
-Keep changes scoped to the app, tests, or project settings needed for the task, and avoid unrelated storyboard or asset churn.
-
-## Task Completion Status
-
-- Task 1: Complete (baseline verification)
-- Task 2: Complete (real toolbar implementation)
-- Task 3: Complete (adaptive window sizing)
-- Task 4: Complete (discoverable Markdown menu commands)
-
-## Implementation Notes
-
-The app now uses a real NSToolbar in the main window (replacing the fake content toolbar), and has implemented adaptive window sizing (reduced from 1200x800 to 720x480 minimum). Testing has been enhanced to verify toolbar content and window properties via the actual instantiated controller rather than parsing storyboard XML.
-
-Task 4 has been completed by adding Markdown formatting commands to the macOS menu bar for discoverability, following the Apple Human Interface Guidelines.
+Use a short imperative commit subject, such as `Fix build script`. Keep each commit focused. A pull request must describe the change and list the tests that you ran. Add screenshots or a recording for UI changes. Call out changes to dependencies, signing, or Xcode workspace files.

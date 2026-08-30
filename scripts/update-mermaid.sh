@@ -10,7 +10,7 @@ fi
 VERSION="$1"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-VENDOR_DIR="${REPO_ROOT}/MarkdownEditor/MarkdownEditor/Resources/vendor/mermaid"
+VENDOR_DIR="${REPO_ROOT}/Draftmark/Resources/vendor/mermaid"
 STABLE_FILE="${VENDOR_DIR}/mermaid.min.js"
 VERSIONED_FILE="${VENDOR_DIR}/mermaid-${VERSION}.min.js"
 DEFAULT_URL="https://cdn.jsdelivr.net/npm/mermaid@${VERSION}/dist/mermaid.min.js"

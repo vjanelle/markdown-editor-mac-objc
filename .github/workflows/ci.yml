@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Resolve Swift package dependencies
-        run: xcodebuild -resolvePackageDependencies -workspace MarkdownEditor/MarkdownEditor.xcworkspace -scheme MarkdownEditor
+        run: xcodebuild -resolvePackageDependencies -workspace Draftmark.xcworkspace -scheme Draftmark
 
       - name: Build
         run: make build

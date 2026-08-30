@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Bring the macOS Markdown editor closer to Apple Human Interface Guidelines by replacing content-area toolbar controls with standard macOS affordances, improving adaptive window behavior, fixing menu discoverability, and correcting alert/document wording.
+**Goal:** Bring the macOS Draftmark closer to Apple Human Interface Guidelines by replacing content-area toolbar controls with standard macOS affordances, improving adaptive window behavior, fixing menu discoverability, and correcting alert/document wording.
 
 **Architecture:** Keep the existing storyboard-based AppKit architecture. Move command presentation toward standard `NSToolbar`/menu surfaces while preserving the existing `EditorViewController` formatting methods and `ConverterManager` bindings. Use focused XCTest coverage around storyboard structure, window sizing, menu actions, icon configuration, and alert text.
 
@@ -14,32 +14,32 @@
 
 ## File Structure
 
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
   - Remove fake content toolbar controls from editor/preview panes.
   - Add a real `NSToolbar` to the main window.
   - Add menu items for Markdown formatting commands.
   - Make app/window naming consistent.
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/MainWindowController.swift`
+- Modify: `Draftmark/Sources/MainWindowController.swift`
   - Reduce and expose adaptive minimum content size.
   - Configure real toolbar behavior if needed after storyboard hookup.
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
+- Modify: `Draftmark/Sources/EditorViewController.swift`
   - Remove manual fake-toolbar layout and custom icon tinting.
   - Add menu/toolbar action aliases with standard selectors where appropriate.
   - Keep formatting behavior in `applyFormat(_:)`.
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift`
+- Modify: `Draftmark/Sources/PreviewViewController.swift`
   - Remove content-area reload button configuration.
   - Keep `reloadButtonClicked(_:)` as the toolbar/menu action target.
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDialogPresenter.swift`
+- Modify: `Draftmark/Sources/Editor/EditorDialogPresenter.swift`
   - Fix alert headline/body ordering.
   - Let unsaved-change messages use a passed document display name.
-- Modify: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
+- Modify: `DraftmarkTests/AppLifecycleTests.swift`
   - Replace the old 1200x800 minimum-size assertion.
   - Add storyboard assertions for real toolbar and no fake content toolbar.
-- Modify: `MarkdownEditor/MarkdownEditorTests/EditorViewControllerTests.swift`
+- Modify: `DraftmarkTests/EditorViewControllerTests.swift`
   - Add tests for command aliases and unsaved-change document naming.
-- Modify: `MarkdownEditor/MarkdownEditorTests/PreviewViewControllerTests.swift`
+- Modify: `DraftmarkTests/PreviewViewControllerTests.swift`
   - Add/adjust tests for preview reload command without requiring a content button.
-- Modify: `MarkdownEditor/MarkdownEditorTests/EditorDialogPresenterTests.swift`
+- Modify: `DraftmarkTests/EditorDialogPresenterTests.swift`
   - Add alert text construction tests.
 
 ---
@@ -47,19 +47,19 @@
 ### Task 1: Baseline Verification
 
 **Files:**
-- Read: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Read: `MarkdownEditor/MarkdownEditor/Sources/MainWindowController.swift`
-- Read: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Read: `MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift`
-- Read: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDialogPresenter.swift`
+- Read: `Draftmark/Base.lproj/Main.storyboard`
+- Read: `Draftmark/Sources/MainWindowController.swift`
+- Read: `Draftmark/Sources/EditorViewController.swift`
+- Read: `Draftmark/Sources/PreviewViewController.swift`
+- Read: `Draftmark/Sources/Editor/EditorDialogPresenter.swift`
 
 - [ ] **Step 1: Run the current test suite**
 
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark test
 ```
 
 Expected: PASS before changes. If this fails, capture the failing test names and fix only unrelated environmental issues before continuing.
@@ -69,10 +69,10 @@ Expected: PASS before changes. If this fails, capture the failing test names and
 Run:
 
 ```bash
-rg -n "toolbar|Show Toolbar|Customize Toolbar|roundTextured|texturedRounded|fixedFrame|MarkdownEditor Lite|buttonCell|popUpButtonCell" MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard
+rg -n "toolbar|Show Toolbar|Customize Toolbar|roundTextured|texturedRounded|fixedFrame|Draftmark Lite|buttonCell|popUpButtonCell" Draftmark/Base.lproj/Main.storyboard
 ```
 
-Expected: Output includes fake content buttons, `roundTextured`/`texturedRounded`, and `MarkdownEditor Lite`; these are the targets for later tasks.
+Expected: Output includes fake content buttons, `roundTextured`/`texturedRounded`, and `Draftmark Lite`; these are the targets for later tasks.
 
 - [ ] **Step 3: Commit the known-good baseline if requested**
 
@@ -90,10 +90,10 @@ Expected: Empty baseline commit is created, or skipped if the user does not want
 ### Task 2: Replace the Fake Toolbar With a Real Window Toolbar
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
+- Modify: `Draftmark/Sources/EditorViewController.swift`
+- Modify: `Draftmark/Sources/PreviewViewController.swift`
+- Test: `DraftmarkTests/AppLifecycleTests.swift`
 
 - [ ] **Step 1: Write failing storyboard tests**
 
@@ -116,8 +116,8 @@ func testMainWindowUsesRealToolbarInsteadOfContentToolbar() {
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar test
 ```
 
 Expected: FAIL because the storyboard currently has no real toolbar and still contains textured rounded content buttons.
@@ -127,24 +127,24 @@ Expected: FAIL because the storyboard currently has no real toolbar and still co
 Edit `Main.storyboard`:
 
 ```xml
-<toolbar key="toolbar" implicitIdentifier="MarkdownEditorMainToolbar" autosavesConfiguration="YES" allowsUserCustomization="YES" displayMode="iconOnly" sizeMode="regular" id="HIG-main-toolbar">
+<toolbar key="toolbar" implicitIdentifier="DraftmarkMainToolbar" autosavesConfiguration="YES" allowsUserCustomization="YES" displayMode="iconOnly" sizeMode="regular" id="HIG-main-toolbar">
     <allowedToolbarItems>
-        <toolbarItem implicitItemIdentifier="com.markdowneditor.bold" label="Bold" paletteLabel="Bold" toolTip="Bold" image="bold" catalog="system" id="HIG-toolbar-bold">
+        <toolbarItem implicitItemIdentifier="com.draftmark.bold" label="Bold" paletteLabel="Bold" toolTip="Bold" image="bold" catalog="system" id="HIG-toolbar-bold">
             <connections>
                 <action selector="boldButtonClicked:" target="Wyk-aA-02j" id="HIG-action-bold"/>
             </connections>
         </toolbarItem>
-        <toolbarItem implicitItemIdentifier="com.markdowneditor.italic" label="Italic" paletteLabel="Italic" toolTip="Italic" image="italic" catalog="system" id="HIG-toolbar-italic">
+        <toolbarItem implicitItemIdentifier="com.draftmark.italic" label="Italic" paletteLabel="Italic" toolTip="Italic" image="italic" catalog="system" id="HIG-toolbar-italic">
             <connections>
                 <action selector="italicButtonClicked:" target="Wyk-aA-02j" id="HIG-action-italic"/>
             </connections>
         </toolbarItem>
-        <toolbarItem implicitItemIdentifier="com.markdowneditor.link" label="Link" paletteLabel="Insert Link" toolTip="Insert Link" image="link" catalog="system" id="HIG-toolbar-link">
+        <toolbarItem implicitItemIdentifier="com.draftmark.link" label="Link" paletteLabel="Insert Link" toolTip="Insert Link" image="link" catalog="system" id="HIG-toolbar-link">
             <connections>
                 <action selector="insertLinkButtonClicked:" target="Wyk-aA-02j" id="HIG-action-link"/>
             </connections>
         </toolbarItem>
-        <toolbarItem implicitItemIdentifier="com.markdowneditor.reloadPreview" label="Reload" paletteLabel="Reload Preview" toolTip="Reload Preview" image="arrow.clockwise" catalog="system" id="HIG-toolbar-reload">
+        <toolbarItem implicitItemIdentifier="com.draftmark.reloadPreview" label="Reload" paletteLabel="Reload Preview" toolTip="Reload Preview" image="arrow.clockwise" catalog="system" id="HIG-toolbar-reload">
             <connections>
                 <action selector="reloadButtonClicked:" target="fDo-d1-ebe" id="HIG-action-reload"/>
             </connections>
@@ -219,8 +219,8 @@ Remove `viewDidLayout()` if it becomes empty.
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar -only-testing:MarkdownEditorTests/EditorViewControllerTests/testFormattingActionsUpdateSelectedText -only-testing:MarkdownEditorTests/PreviewViewControllerTests/testReloadButtonLoadsCurrentHtml test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar -only-testing:DraftmarkTests/EditorViewControllerTests/testFormattingActionsUpdateSelectedText -only-testing:DraftmarkTests/PreviewViewControllerTests/testReloadButtonLoadsCurrentHtml test
 ```
 
 Expected: PASS.
@@ -228,7 +228,7 @@ Expected: PASS.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift
+git add Draftmark/Base.lproj/Main.storyboard Draftmark/Sources/EditorViewController.swift Draftmark/Sources/PreviewViewController.swift DraftmarkTests/AppLifecycleTests.swift
 git commit -m "fix: use standard macOS toolbar"
 ```
 
@@ -237,9 +237,9 @@ git commit -m "fix: use standard macOS toolbar"
 ### Task 3: Make Window Sizing Adaptive
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/MainWindowController.swift`
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Test: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
+- Modify: `Draftmark/Sources/MainWindowController.swift`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
+- Test: `DraftmarkTests/AppLifecycleTests.swift`
 
 - [ ] **Step 1: Replace the failing minimum-size test**
 
@@ -262,7 +262,7 @@ func testMainWindowControllerUsesAdaptiveMinimumContentSize() {
     XCTAssertLessThanOrEqual(window.contentMinSize.height, 600.0)
     XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.width ?? 0, window.contentMinSize.width)
     XCTAssertGreaterThanOrEqual(window.contentView?.frame.size.height ?? 0, window.contentMinSize.height)
-    XCTAssertEqual(controller.windowFrameAutosaveName, "MarkdownEditorMainWindow")
+    XCTAssertEqual(controller.windowFrameAutosaveName, "DraftmarkMainWindow")
 }
 ```
 
@@ -271,8 +271,8 @@ func testMainWindowControllerUsesAdaptiveMinimumContentSize() {
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowControllerUsesAdaptiveMinimumContentSize test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowControllerUsesAdaptiveMinimumContentSize test
 ```
 
 Expected: FAIL because the current minimum is 1200x800.
@@ -308,8 +308,8 @@ to:
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowControllerUsesAdaptiveMinimumContentSize -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowStoryboardInstantiatesContentController test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowControllerUsesAdaptiveMinimumContentSize -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowStoryboardInstantiatesContentController test
 ```
 
 Expected: PASS.
@@ -317,7 +317,7 @@ Expected: PASS.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Sources/MainWindowController.swift MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift
+git add Draftmark/Sources/MainWindowController.swift Draftmark/Base.lproj/Main.storyboard DraftmarkTests/AppLifecycleTests.swift
 git commit -m "fix: make main window size adaptive"
 ```
 
@@ -326,10 +326,10 @@ git commit -m "fix: make main window size adaptive"
 ### Task 4: Add Discoverable Markdown Menu Commands
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/EditorViewControllerTests.swift`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
+- Modify: `Draftmark/Sources/EditorViewController.swift`
+- Test: `DraftmarkTests/AppLifecycleTests.swift`
+- Test: `DraftmarkTests/EditorViewControllerTests.swift`
 
 - [ ] **Step 1: Add failing menu/storyboard test**
 
@@ -375,8 +375,8 @@ This passes with the current methods, but protects the menu wiring target method
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardExposesMarkdownFormattingMenuCommands -only-testing:MarkdownEditorTests/EditorViewControllerTests/testStandardFormattingCommandAliasesApplyMarkdown test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardExposesMarkdownFormattingMenuCommands -only-testing:DraftmarkTests/EditorViewControllerTests/testStandardFormattingCommandAliasesApplyMarkdown test
 ```
 
 Expected: Storyboard test FAILS until the Markdown menu is added.
@@ -447,8 +447,8 @@ In `Main.storyboard`, add a top-level menu after `Format` and before `View`:
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardExposesMarkdownFormattingMenuCommands -only-testing:MarkdownEditorTests/EditorViewControllerTests/testFormattingActionsUpdateSelectedText -only-testing:MarkdownEditorTests/EditorViewControllerTests/testBlockFormattingActionsUpdateSelectedText test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardExposesMarkdownFormattingMenuCommands -only-testing:DraftmarkTests/EditorViewControllerTests/testFormattingActionsUpdateSelectedText -only-testing:DraftmarkTests/EditorViewControllerTests/testBlockFormattingActionsUpdateSelectedText test
 ```
 
 Expected: PASS.
@@ -456,7 +456,7 @@ Expected: PASS.
 - [ ] **Step 6: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift MarkdownEditor/MarkdownEditorTests/EditorViewControllerTests.swift
+git add Draftmark/Base.lproj/Main.storyboard DraftmarkTests/AppLifecycleTests.swift DraftmarkTests/EditorViewControllerTests.swift
 git commit -m "fix: add markdown formatting menu"
 ```
 
@@ -465,10 +465,10 @@ git commit -m "fix: add markdown formatting menu"
 ### Task 5: Use System Symbols and Remove Manual Icon Tinting
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
+- Modify: `Draftmark/Sources/EditorViewController.swift`
+- Modify: `Draftmark/Sources/PreviewViewController.swift`
+- Test: `DraftmarkTests/AppLifecycleTests.swift`
 
 - [ ] **Step 1: Add failing storyboard asset test**
 
@@ -490,8 +490,8 @@ func testStoryboardDoesNotUseBundledMaterialFormattingIcons() {
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardDoesNotUseBundledMaterialFormattingIcons test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardDoesNotUseBundledMaterialFormattingIcons test
 ```
 
 Expected: FAIL until storyboard toolbar/menu icon references use SF Symbols only.
@@ -519,8 +519,8 @@ Do not manually tint these images in Swift. Use AppKit defaults so disabled/high
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardDoesNotUseBundledMaterialFormattingIcons -only-testing:MarkdownEditorTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardDoesNotUseBundledMaterialFormattingIcons -only-testing:DraftmarkTests/AppLifecycleTests/testMainWindowUsesRealToolbarInsteadOfContentToolbar test
 ```
 
 Expected: PASS.
@@ -528,7 +528,7 @@ Expected: PASS.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift
+git add Draftmark/Base.lproj/Main.storyboard Draftmark/Sources/EditorViewController.swift Draftmark/Sources/PreviewViewController.swift DraftmarkTests/AppLifecycleTests.swift
 git commit -m "fix: use system toolbar symbols"
 ```
 
@@ -537,10 +537,10 @@ git commit -m "fix: use system toolbar symbols"
 ### Task 6: Fix Alert Copy and Document Names
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDialogPresenter.swift`
-- Modify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/EditorDialogPresenterTests.swift`
-- Test: `MarkdownEditor/MarkdownEditorTests/EditorViewControllerTests.swift`
+- Modify: `Draftmark/Sources/Editor/EditorDialogPresenter.swift`
+- Modify: `Draftmark/Sources/EditorViewController.swift`
+- Test: `DraftmarkTests/EditorDialogPresenterTests.swift`
+- Test: `DraftmarkTests/EditorViewControllerTests.swift`
 
 - [ ] **Step 1: Write failing alert text tests**
 
@@ -577,8 +577,8 @@ func testDocumentDisplayNameUsesFileNameOrFallback() {
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/EditorDialogPresenterTests/testUnsavedChangesMessageUsesDocumentDisplayName -only-testing:MarkdownEditorTests/EditorViewControllerTests/testDocumentDisplayNameUsesFileNameOrFallback test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/EditorDialogPresenterTests/testUnsavedChangesMessageUsesDocumentDisplayName -only-testing:DraftmarkTests/EditorViewControllerTests/testDocumentDisplayNameUsesFileNameOrFallback test
 ```
 
 Expected: FAIL because these APIs do not exist yet.
@@ -702,8 +702,8 @@ presenter.confirmDiscardingChanges(forDocumentDisplayName: "Untitled", window: n
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/EditorDialogPresenterTests -only-testing:MarkdownEditorTests/EditorViewControllerTests/testDocumentDisplayNameUsesFileNameOrFallback -only-testing:MarkdownEditorTests/EditorViewControllerTests/testNewDocumentDirtyDiscardCreatesNewFile -only-testing:MarkdownEditorTests/EditorViewControllerTests/testOpenDocumentDirtyDiscardOpensOpenPanel test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/EditorDialogPresenterTests -only-testing:DraftmarkTests/EditorViewControllerTests/testDocumentDisplayNameUsesFileNameOrFallback -only-testing:DraftmarkTests/EditorViewControllerTests/testNewDocumentDirtyDiscardCreatesNewFile -only-testing:DraftmarkTests/EditorViewControllerTests/testOpenDocumentDirtyDiscardOpensOpenPanel test
 ```
 
 Expected: PASS.
@@ -711,7 +711,7 @@ Expected: PASS.
 - [ ] **Step 7: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDialogPresenter.swift MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift MarkdownEditor/MarkdownEditorTests/EditorDialogPresenterTests.swift MarkdownEditor/MarkdownEditorTests/EditorViewControllerTests.swift
+git add Draftmark/Sources/Editor/EditorDialogPresenter.swift Draftmark/Sources/EditorViewController.swift DraftmarkTests/EditorDialogPresenterTests.swift DraftmarkTests/EditorViewControllerTests.swift
 git commit -m "fix: improve document alert copy"
 ```
 
@@ -720,8 +720,8 @@ git commit -m "fix: improve document alert copy"
 ### Task 7: Align App and Window Naming
 
 **Files:**
-- Modify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Test: `MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift`
+- Modify: `Draftmark/Base.lproj/Main.storyboard`
+- Test: `DraftmarkTests/AppLifecycleTests.swift`
 
 - [ ] **Step 1: Add failing naming test**
 
@@ -731,8 +731,8 @@ In `AppLifecycleTests.swift`, add:
 func testStoryboardUsesConsistentAppName() {
     let storyboard = mainStoryboardContents()
 
-    XCTAssertTrue(storyboard.contains("title=\"MarkdownEditor\""))
-    XCTAssertFalse(storyboard.contains("MarkdownEditor Lite"))
+    XCTAssertTrue(storyboard.contains("title=\"Draftmark\""))
+    XCTAssertFalse(storyboard.contains("Draftmark Lite"))
 }
 ```
 
@@ -741,24 +741,24 @@ func testStoryboardUsesConsistentAppName() {
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardUsesConsistentAppName test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardUsesConsistentAppName test
 ```
 
-Expected: FAIL because the window title currently says `MarkdownEditor Lite`.
+Expected: FAIL because the window title currently says `Draftmark Lite`.
 
 - [ ] **Step 3: Update the main window title**
 
 In `Main.storyboard`, change:
 
 ```xml
-<window key="window" title="MarkdownEditor Lite" ...
+<window key="window" title="Draftmark Lite" ...
 ```
 
 to:
 
 ```xml
-<window key="window" title="MarkdownEditor" ...
+<window key="window" title="Draftmark" ...
 ```
 
 - [ ] **Step 4: Run focused test**
@@ -766,8 +766,8 @@ to:
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor -only-testing:MarkdownEditorTests/AppLifecycleTests/testStoryboardUsesConsistentAppName test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -only-testing:DraftmarkTests/AppLifecycleTests/testStoryboardUsesConsistentAppName test
 ```
 
 Expected: PASS.
@@ -775,7 +775,7 @@ Expected: PASS.
 - [ ] **Step 5: Commit**
 
 ```bash
-git add MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard MarkdownEditor/MarkdownEditorTests/AppLifecycleTests.swift
+git add Draftmark/Base.lproj/Main.storyboard DraftmarkTests/AppLifecycleTests.swift
 git commit -m "fix: align app naming"
 ```
 
@@ -784,19 +784,19 @@ git commit -m "fix: align app naming"
 ### Task 8: Final HIG Regression Pass
 
 **Files:**
-- Verify: `MarkdownEditor/MarkdownEditor/Base.lproj/Main.storyboard`
-- Verify: `MarkdownEditor/MarkdownEditor/Sources/MainWindowController.swift`
-- Verify: `MarkdownEditor/MarkdownEditor/Sources/EditorViewController.swift`
-- Verify: `MarkdownEditor/MarkdownEditor/Sources/PreviewViewController.swift`
-- Verify: `MarkdownEditor/MarkdownEditor/Sources/Editor/EditorDialogPresenter.swift`
-- Verify: `MarkdownEditor/MarkdownEditorTests/*.swift`
+- Verify: `Draftmark/Base.lproj/Main.storyboard`
+- Verify: `Draftmark/Sources/MainWindowController.swift`
+- Verify: `Draftmark/Sources/EditorViewController.swift`
+- Verify: `Draftmark/Sources/PreviewViewController.swift`
+- Verify: `Draftmark/Sources/Editor/EditorDialogPresenter.swift`
+- Verify: `DraftmarkTests/*.swift`
 
 - [ ] **Step 1: Run style grep for removed patterns**
 
 Run:
 
 ```bash
-rg -n "roundTextured|texturedRounded|ic_format_|ic_insert_link_|ic_refresh_|MarkdownEditor Lite|minimumContentSize = NSSize\\(width: 1200|configureFormattingButtons|layoutFormattingToolbar|tintedNonTemplateImage" MarkdownEditor/MarkdownEditor MarkdownEditor/MarkdownEditorTests
+rg -n "roundTextured|texturedRounded|ic_format_|ic_insert_link_|ic_refresh_|Draftmark Lite|minimumContentSize = NSSize\\(width: 1200|configureFormattingButtons|layoutFormattingToolbar|tintedNonTemplateImage" Draftmark/Draftmark Draftmark/DraftmarkTests
 ```
 
 Expected: No matches.
@@ -806,8 +806,8 @@ Expected: No matches.
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor test
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark test
 ```
 
 Expected: PASS.
@@ -817,8 +817,8 @@ Expected: PASS.
 Run:
 
 ```bash
-cd MarkdownEditor
-xcodebuild -workspace MarkdownEditor.xcworkspace -scheme MarkdownEditor build
+cd .
+xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark build
 ```
 
 Expected: BUILD SUCCEEDED.
@@ -828,7 +828,7 @@ Expected: BUILD SUCCEEDED.
 Open the workspace:
 
 ```bash
-open MarkdownEditor/MarkdownEditor.xcworkspace
+open Draftmark.xcworkspace
 ```
 
 Manual expectations:
@@ -845,7 +845,7 @@ Manual expectations:
 
 ```bash
 git status --short
-git add MarkdownEditor docs/superpowers/plans/2026-05-20-apple-hig-alignment.md
+git add Draftmark docs/superpowers/plans/2026-05-20-apple-hig-alignment.md
 git commit -m "docs: plan Apple HIG alignment"
 ```
 

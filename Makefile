@@ -1,9 +1,9 @@
 ROOT_DIR := $(abspath .)
-WORKSPACE := $(ROOT_DIR)/MarkdownEditor/MarkdownEditor.xcworkspace
-SCHEME := MarkdownEditor
-DERIVED_DATA := /private/tmp/MarkdownEditorDerivedData
-APP_PATH := $(DERIVED_DATA)/Build/Products/Debug/MarkdownEditor\ Lite.app
-COVERAGE_RESULT := /private/tmp/MarkdownEditorCoverage.xcresult
+WORKSPACE := $(ROOT_DIR)/Draftmark.xcworkspace
+SCHEME := Draftmark
+DERIVED_DATA := /private/tmp/DraftmarkDerivedData
+APP_PATH := $(DERIVED_DATA)/Build/Products/Debug/Draftmark.app
+COVERAGE_RESULT := /private/tmp/DraftmarkCoverage.xcresult
 COVERAGE_MIN := 0.8
 
 .PHONY: build test coverage run app-path clean
@@ -19,7 +19,7 @@ coverage:
 	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -enableCodeCoverage YES -resultBundlePath $(COVERAGE_RESULT) test -quiet
 	@# Exclude compiler-generated closures and AppKit/WebKit delegate wrappers that are unsafe to drive in headless tests.
 	@violations=$$(xcrun xccov view --report --json $(COVERAGE_RESULT) | jq -r --argjson threshold $(COVERAGE_MIN) '\
-		.targets[] | select(.name == "MarkdownEditor Lite.app") | .files[] as $$file | $$file.functions[] |\
+		.targets[] | select(.name == "Draftmark.app") | .files[] as $$file | $$file.functions[] |\
 		select(.lineCoverage < $$threshold) |\
 		select((.name | test("^(implicit closure|closure #)")) | not) |\
 		select((.name | test("^PreviewViewController.webView\\(")) | not) |\
@@ -30,13 +30,13 @@ coverage:
 		printf '%s\n' "$$violations"; \
 		exit 1; \
 	fi; \
-	xcrun xccov view --report $(COVERAGE_RESULT) | awk '/MarkdownEditor Lite.app/ { print; exit }'
+	xcrun xccov view --report $(COVERAGE_RESULT) | awk '/Draftmark.app/ { print; exit }'
 
 run: build
 	open $(APP_PATH)
 
 app-path:
-	@printf '%s\n' "$(DERIVED_DATA)/Build/Products/Debug/MarkdownEditor Lite.app"
+	@printf '%s\n' "$(DERIVED_DATA)/Build/Products/Debug/Draftmark.app"
 
 clean:
 	rm -rf $(DERIVED_DATA)
