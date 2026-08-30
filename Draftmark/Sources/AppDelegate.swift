@@ -5,6 +5,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private static let repositoryURLString = "https://github.com/vjanelle/Draftmark"
 
     private var storedMainWindowController: NSWindowController?
+    private var pendingOpenFilename: String?
     @objc var settingsWindowController: SettingsWindowController?
 
     @objc var mainWindowController: NSWindowController? {
@@ -16,13 +17,27 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         storedMainWindowController = storyboard.instantiateController(withIdentifier: "MainWindowController") as? MainWindowController
         mainWindowController?.showWindow(self)
         mainWindowController?.window?.makeKeyAndOrderFront(self)
+
+        if let pendingOpenFilename {
+            self.pendingOpenFilename = nil
+            _ = (mainWindowController as? MainWindowController)?.openFile(at: pendingOpenFilename)
+        }
     }
 
     func application(_ sender: NSApplication, openFiles filenames: [String]) {
-        guard let filename = filenames.first,
-              let windowController = mainWindowController,
-              let mainWindowController = windowController as? MainWindowController,
-              mainWindowController.openFile(at: filename) else {
+        guard let filename = filenames.first else {
+            sender.reply(toOpenOrPrint: .failure)
+            return
+        }
+
+        guard let windowController = mainWindowController,
+              let mainWindowController = windowController as? MainWindowController else {
+            pendingOpenFilename = filename
+            sender.reply(toOpenOrPrint: .success)
+            return
+        }
+
+        guard mainWindowController.openFile(at: filename) else {
             sender.reply(toOpenOrPrint: .failure)
             return
         }
