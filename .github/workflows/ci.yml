@@ -15,7 +15,7 @@ jobs:
         run: xcodebuild -resolvePackageDependencies -workspace Draftmark.xcworkspace -scheme Draftmark
 
       - name: Build
-        run: make build
+        run: xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO build
 
       - name: Test
-        run: make test
+        run: xcodebuild -workspace Draftmark.xcworkspace -scheme Draftmark -derivedDataPath /private/tmp/DraftmarkDerivedData CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO test

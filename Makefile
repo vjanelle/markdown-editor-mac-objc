@@ -1,5 +1,4 @@
-ROOT_DIR := $(abspath .)
-WORKSPACE := $(ROOT_DIR)/Draftmark.xcworkspace
+WORKSPACE := Draftmark.xcworkspace
 SCHEME := Draftmark
 DERIVED_DATA := /private/tmp/DraftmarkDerivedData
 APP_PATH := $(DERIVED_DATA)/Build/Products/Debug/Draftmark.app
@@ -9,14 +8,14 @@ COVERAGE_MIN := 0.8
 .PHONY: build test coverage run app-path clean
 
 build:
-	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) build -quiet
+	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) build
 
 test:
-	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) test -quiet
+	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) test
 
 coverage:
 	rm -rf $(COVERAGE_RESULT)
-	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -enableCodeCoverage YES -resultBundlePath $(COVERAGE_RESULT) test -quiet
+	xcodebuild -workspace $(WORKSPACE) -scheme $(SCHEME) -derivedDataPath $(DERIVED_DATA) -enableCodeCoverage YES -resultBundlePath $(COVERAGE_RESULT) test
 	@# Exclude compiler-generated closures and AppKit/WebKit delegate wrappers that are unsafe to drive in headless tests.
 	@violations=$$(xcrun xccov view --report --json $(COVERAGE_RESULT) | jq -r --argjson threshold $(COVERAGE_MIN) '\
 		.targets[] | select(.name == "Draftmark.app") | .files[] as $$file | $$file.functions[] |\
