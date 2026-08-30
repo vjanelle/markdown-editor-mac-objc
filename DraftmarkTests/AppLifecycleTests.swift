@@ -34,6 +34,16 @@ final class AppLifecycleTests: XCTestCase {
         return (try? String(contentsOf: storyboardURL, encoding: .utf8)) ?? ""
     }
 
+    private func editorViewController(in viewController: NSViewController?) -> EditorViewController? {
+        guard let viewController else {
+            return nil
+        }
+        if let editor = viewController as? EditorViewController {
+            return editor
+        }
+        return viewController.children.lazy.compactMap { self.editorViewController(in: $0) }.first
+    }
+
     func testMainWindowControllerUpdatesSelectedConverterIndex() {
         let controller = MainWindowController()
 
@@ -90,6 +100,21 @@ final class AppLifecycleTests: XCTestCase {
         delegate.application(.shared, openFiles: [path])
 
         XCTAssertEqual(controller.openedPath, path)
+    }
+
+    func testAppDelegateOpensFileQueuedBeforeLaunchFinishes() throws {
+        let delegate = AppDelegate()
+        let path = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent("draftmark-launch.md")
+        try "# Opened at launch".write(to: path, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: path) }
+
+        delegate.application(.shared, openFiles: [path.path])
+        delegate.applicationDidFinishLaunching(Notification(name: NSApplication.didFinishLaunchingNotification))
+
+        let windowController = delegate.mainWindowController as? MainWindowController
+        let editor = editorViewController(in: windowController?.contentViewController)
+        XCTAssertEqual(editor?.filePath, path.path)
+        XCTAssertEqual(editor?.textView.string, "# Opened at launch")
     }
 
     func testAppDelegateShowsAboutPanel() {
