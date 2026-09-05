@@ -2,6 +2,12 @@ import Cocoa
 import XCTest
 @testable import Draftmark
 
+final class FailingEditorDocumentStore: EditorDocumentStore {
+    override func writeString(_ string: String, to url: URL) throws {
+        throw CocoaError(.fileWriteOutOfSpace)
+    }
+}
+
 final class StubEditorDialogPresenter: EditorDialogPresenter {
     var alertCallCount = 0
     var confirmCallCount = 0
@@ -166,6 +172,78 @@ final class EditorViewControllerTests: XCTestCase {
         XCTAssertFalse(controller.saveFile())
     }
 
+    func testFailedAutosavePreservesOriginalFileAndDirtyState() throws {
+        let controller = makeController(text: "unsaved edits")
+        let url = URL(fileURLWithPath: temporaryPath(name: UUID().uuidString))
+        try "original".write(to: url, atomically: true, encoding: .utf8)
+        defer { try? FileManager.default.removeItem(at: url) }
+        controller.filePath = url.path
+        controller.dirty = true
+        controller.documentStore = FailingEditorDocumentStore()
+
+        controller.autosaveIfNeeded()
+
+        XCTAssertEqual(try String(contentsOf: url, encoding: .utf8), "original")
+        XCTAssertEqual(textView.string, "unsaved edits")
+        XCTAssertTrue(controller.dirty)
+    }
+
+    func testFailedSaveAsPreservesDocumentPathAndDirtyState() {
+        let controller = makeController(text: "unsaved edits")
+        controller.filePath = "/tmp/original.md"
+        controller.dirty = true
+        controller.documentStore = FailingEditorDocumentStore()
+        dialogPresenter.saveURL = URL(fileURLWithPath: "/tmp/replacement.md")
+        var saved = true
+
+        controller.promptForSaveURL { saved = $0 }
+
+        XCTAssertFalse(saved)
+        XCTAssertEqual(controller.filePath, "/tmp/original.md")
+        XCTAssertTrue(controller.dirty)
+    }
+
+    func testFailedOpenPreservesDocumentAndSubsequentSaveTarget() throws {
+        let controller = makeController(text: "unsaved edits")
+        let originalURL = URL(fileURLWithPath: temporaryPath(name: UUID().uuidString))
+        let invalidURL = URL(fileURLWithPath: temporaryPath(name: UUID().uuidString))
+        let invalidUTF8 = Data([0xff, 0xfe])
+        try "original".write(to: originalURL, atomically: true, encoding: .utf8)
+        try invalidUTF8.write(to: invalidURL)
+        defer {
+            try? FileManager.default.removeItem(at: originalURL)
+            try? FileManager.default.removeItem(at: invalidURL)
+        }
+        controller.filePath = originalURL.path
+        controller.dirty = true
+        dialogPresenter.openURL = invalidURL
+        var opened = true
+
+        controller.promptForOpenURL { opened = $0 }
+
+        XCTAssertFalse(opened)
+        XCTAssertEqual(controller.filePath, originalURL.path)
+        XCTAssertEqual(textView.string, "unsaved edits")
+        XCTAssertTrue(controller.dirty)
+        XCTAssertTrue(controller.saveFile())
+        XCTAssertEqual(try String(contentsOf: originalURL, encoding: .utf8), "unsaved edits")
+        XCTAssertEqual(try Data(contentsOf: invalidURL), invalidUTF8)
+    }
+
+    func testFailedOpenAfterDiscardKeepsUnsavedChanges() throws {
+        let controller = makeController(text: "unsaved edits")
+        controller.filePath = "/tmp/original.md"
+        controller.dirty = true
+        dialogPresenter.confirmationResponse = .alertThirdButtonReturn
+        dialogPresenter.openURL = URL(fileURLWithPath: temporaryPath(name: UUID().uuidString))
+
+        controller.openDocument(nil)
+
+        XCTAssertEqual(controller.filePath, "/tmp/original.md")
+        XCTAssertEqual(textView.string, "unsaved edits")
+        XCTAssertTrue(controller.dirty)
+    }
+
     func testMenuActionsUseNonModalBranchesWhenDocumentIsClean() {
         let controller = makeTestableController(text: "body")
 
@@ -176,7 +254,7 @@ final class EditorViewControllerTests: XCTestCase {
         XCTAssertEqual(dialogPresenter.openPanelCallCount, 1)
     }
 
-    func testNewDocumentDirtySaveSuccessLeavesDocumentInPlace() {
+    func testNewDocumentDirtySaveSuccessCreatesNewDocument() {
         let controller = makeTestableController(text: "body")
         controller.saveFileResult = true
         dialogPresenter.confirmationResponse = .alertFirstButtonReturn
@@ -185,7 +263,7 @@ final class EditorViewControllerTests: XCTestCase {
         controller.newDocument(nil)
 
         XCTAssertEqual(controller.saveFileCallCount, 1)
-        XCTAssertEqual(controller.newFileCallCount, 0)
+        XCTAssertEqual(controller.newFileCallCount, 1)
         XCTAssertEqual(dialogPresenter.savePanelCallCount, 0)
     }
 
@@ -222,7 +300,7 @@ final class EditorViewControllerTests: XCTestCase {
         XCTAssertEqual(controller.saveFileCallCount, 0)
     }
 
-    func testOpenDocumentDirtySaveSuccessLeavesDocumentInPlace() {
+    func testOpenDocumentDirtySaveSuccessOpensPanel() {
         let controller = makeTestableController(text: "body")
         controller.saveFileResult = true
         dialogPresenter.confirmationResponse = .alertFirstButtonReturn
@@ -231,7 +309,7 @@ final class EditorViewControllerTests: XCTestCase {
         controller.openDocument(nil)
 
         XCTAssertEqual(controller.saveFileCallCount, 1)
-        XCTAssertEqual(dialogPresenter.openPanelCallCount, 0)
+        XCTAssertEqual(dialogPresenter.openPanelCallCount, 1)
     }
 
     func testOpenDocumentDirtySaveFailureOpensSavePanel() {

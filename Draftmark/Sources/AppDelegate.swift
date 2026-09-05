@@ -20,7 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         if let pendingOpenFilename {
             self.pendingOpenFilename = nil
-            _ = (mainWindowController as? MainWindowController)?.openFile(at: pendingOpenFilename)
+            (mainWindowController as? MainWindowController)?.openFile(at: pendingOpenFilename) { _ in }
         }
     }
 
@@ -37,12 +37,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return
         }
 
-        guard mainWindowController.openFile(at: filename) else {
-            sender.reply(toOpenOrPrint: .failure)
-            return
+        mainWindowController.openFile(at: filename) { success in
+            sender.reply(toOpenOrPrint: success ? .success : .failure)
         }
-
-        sender.reply(toOpenOrPrint: .success)
     }
 
     @IBAction func showAboutPanel(_ sender: Any?) {
@@ -73,6 +70,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
+    }
+
+    func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        guard let controller = mainWindowController as? MainWindowController else {
+            return .terminateNow
+        }
+        var immediateReply: Bool?
+        var awaitingReply = false
+        controller.confirmClosing { shouldTerminate in
+            if awaitingReply {
+                sender.reply(toApplicationShouldTerminate: shouldTerminate)
+            } else {
+                immediateReply = shouldTerminate
+            }
+        }
+        if let immediateReply {
+            return immediateReply ? .terminateNow : .terminateCancel
+        }
+        awaitingReply = true
+        return .terminateLater
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows flag: Bool) -> Bool {

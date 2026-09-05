@@ -14,9 +14,9 @@ final class TestMainWindowController: MainWindowController {
     var openedPath: String?
     var openFileResult = true
 
-    override func openFile(at path: String) -> Bool {
+    override func openFile(at path: String, completionHandler handler: @escaping (Bool) -> Void) {
         openedPath = path
-        return openFileResult
+        handler(openFileResult)
     }
 }
 
@@ -223,6 +223,91 @@ final class AppLifecycleTests: XCTestCase {
 
         XCTAssertFalse(controller.windowShouldClose(window))
         XCTAssertTrue(editor.dirty)
+    }
+
+    func testFinderOpenHonorsSaveCancelAndDiscard() {
+        for response: NSApplication.ModalResponse in [.alertFirstButtonReturn, .alertSecondButtonReturn, .alertThirdButtonReturn] {
+            let controller = MainWindowController()
+            let editor = makeCloseTestEditor() as! TestableEditorViewController
+            let presenter = editor.dialogPresenter as! StubEditorDialogPresenter
+            presenter.confirmationResponse = response
+            editor.saveFileResult = true
+            editor.filePath = "/tmp/original.md"
+            controller.contentViewController = editor
+            var opened: Bool?
+
+            controller.openFile(at: "/tmp/replacement.md") { opened = $0 }
+
+            let shouldOpen = response != .alertSecondButtonReturn
+            XCTAssertEqual(opened, shouldOpen)
+            XCTAssertEqual(presenter.confirmCallCount, 1)
+            XCTAssertEqual(editor.openFileCallCount, shouldOpen ? 1 : 0)
+            XCTAssertEqual(editor.saveFileCallCount, response == .alertFirstButtonReturn ? 1 : 0)
+            XCTAssertEqual(editor.filePath, shouldOpen ? "/tmp/replacement.md" : "/tmp/original.md")
+        }
+    }
+
+    func testFinderOpenStopsWhenSaveIsCanceled() {
+        let controller = MainWindowController()
+        let editor = makeCloseTestEditor() as! TestableEditorViewController
+        let presenter = editor.dialogPresenter as! StubEditorDialogPresenter
+        presenter.confirmationResponse = .alertFirstButtonReturn
+        editor.filePath = "/tmp/original.md"
+        controller.contentViewController = editor
+        var opened = true
+
+        controller.openFile(at: "/tmp/replacement.md") { opened = $0 }
+
+        XCTAssertFalse(opened)
+        XCTAssertEqual(editor.openFileCallCount, 0)
+        XCTAssertEqual(editor.filePath, "/tmp/original.md")
+        XCTAssertTrue(editor.dirty)
+    }
+
+    func testQuitHonorsSaveCancelAndDiscard() {
+        for response: NSApplication.ModalResponse in [.alertFirstButtonReturn, .alertSecondButtonReturn, .alertThirdButtonReturn] {
+            let delegate = TestAppDelegate()
+            let controller = MainWindowController()
+            let editor = makeCloseTestEditor() as! TestableEditorViewController
+            let presenter = editor.dialogPresenter as! StubEditorDialogPresenter
+            presenter.confirmationResponse = response
+            editor.saveFileResult = true
+            controller.contentViewController = editor
+            delegate.stubWindowController = controller
+
+            let reply = delegate.applicationShouldTerminate(.shared)
+
+            XCTAssertEqual(reply, response == .alertSecondButtonReturn ? .terminateCancel : .terminateNow)
+            XCTAssertEqual(presenter.confirmCallCount, 1)
+            XCTAssertEqual(editor.saveFileCallCount, response == .alertFirstButtonReturn ? 1 : 0)
+            XCTAssertEqual(editor.dirty, response == .alertSecondButtonReturn)
+        }
+    }
+
+    func testQuitStopsWhenSaveIsCanceled() {
+        let delegate = TestAppDelegate()
+        let controller = MainWindowController()
+        let editor = makeCloseTestEditor()
+        let presenter = editor.dialogPresenter as! StubEditorDialogPresenter
+        presenter.confirmationResponse = .alertFirstButtonReturn
+        controller.contentViewController = editor
+        delegate.stubWindowController = controller
+
+        XCTAssertEqual(delegate.applicationShouldTerminate(.shared), .terminateCancel)
+        XCTAssertTrue(editor.dirty)
+    }
+
+    func testQuitCleanDocumentNeedsNoConfirmation() {
+        let delegate = TestAppDelegate()
+        let controller = MainWindowController()
+        let editor = makeCloseTestEditor()
+        let presenter = editor.dialogPresenter as! StubEditorDialogPresenter
+        editor.dirty = false
+        controller.contentViewController = editor
+        delegate.stubWindowController = controller
+
+        XCTAssertEqual(delegate.applicationShouldTerminate(.shared), .terminateNow)
+        XCTAssertEqual(presenter.confirmCallCount, 0)
     }
 
     private func makeCloseTestEditor() -> EditorViewController {

@@ -10,6 +10,7 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
     @objc var filePath: String?
     @objc var dirty = false
     @objc lazy var dialogPresenter = EditorDialogPresenter()
+    var documentStore = EditorDocumentStore()
     private lazy var fileWatcher = EditorFileWatcher()
 
     private var presentationWindow: NSWindow? {
@@ -104,55 +105,17 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
     }
 
     @IBAction func newDocument(_ sender: Any?) {
-        if !dirty {
-            newFile()
-            return
-        }
-        dialogPresenter.confirmDiscardingChanges(for: presentationWindow) { [weak self] returnCode in
-            guard let self else {
-                return
-            }
-            switch returnCode {
-            case .alertFirstButtonReturn:
-                if self.saveFile() {
-                    return
-                }
-                self.promptForSaveURL { result in
-                    if result {
-                        self.newFile()
-                    }
-                }
-            case .alertThirdButtonReturn:
-                self.newFile()
-            default:
-                break
+        confirmReplacingDocument { [weak self] shouldReplace in
+            if shouldReplace {
+                self?.newFile()
             }
         }
     }
 
     @IBAction func openDocument(_ sender: Any?) {
-        if !dirty {
-            promptForOpenURL(completionHandler: nil)
-            return
-        }
-        dialogPresenter.confirmDiscardingChanges(for: presentationWindow) { [weak self] returnCode in
-            guard let self else {
-                return
-            }
-            switch returnCode {
-            case .alertFirstButtonReturn:
-                if self.saveFile() {
-                    return
-                }
-                self.promptForSaveURL { result in
-                    if result {
-                        self.promptForOpenURL(completionHandler: nil)
-                    }
-                }
-            case .alertThirdButtonReturn:
-                self.promptForOpenURL(completionHandler: nil)
-            default:
-                break
+        confirmReplacingDocument { [weak self] shouldReplace in
+            if shouldReplace {
+                self?.promptForOpenURL(completionHandler: nil)
             }
         }
     }
@@ -230,6 +193,16 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
     }
 
     func confirmClosing(completionHandler handler: @escaping (Bool) -> Void) {
+        confirmReplacingDocument { [weak self] shouldClose in
+            if shouldClose, let self {
+                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
+                self.dirty = false
+            }
+            handler(shouldClose)
+        }
+    }
+
+    func confirmReplacingDocument(completionHandler handler: @escaping (Bool) -> Void) {
         guard dirty else {
             handler(true)
             return
@@ -248,8 +221,6 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
                     self.promptForSaveURL(completionHandler: handler)
                 }
             case .alertThirdButtonReturn:
-                NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
-                self.dirty = false
                 handler(true)
             default:
                 handler(false)
@@ -275,8 +246,7 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
             }
             var success = false
             if let selectedURL {
-                self.filePath = selectedURL.path
-                success = self.openFile()
+                success = self.openFile(at: selectedURL.path)
             }
             handler?(success)
         }
@@ -291,8 +261,12 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
             }
             var success = false
             if let selectedURL {
+                let previousPath = self.filePath
                 self.filePath = selectedURL.path
                 success = self.saveFile()
+                if !success {
+                    self.filePath = previousPath
+                }
             }
             handler?(success)
         }
@@ -307,8 +281,17 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         fileWatcher.stopWatching()
     }
 
+    func openFile(at path: String) -> Bool {
+        let previousPath = filePath
+        filePath = path
+        guard openFile() else {
+            filePath = previousPath
+            return false
+        }
+        return true
+    }
+
     @objc func openFile() -> Bool {
-        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
         guard let filePath else {
             return false
         }
@@ -317,11 +300,11 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
             return false
         }
 
-        let store = EditorDocumentStore()
-        guard let string = try? store.readString(from: URL(fileURLWithPath: filePath)) else {
+        guard let string = try? documentStore.readString(from: URL(fileURLWithPath: filePath)) else {
             return false
         }
 
+        NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(autosaveIfNeeded), object: nil)
         dirty = false
         textView.string = string
         ConverterManager.shared.setContent(with: textView.string)
@@ -334,18 +317,9 @@ class EditorViewController: NSViewController, NSTextViewDelegate {
         guard let filePath else {
             return false
         }
-        if FileManager.default.fileExists(atPath: filePath) {
-            do {
-                try FileManager.default.removeItem(atPath: filePath)
-            } catch {
-                return false
-            }
-        }
-
-        dirty = false
-        let store = EditorDocumentStore()
         do {
-            try store.writeString(textView.string, to: URL(fileURLWithPath: filePath))
+            try documentStore.writeString(textView.string, to: URL(fileURLWithPath: filePath))
+            dirty = false
             startWatchingCurrentFile()
             return true
         } catch {

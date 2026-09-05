@@ -54,13 +54,23 @@ class MainWindowController: NSWindowController, NSWindowDelegate {
         return false
     }
 
-    @objc func openFile(at path: String) -> Bool {
+    func confirmClosing(completionHandler handler: @escaping (Bool) -> Void) {
+        guard let editor = findEditorViewController(in: contentViewController) else {
+            handler(true)
+            return
+        }
+        editor.confirmClosing(completionHandler: handler)
+    }
+
+    func openFile(at path: String, completionHandler handler: @escaping (Bool) -> Void) {
         guard let editorViewController = findEditorViewController(in: contentViewController) else {
-            return false
+            handler(false)
+            return
         }
 
-        editorViewController.filePath = path
-        return editorViewController.openFile()
+        editorViewController.confirmReplacingDocument { shouldOpen in
+            handler(shouldOpen && editorViewController.openFile(at: path))
+        }
     }
 
     private func findEditorViewController(in viewController: NSViewController?) -> EditorViewController? {

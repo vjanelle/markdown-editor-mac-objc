@@ -33,4 +33,25 @@ final class DraftmarkUITests: XCTestCase {
         XCTAssertGreaterThan(previewPane.frame.height, 100.0)
         XCTAssertGreaterThan(app.buttons.count, 1)
     }
+
+    func testQuitUnsavedDocumentCanBeCanceledThenDiscarded() {
+        let app = launchApplication()
+        let editor = app.textViews["EditorTextView"]
+        XCTAssertTrue(editor.waitForExistence(timeout: 5))
+        editor.click()
+        editor.typeText("unsaved quit test")
+        app.typeKey("q", modifierFlags: .command)
+
+        let cancel = app.sheets.buttons["Cancel"]
+        XCTAssertTrue(cancel.waitForExistence(timeout: 5))
+        cancel.click()
+        XCTAssertTrue(editor.exists)
+        XCTAssertTrue((editor.value as? String)?.contains("unsaved quit test") == true)
+
+        app.typeKey("q", modifierFlags: .command)
+        let discard = app.sheets.buttons["Don't Save"]
+        XCTAssertTrue(discard.waitForExistence(timeout: 5))
+        discard.click()
+        XCTAssertTrue(app.wait(for: .notRunning, timeout: 5))
+    }
 }
